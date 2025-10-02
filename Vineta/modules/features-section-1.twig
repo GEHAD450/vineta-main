@@ -1,9 +1,9 @@
+
 {% if not settings.hide_all_section %}
 <section section-id="{{ sectionId }}" 
-style="{% if settings.bg_color %}background-color:{{ settings.bg_color }};{% endif %} {% if settings.bg_img %}background-image:url({{ settings.bg_img }});background-size: cover; background-position: center; {% if settings.bg_attachment %} background-attachment: fixed;{% endif %}{% endif %}"
-class="featured__product--section pb-{% if settings.padding_bottom and settings.padding_bottom != 'default' %}{{ settings.padding_bottom }}{% else %}80{% endif %} pt-{% if settings.padding_top and settings.padding_top != 'default' %}{{ settings.padding_top }}{% else %}80{% endif %}">
+         style="{% if settings.bg_color %}background-color:{{ settings.bg_color }};{% endif %} {% if settings.bg_img %}background-image:url({{ settings.bg_img }});background-size: cover; background-position: center; {% if settings.bg_attachment %} background-attachment: fixed;{% endif %}{% endif %}"
+         class="featured__product--thumbnail-section pb-{% if settings.padding_bottom and settings.padding_bottom != 'default' %}{{ settings.padding_bottom }}{% else %}80{% endif %} pt-{% if settings.padding_top and settings.padding_top != 'default' %}{{ settings.padding_top }}{% else %}80{% endif %}">
    
-       
   {% if settings.overlay %}
     <div class="overlay" style="{% if settings.overlay_color %}background-color:{{ settings.overlay_color }};{% endif %} {% if settings.overlay_opacity %}opacity:{{ settings.overlay_opacity }};{% endif %}"></div>
   {% endif %}
@@ -16,109 +16,227 @@ class="featured__product--section pb-{% if settings.padding_bottom and settings.
         <h4 class="sub-title" style="{% if settings.sub_title_color %}color:{{ settings.sub_title_color }};{% endif %}">{{ settings.sub_title }}</h4>
       {% endif %}
       {% if settings.section_title %}
-        <h2 class="section-title"  style="{% if settings.title_color %}color:{{ settings.title_color }};{% endif %}">
+        <h2 class="section-title" style="{% if settings.title_color %}color:{{ settings.title_color }};{% endif %}">
           {{ settings.section_title }}
         </h2>
       {% endif %}
     </div>
     {% endif %}
 
-      <div class="row row-cols-lg-3 row-cols-1">
-        <div class="col">
-          <div class="featured__product--list">
-            {% for item in settings.items|slice(0, 2) %}
-              <div class="featured__product--card mb-30" style="{% if item.bg_color %}background-color: {{ item.bg_color }};{% endif %}">
-                {% if item.icon %}
-                  <div class="featured__product--card__icon--img">
-                        <span class="featured__product--card__icon" style="{% if item.icon_bg_color %}background-color: {{ item.icon_bg_color }};{% endif %}">
-                            <img loading="lazy" class="display-block" src="{{ imageUrl(item.icon, { w: 'auto', q: 'auto', f: 'auto' }) }}" alt="{{ item.title }}">
-                        </span>
-                  </div>
+    <!-- Featured Product Thumbnail Slider -->
+    <div class="featured__product--thumbnail-wrapper">
+      <div class="featured__product--thumbnail">
+        <div class="horizontal-slider-container" id="featured-slider-{{ sectionId }}">
+          <div class="slider-track">
+            <!-- Original Images -->
+            {% for image in settings.slider_images %}
+            {% if image.image %}
+              <div class="slide-item">
+                {% if image.link %}
+                  <a href="{{ image.link }}" {% if image.new_tab %} target="_blank" {% endif %}>
+                    <img loading="{% if loop.first %}eager{% else %}lazy{% endif %}" 
+                         class="featured__product--thumbnail__img display-block"
+                         src="{{ imageUrl(image.image, { w: 'auto', q: 'auto', f: 'auto' }) }}"
+                         alt="{{ image.alt ? image.alt : 'Featured Product Image' }}">
+                  </a>
+                {% else %}
+                  <img loading="{% if loop.first %}eager{% else %}lazy{% endif %}" 
+                       class="featured__product--thumbnail__img display-block"
+                       src="{{ imageUrl(image.image, { w: 'auto', q: 'auto', f: 'auto' }) }}"
+                       alt="{{ image.alt ? image.alt : 'Featured Product Image' }}">
                 {% endif %}
-                <div class="featured__product--card__content">
-                  {% if item.title %}
-                    <h2 class="featured__product--card__title h3" style="{% if item.text_color %}color: {{ item.text_color }};{% endif %}">{{ item.title }}</h2>
-                  {% endif %}
-                  {% if item.description %}
-                    <p class="featured__product--card__desc" style="{% if item.text_color %}color: {{ item.text_color }};{% endif %}">{{ item.description }}</p>
-                  {% endif %}
-                </div>
               </div>
+            {% endif %}
             {% endfor %}
-          </div>
-        </div>
-
-        <div class="col col-md-order">
-            <div class="featured__product--thumbnail">
-              <div class="slider center-slider" id="featured-slider-{{ sectionId }}">
-                {% for image in settings.slider_images %}
-                {% if image.image %}
-                  <div class="slide-item">
-                    {% if image.link %}
-                      <a href="{{ image.link }}" {% if image.new_tab %} target="_blank" {% endif %}>
-                        <img loading="lazy" class="featured__product--thumbnail__img display-block"
-                            src="{{ imageUrl(image.image, { w: 'auto', q: 'auto', f: 'auto' }) }}"
-                            alt="Slider Image">
-                      </a>
-                    {% else %}
-                      <img loading="lazy" class="featured__product--thumbnail__img display-block"
-                          src="{{ imageUrl(image.image, { w: 'auto', q: 'auto', f: 'auto' }) }}"
-                          alt="Slider Image">
-                    {% endif %}
-                  </div>
+            
+            <!-- Duplicate Images for Seamless Loop -->
+            {% for image in settings.slider_images %}
+            {% if image.image %}
+              <div class="slide-item slide-duplicate">
+                {% if image.link %}
+                  <a href="{{ image.link }}" {% if image.new_tab %} target="_blank" {% endif %}>
+                    <img loading="lazy" 
+                         class="featured__product--thumbnail__img display-block"
+                         src="{{ imageUrl(image.image, { w: 'auto', q: 'auto', f: 'auto' }) }}"
+                         alt="{{ image.alt ? image.alt : 'Featured Product Image' }}">
+                  </a>
+                {% else %}
+                  <img loading="lazy" 
+                       class="featured__product--thumbnail__img display-block"
+                       src="{{ imageUrl(image.image, { w: 'auto', q: 'auto', f: 'auto' }) }}"
+                       alt="{{ image.alt ? image.alt : 'Featured Product Image' }}">
                 {% endif %}
-                {% endfor %}
               </div>
-            </div>
-        </div>
-
-        <!-- العمود الأيمن -->
-        <div class="col">
-          <div class="featured__product--list">
-            {% for item in settings.items|slice(2, 2) %}
-              <div class="featured__product--card mb-30" style="{% if item.bg_color %}background-color: {{ item.bg_color }};{% endif %}">
-                {% if item.icon %}
-                  <div class="featured__product--card__icon--img">
-                        <span class="featured__product--card__icon" style="{% if item.icon_bg_color %}background-color: {{ item.icon_bg_color }};{% endif %}">
-                            <img loading="lazy" class="display-block" src="{{ imageUrl(item.icon, { w: 'auto', q: 'auto', f: 'auto' }) }}" alt="{{ item.title }}">
-                        </span>
-                  </div>
-                {% endif %}
-                <div class="featured__product--card__content">
-                  {% if item.title %}
-                    <h2 class="featured__product--card__title h3" style="{% if item.text_color %}color: {{ item.text_color }};{% endif %}">{{ item.title }}</h2>
-                  {% endif %}
-                  {% if item.description %}
-                    <p class="featured__product--card__desc" style="{% if item.text_color %}color: {{ item.text_color }};{% endif %}">{{ item.description }}</p>
-                  {% endif %}
-                </div>
-              </div>
+            {% endif %}
             {% endfor %}
           </div>
         </div>
       </div>
+    </div>
 
    </div>
 </section>
 
+<!-- CSS Styles for Features Section Slider Only - Scoped to avoid conflicts -->
+<style>
+/* Scoped to features-section-1 only */
+.featured__product--thumbnail-section .featured__product--thumbnail {
+  width: 100%;
+  height: {% if settings.slider_height %}{{ settings.slider_height }}px{% else %}400px{% endif %};
+  overflow: hidden;
+  position: relative;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.featured__product--thumbnail-section .horizontal-slider-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.featured__product--thumbnail-section .slider-track {
+  display: flex;
+  width: fit-content;
+  height: 100%;
+  animation: featuresSlideHorizontal {% if settings.animation_speed %}{{ settings.animation_speed }}s{% else %}20s{% endif %} linear infinite;
+  {% if settings.pause_on_hover %}animation-play-state: running;{% endif %}
+}
+
+{% if settings.pause_on_hover %}
+.featured__product--thumbnail-section .slider-track:hover {
+  animation-play-state: paused;
+}
+{% endif %}
+
+.featured__product--thumbnail-section .slide-item {
+  flex-shrink: 0;
+  width: 300px;
+  height: 100%;
+  margin-right: 20px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.featured__product--thumbnail-section .slide-item:hover {
+  transform: scale(1.05);
+  z-index: 2;
+}
+
+.featured__product--thumbnail-section .featured__product--thumbnail__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.featured__product--thumbnail-section .slide-item:hover .featured__product--thumbnail__img {
+  transform: scale(1.1);
+}
+
+/* Animation keyframes - unique name to avoid conflicts */
+@keyframes featuresSlideHorizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] .featured__product--thumbnail-section .slider-track {
+  animation-name: featuresSlideHorizontalRTL;
+}
+
+@keyframes featuresSlideHorizontalRTL {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .featured__product--thumbnail-section .featured__product--thumbnail {
+    height: 250px;
+  }
+  
+  .featured__product--thumbnail-section .slide-item {
+    width: 200px;
+    margin-right: 15px;
+  }
+  
+  .featured__product--thumbnail-section .slider-track {
+    animation-duration: 15s;
+  }
+}
+
+@media (max-width: 480px) {
+  .featured__product--thumbnail-section .featured__product--thumbnail {
+    height: 200px;
+  }
+  
+  .featured__product--thumbnail-section .slide-item {
+    width: 150px;
+    margin-right: 10px;
+  }
+}
+</style>
+
+<!-- JavaScript for Enhanced Functionality -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // slick slider for featured-slider-{{ sectionId }}
-  $('#featured-slider-{{ sectionId }}').slick({
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    dots: false,
-    autoplay: true,
-    loop: true,                              
-    infinite: true,
-    {% if settings.slider_vertical %}
-    vertical: true,
-    verticalSwiping: true
-    {% else %}
-    rtl: window.appDirection === 'rtl'
-    {% endif %}
-  });
+  const sliderId = 'featured-slider-{{ sectionId }}';
+  const sliderContainer = document.getElementById(sliderId);
+  const sliderTrack = sliderContainer ? sliderContainer.querySelector('.slider-track') : null;
+  
+  if (sliderTrack) {
+    console.log('Featured Product Thumbnail Slider initialized:', sliderId);
+    
+    // Add intersection observer for performance
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            sliderTrack.style.animationPlayState = 'running';
+          } else {
+            sliderTrack.style.animationPlayState = 'paused';
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      observer.observe(sliderContainer);
+    }
+    
+    // Handle visibility change
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        sliderTrack.style.animationPlayState = 'paused';
+      } else {
+        sliderTrack.style.animationPlayState = 'running';
+      }
+    });
+    
+    // Add keyboard navigation
+    sliderContainer.addEventListener('keydown', function(e) {
+      if (e.key === 'Space' || e.key === ' ') {
+        e.preventDefault();
+        const currentState = sliderTrack.style.animationPlayState;
+        sliderTrack.style.animationPlayState = currentState === 'paused' ? 'running' : 'paused';
+      }
+    });
+    
+    // Make container focusable for keyboard navigation
+    sliderContainer.setAttribute('tabindex', '0');
+    sliderContainer.setAttribute('aria-label', 'Featured Products Slider - Press Space to pause/resume');
+  }
 });
 </script>
 {% endif %}
@@ -126,10 +244,10 @@ document.addEventListener('DOMContentLoaded', function() {
 {% schema %}
 {
   "name": {
-    "ar": "مميزات المنتج مع سلايدر الصور",
-    "en": "Features with slider images"
+    "ar": "سلايدر الصور الأفقي المتحرك",
+    "en": "Horizontal Continuous Image Slider"
   },
-  "icon": "fal fa-sparkles",
+  "icon": "fal fa-images",
   "display": true,
   "settings": {
     "hide_all_section": {
@@ -748,17 +866,34 @@ document.addEventListener('DOMContentLoaded', function() {
       "min": 0,
       "max": 1
     },
-    "slider_vertical": {
+    "animation_speed": {
+      "type": "number",
+      "label": {
+        "ar": "سرعة الحركة (ثانية)",
+        "en": "Animation Speed (seconds)"
+      },
+      "default": 20,
+      "min": 5,
+      "max": 60
+    },
+    "pause_on_hover": {
       "type": "checkbox",
       "option": {
-        "ar": "سلايدر الصور عمودي",
-        "en": "Vertical Slider"
+        "ar": "إيقاف الحركة عند التمرير",
+        "en": "Pause on Hover"
       },
-      "info": {
-        "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
-        "en": "You must click on save to activate this option"
+      "noLabel": true,
+      "default": true
+    },
+    "slider_height": {
+      "type": "number",
+      "label": {
+        "ar": "ارتفاع السلايدر",
+        "en": "Slider Height"
       },
-      "noLabel":true
+      "default": 400,
+      "min": 200,
+      "max": 800
     },
     "slider_images": {
       "type": "list",
@@ -778,55 +913,6 @@ document.addEventListener('DOMContentLoaded', function() {
           "type": "checkbox",
           "option": { "ar": "فتح في علامة تبويب جديدة", "en": "Open in new tab" },
           "noLabel": true
-        }
-      }
-    },
-    "items": {
-      "type": "list",
-      "maxItems": 4,
-      "settings_label": { "ar": "عنصر", "en": "Item" },
-      "settings": {
-        "icon": {
-          "type": "image",
-          "label": {
-            "ar": "أيقونة",
-            "en": "Icon"
-          }
-        },
-        "title": {
-          "type": "text",
-          "label": {
-            "ar": "العنوان",
-            "en": "Title"
-          }
-        },
-        "description": {
-          "type": "textarea",
-          "label": {
-            "ar": "الوصف",
-            "en": "Description"
-          }
-        },
-        "bg_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون الخلفية",
-            "en": "Background Color"
-          }
-        },
-        "icon_bg_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون خلفية الأيقونة",
-            "en": "Icon Background Color"
-          }
-        },
-        "text_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون النص",
-            "en": "Text Color"
-          }
         }
       }
     }
