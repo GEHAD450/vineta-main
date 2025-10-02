@@ -77,120 +77,28 @@
    </div>
 </section>
 
-<!-- CSS Styles for Features Section Slider Only - Scoped to avoid conflicts -->
 <style>
-/* Scoped to features-section-1 only */
+
 .featured__product--thumbnail-section .featured__product--thumbnail {
   width: 100%;
   height: {% if settings.slider_height %}{{ settings.slider_height }}px{% else %}400px{% endif %};
   overflow: hidden;
   position: relative;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background: transparent !important;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
 }
-
-.featured__product--thumbnail-section .horizontal-slider-container {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
 .featured__product--thumbnail-section .slider-track {
   display: flex;
   width: fit-content;
   height: 100%;
-  animation: featuresSlideHorizontal {% if settings.animation_speed %}{{ settings.animation_speed }}s{% else %}20s{% endif %} linear infinite;
-  {% if settings.pause_on_hover %}animation-play-state: running;{% endif %}
-}
-
-{% if settings.pause_on_hover %}
-.featured__product--thumbnail-section .slider-track:hover {
-  animation-play-state: paused;
-}
-{% endif %}
-
-.featured__product--thumbnail-section .slide-item {
-  flex-shrink: 0;
-  width: 300px;
-  height: 100%;
-  margin-right: 20px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  transition: transform 0.3s ease;
-}
-
-.featured__product--thumbnail-section .slide-item:hover {
-  transform: scale(1.05);
-  z-index: 2;
-}
-
-.featured__product--thumbnail-section .featured__product--thumbnail__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-.featured__product--thumbnail-section .slide-item:hover .featured__product--thumbnail__img {
-  transform: scale(1.1);
-}
-
-/* Animation keyframes - unique name to avoid conflicts */
-@keyframes featuresSlideHorizontal {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-/* RTL Support */
-[dir="rtl"] .featured__product--thumbnail-section .slider-track {
-  animation-name: featuresSlideHorizontalRTL;
-}
-
-@keyframes featuresSlideHorizontalRTL {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(50%);
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .featured__product--thumbnail-section .featured__product--thumbnail {
-    height: 250px;
-  }
-  
-  .featured__product--thumbnail-section .slide-item {
-    width: 200px;
-    margin-right: 15px;
-  }
-  
-  .featured__product--thumbnail-section .slider-track {
-    animation-duration: 15s;
-  }
-}
-
-@media (max-width: 480px) {
-  .featured__product--thumbnail-section .featured__product--thumbnail {
-    height: 200px;
-  }
-  
-  .featured__product--thumbnail-section .slide-item {
-    width: 150px;
-    margin-right: 10px;
-  }
+  animation: featuresSlideHorizontal {% if settings.animation_speed %}{{ settings.animation_speed }}s{% else %}15s{% endif %} linear infinite;
+  animation-play-state: running;
+  gap: 5px;
 }
 </style>
 
-<!-- JavaScript for Enhanced Functionality -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const sliderId = 'featured-slider-{{ sectionId }}';
@@ -200,42 +108,30 @@ document.addEventListener('DOMContentLoaded', function() {
   if (sliderTrack) {
     console.log('Featured Product Thumbnail Slider initialized:', sliderId);
     
-    // Add intersection observer for performance
+    sliderTrack.style.animationPlayState = 'running';
+    
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            sliderTrack.style.animationPlayState = 'running';
-          } else {
-            sliderTrack.style.animationPlayState = 'paused';
-          }
+          sliderTrack.style.animationPlayState = 'running';
         });
       }, { threshold: 0.1 });
       
       observer.observe(sliderContainer);
     }
     
-    // Handle visibility change
     document.addEventListener('visibilitychange', function() {
-      if (document.hidden) {
-        sliderTrack.style.animationPlayState = 'paused';
-      } else {
+      sliderTrack.style.animationPlayState = 'running';
+    });
+    
+    sliderContainer.setAttribute('tabindex', '0');
+    sliderContainer.setAttribute('aria-label', 'Featured Products Slider - Continuous Animation');
+    
+    setInterval(function() {
+      if (sliderTrack.style.animationPlayState !== 'running') {
         sliderTrack.style.animationPlayState = 'running';
       }
-    });
-    
-    // Add keyboard navigation
-    sliderContainer.addEventListener('keydown', function(e) {
-      if (e.key === 'Space' || e.key === ' ') {
-        e.preventDefault();
-        const currentState = sliderTrack.style.animationPlayState;
-        sliderTrack.style.animationPlayState = currentState === 'paused' ? 'running' : 'paused';
-      }
-    });
-    
-    // Make container focusable for keyboard navigation
-    sliderContainer.setAttribute('tabindex', '0');
-    sliderContainer.setAttribute('aria-label', 'Featured Products Slider - Press Space to pause/resume');
+    }, 1000);
   }
 });
 </script>
