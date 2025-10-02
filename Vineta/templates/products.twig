@@ -1,0 +1,225 @@
+{% extends "layout.twig" %}
+
+{% block header %} {{ include('header.twig') }} {% endblock %}
+
+{% block main_content %}
+
+    <section class="breadcrumb-section {% if category.cover_image or settings.globals_settings_breadcrumb_breadcrumb_bg_image %} withBg {% endif %}" 
+{% if category.cover_image %} style="background-image:url({{ category.cover_image }})" 
+{% elseif settings.globals_settings_breadcrumb_breadcrumb_bg_image %} 
+style="background-image:url({{ settings.globals_settings_breadcrumb_breadcrumb_bg_image }})" {% endif %}>
+        <nav aria-label="breadcrumb">
+        
+            <div class="container custom-container">
+              <ul class="subTitle-detail">
+                <li class="breadcrumb-item" aria-current="page"><a href="/">{{ locals.home_title }}</a></li>
+                <li class="breadcrumb-item active " aria-current="page">{{ locals.products_title }}</li>
+              </ul>
+            </div>
+    
+        </nav>
+    </section>
+
+    <div class="paddingPage">
+        <div class="container custom-container">
+            <div class="row">
+            {% if  products.filters|length > 0 %}
+                <div class="col-lg-4">
+                <div class="d-flex flex-column fullfilter">
+                    {% include 'template_for_products_attributes' %}
+                    <div class="attributes-submit" style="padding-inline-end: 25px">
+                        <button type="button" id="submitFilter" class="highlight-button btn btn-sm hbtn1" data-abc="true">{{ locals.submit }}</button>
+                        <button id="products-list-filter-form-clear" type="button" class="reset tp-btn tp-btn-primary-outline" onclick="clearFilters()">
+                <span>{{ locals.reset }}</span>
+            </button>
+                    </div>
+                </div>
+                </div>
+            {% endif %}
+            <div class="{% if  products.filters|length > 0 %} col-lg-8 {% else %} col-lg-12 {% endif %} mt-3">
+                <div class="products-container">
+                    <div>
+                        {% include 'products-filter.twig' with { 'count' : products.total, 'has_products_filtration': ( products.filters|length > 0) } %}
+                    </div>
+
+                    <div id="products-list" class="row products-slider products-list">
+                        {% for product in products.data %}
+                            <div class="{% if settings.globals_settings_products_select_prod_style == 'style2' %} col-12 style2 
+                            {% else %} 
+                            {% if settings.globals_settings_products_select_prod_style == 'style1' or not settings.globals_settings_products_select_prod_style %}
+                            col-md-4 
+                            {% endif %}
+                            col-sm-6 col-12 
+                            {% endif %}">
+                                <div class="prod-col">                                
+                                    {% include 'product-card.twig' with {'product' : product, 'index': key,
+                                    'parentId':66666,'hide_rate':settings.globals_settings_products_hide_rate,
+                                    'select_prod_style':settings.globals_settings_products_select_prod_style,
+                                    'show_count':settings.globals_settings_products_show_count,
+                                    'card_list_border':settings.globals_settings_products_card_list_border,
+                                    'show_payments': settings.globals_settings_products_show_payments,
+                                    'show_payments': settings.globals_settings_products_show_payments,
+                                    'hide_description':settings.globals_settings_products_hide_description} %}
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                    {% if  products.data|length == 0 %}
+                    <div class="empty">
+                        <img src="{{ asset_url ~ 'box1.png' }}" loading="lazy" alt="empty">
+                        <span>{{  locals.products_list_empty }}
+                        </span>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+        {% include 'pagination.twig' with { 'totalPages' : products.last_page , 'currentPage' : products.current_page } %}
+    </div>
+
+<script>
+
+window.addEventListener('DOMContentLoaded', (event) => {
+
+        $("#submitFilter").click(function(){
+            $('input[name="from_price"][type="hidden"]').val($('.attribute-price-body input[name="from_price"]').val());
+            $('input[name="to_price"][type="hidden"]').val($('.attribute-price-body input[name="to_price"]').val());
+            setTimeout(function(){
+                document.getElementById('attribute_form').submit();
+            }, 200);
+        });
+
+    window.clearFilters = function () {
+        // go to products page
+        window.location.href = '/products';
+    };
+
+
+    // إضافة مكتبة noUiSlider ديناميكيًا
+    function loadNoUiSlider(callback) {
+        let link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.css";
+        document.head.appendChild(link);
+
+        let script = document.createElement("script");
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.js";
+        script.onload = callback;
+        document.body.appendChild(script);
+    }
+
+    // إضافة الشريط بعد تحميل المكتبة
+    loadNoUiSlider(() => {
+        // حدد العنصر الذي تريد إضافة شريط التمرير إليه
+        const priceContainer = document.querySelector(".attribute-price-body .form-row");
+
+        // إنشاء عنصر جديد لشريط التمرير
+        const sliderContainer = document.createElement("div");
+        if(priceContainer && sliderContainer) {
+    
+            sliderContainer.id = "price-slider";
+
+            // إدراج شريط التمرير بعد الحقول
+            priceContainer.insertAdjacentElement("afterend", sliderContainer);
+
+            var fromPrice = 0;
+            var toPrice = 50000;
+
+            if(document.querySelector("input[name='from_price'][type='hidden']")) {
+                fromPrice = document.querySelector("input[name='from_price'][type='hidden']").value;
+            }
+            if(document.querySelector("input[name='to_price'][type='hidden']")) {
+                toPrice = document.querySelector("input[name='to_price'][type='hidden']").value;
+            }
+
+            // إعداد شريط التمرير مع دعم RTL
+            noUiSlider.create(sliderContainer, {
+                start: [fromPrice, toPrice], // القيم الافتراضية
+                connect: true,
+                direction: "rtl", // دعم RTL
+                range: {
+                    min: 0,
+                    max: 50000,
+                },
+                step: 1,
+            });
+        }
+
+        // الحقول الخاصة بالسعر
+        const fromPriceInput = document.querySelector('.attribute-price-body input[name="from_price"]');
+        const toPriceInput = document.querySelector('.attribute-price-body input[name="to_price"]');
+
+        // تحقق من وجود الحقول قبل المتابعة
+        if (!fromPriceInput || !toPriceInput) {
+            console.error("لم يتم العثور على الحقول الخاصة بالسعر.");
+            return;
+        }
+
+        // تحديث الحقول عند تحريك الشريط
+        sliderContainer.noUiSlider.on("update", (values) => {
+            fromPriceInput.value = Math.round(values[0]); // تحديث حقل "من"
+            toPriceInput.value = Math.round(values[1]); // تحديث حقل "إلى"
+        });
+
+        // تحديث الشريط عند تغيير القيم يدويًا في الحقول
+        fromPriceInput.addEventListener("change", () => {
+            // الحصول على القيمة الحالية من الحقل "من"
+            const fromValue = parseFloat(fromPriceInput.value) || 0;
+            const toValue = parseFloat(toPriceInput.value) || 5000; // إذا لم تكن هناك قيمة، اجعل "إلى" 5000 كقيمة افتراضية
+
+            // تحديث الشريط باستخدام القيمة المدخلة
+            sliderContainer.noUiSlider.set([fromValue, toValue]);
+        });
+
+        toPriceInput.addEventListener("change", () => {
+            // الحصول على القيمة الحالية من الحقل "إلى"
+            const fromValue = parseFloat(fromPriceInput.value) || 0; // استخدام القيمة المدخلة في "من" أو الافتراضية
+            const toValue = parseFloat(toPriceInput.value) || 5000; // استخدام القيمة المدخلة في "إلى" أو الافتراضية
+
+            // تحديث الشريط باستخدام القيمة المدخلة
+            sliderContainer.noUiSlider.set([fromValue, toValue]);
+        });
+    });
+    
+
+
+    const attributeFooter = document.querySelector('.attribute-footer');
+
+    // النص الديناميكي الذي تم استبداله من القالب (مثلاً أثناء التصيير في الخلفية)
+    const clearText = '{{ locals.reset }}'; // سيتم استبداله أثناء توليد HTML
+        if (attributeFooter) {
+        // إضافة الزر الجديد بعد زر "حفظ"
+        attributeFooter.insertAdjacentHTML(
+            'beforeend', // الإضافة في نهاية الحاوية
+            `<button id="products-list-filter-form-clear" type="button" class="tp-btn tp-btn-primary-outline" onclick="clearFilters()">
+                <span>${clearText}</span>
+            </button>`
+        );
+
+    }
+
+    const filterButton = document.querySelector('.open-close-filter');
+
+    // استهداف العنصر الذي تريد تبديل الكلاس فيه
+    const productAttributes = document.querySelector('.product-attributes');
+
+    if(productAttributes && filterButton) {
+        // إضافة event listener للزر
+        filterButton.addEventListener('click', () => {
+            // تبديل الكلاس بين العنصرين
+            productAttributes.classList.toggle('hide-filter');
+        });
+    }
+
+
+});
+</script>
+
+
+{% endblock %}
+
+{% block footer %} {{ include('footer.twig') }} {% endblock %}

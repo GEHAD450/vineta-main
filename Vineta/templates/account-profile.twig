@@ -1,0 +1,57 @@
+{% extends "layout.twig" %}
+
+{% block header %} {{ include('header.twig') }} {% endblock %}
+
+{% block top_links %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'account-pages.css?v=1.69' }}" />
+{% endblock %}
+
+{% block main_content %}
+
+<section class="breadcrumb-section {% if category.cover_image or settings.globals_settings_breadcrumb_breadcrumb_bg_image %} withBg {% endif %}" 
+{% if category.cover_image %} style="background-image:url({{ category.cover_image }})" 
+{% elseif settings.globals_settings_breadcrumb_breadcrumb_bg_image %} 
+style="background-image:url({{ settings.globals_settings_breadcrumb_breadcrumb_bg_image }})" {% endif %}>
+    <nav aria-label="breadcrumb">
+       
+          <div class="container custom-container">
+              <div>
+                {% include 'profile-title.twig' with { 'title' : locals.profile.addresses } %}
+              </div>
+          </div>
+  
+      </nav>
+</section>
+
+    <div class="container-parent shippingPage profilePage">
+        <div class="container custom-container">
+            <div class="d-flex shippingFlex">
+                {% include 'profile-section.twig' with { 'section' : 'profile' } %}
+                <div class="flex-grow-1">
+                    {% include 'profile-title.twig' with { 'title' : locals.profile.personal_info } %}
+                    <div class="account-content">
+
+                         <div>
+                             {{ account_profile_template_content|raw }}
+                         </div>
+
+                        <div style="margin-top: 80px">
+                            <form action="/auth/logout" method="POST" class="d-flex logout justify-content-between">
+                                <input type="hidden" name="_token" value="{{ csrf_token }}" />
+                                <button type="submit" class="btn btn-danger hbtn1">{{ locals.logout }}</button>
+                            </form>
+                        </div>
+
+                        {% include 'template_for_mazeed_badge' %}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block footer %} {{ include('footer.twig') }} {% endblock %}

@@ -1,0 +1,16 @@
+{% if reviews %}
+    {% for key, review in reviews %}
+            <div class="reviewStyle">
+                <p class="customer">{{ review.customer.name }}
+                        <span class="date">
+                                - 
+                                {{ datetimeFormat(review.created_at, 'd-m-Y g:i:s A', session.lang.code) }}
+                        </span>
+                </p>
+                <div class="d-flex card-rate-comment">
+                {% include 'rating-stars.twig' with {'rating' : review.rating } %}
+                </div>
+                <div class="text">{{ review.comment | raw }}</div>
+            </div>
+    {% endfor %}
+{% endif %}

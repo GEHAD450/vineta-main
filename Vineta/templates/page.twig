@@ -1,0 +1,35 @@
+{% extends "layout.twig" %}
+
+
+{% block header %} {{ include('header.twig') }} {% endblock %}
+
+{% block main_content %}
+<section class="breadcrumb-section {% if category.cover_image or settings.globals_settings_breadcrumb_breadcrumb_bg_image %} withBg {% endif %}" 
+{% if category.cover_image %} style="background-image:url({{ category.cover_image }})" 
+{% elseif settings.globals_settings_breadcrumb_breadcrumb_bg_image %} 
+style="background-image:url({{ settings.globals_settings_breadcrumb_breadcrumb_bg_image }})" {% endif %}>
+    <nav aria-label="breadcrumb">
+       
+          <div class="container custom-container">
+              <div>
+                <h1 class="bread-title">{{ page.title }}</h1>
+              </div>
+          </div>
+  
+      </nav>
+</section>
+
+
+    <section class="pageStyle mt-5 mb-5 ">
+        <div class="container custom-container">
+            <div class="page-text mt-3 mb-5">
+                {{ page.content | raw }}
+            </div>
+
+
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block footer %} {{ include('footer.twig') }} {% endblock %}

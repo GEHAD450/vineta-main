@@ -1,0 +1,70 @@
+            <div class="overlay"></div>
+        <div class="content">
+            <i class="fa fa-close close"></i>
+
+            <div style="max-height: calc(100% - 310px);overflow: hidden;">
+                <h2 class="cartTitle">{{ locals.cart_title }}</h2>
+                <div class="items custom-scroll" tabindex="5000" style="outline: none;"></div>
+            </div>
+          <div class="footerSub">
+              <div class="cart-totals-div">
+              </div>
+
+              <div class="coupon-form mt-4">
+                        <form>
+                            <div class="form-group">
+                                <h4>{{ locals.coupon_discount }}</h4>
+                                <div class="d-flex">
+                                    <input class="form-control send-coupon" type="text" placeholder="{{ locals.coupon_discount_enter }}" />
+                                    <button type="button" class="hbtn1" onclick="sendCoupon()">
+                                        <img loading="lazy" class="send-coupon-progress d-none" src="{{ asset_url }}spinner.gif" width="15" height="15"/>
+                                        {{ locals.coupon_discount_submit }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+              </div>
+
+              <div class="cart-discount-rule-wrapper free-shipping-rule-section mt-3 {% if cart.fee_shipping_discount_rules %}d-block{% else %}d-none{% endif %}">
+                  <div class="d-flex align-items-center">
+                      <div class="message flex-grow-1 free-shipping-rule-message">
+                          {{ cart.fee_shipping_discount_rules.conditions_subtotal.status.message }}
+                      </div>
+                      <div class="discount-progress flex-shrink-0">
+                          <span class="free-shipping-rule-done {% if cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'applied' %}d-inline-block{% else %}d-none{% endif %}">
+                              <span style="font-size: 28px"  class="icon-done text-color-primary"></span>
+                          </span>
+                      </div>
+                  </div>
+                  <div class="discount-progress-linear" style="margin-bottom:10px;" class="{% if cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'min_not_reached' %}d-block{% else %}d-none{% endif %}">
+                      <div class="progress-bar free-shipping-rule-progress"  style="background-color:var(--primary-color);color:#000!important;padding-top:7px;padding-bottom:7px;max-width:100%;font-weight:700;width: {{ cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min }}%">
+                          {% if cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'applied' %}
+                              <span>{{ locals.coupon_discount_free_shipping }}</span>
+                          {% else %}
+                              <span>{{ cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min }}%</span>
+                          {% endif %}
+                      </div>
+                  </div>
+
+              </div>
+
+            <div class="Vineta-mini-cart__buttons buttons">
+                {% if store.availability.closed_now %}
+                    <a href="#"
+                    style="opacity: 0.5; pointer-events: none; cursor: not-allowed;"
+                    class="checkBtn button checkout"
+                    >
+                        {{ locals.cart_continue_to_purchase }}
+                    </a>
+                {% else %}
+                    <a href="{% if customer %}/checkout/choose-address-and-shipping{% else %}/auth/login?redirect_to=/checkout/choose-address-and-shipping{% endif %}"
+                    class="checkBtn button checkout"
+                    >
+                        {{ locals.cart_continue_to_purchase }}
+                    </a>
+                {% endif %}
+                <a href="/cart/view" class="viewBag button">{{locals.show_page_cart}}</a>
+            </div>
+          </div>
+        </div>
+        

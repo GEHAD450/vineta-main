@@ -1,0 +1,80 @@
+{% extends "layout.twig" %}
+
+{% block header %} {{ include('header.twig') }} {% endblock %}
+
+{% block top_links %}
+    <link rel="stylesheet" href="{{ asset_url ~ 'profile-style.css?v=1.03' }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'account-pages.css?v=1.57' }}" />
+{% endblock %}
+
+{% block main_content %}
+
+<section class="breadcrumb-section {% if category.cover_image or settings.globals_settings_breadcrumb_breadcrumb_bg_image %} withBg {% endif %}" 
+{% if category.cover_image %} style="background-image:url({{ category.cover_image }})" 
+{% elseif settings.globals_settings_breadcrumb_breadcrumb_bg_image %} 
+style="background-image:url({{ settings.globals_settings_breadcrumb_breadcrumb_bg_image }})" {% endif %}>
+    <nav aria-label="breadcrumb">
+       
+          <div class="container custom-container">
+              <div>
+                {% include 'profile-title.twig' with { 'title' : locals.profile.orders } %}
+              </div>
+          </div>
+  
+      </nav>
+</section>
+
+
+    <div class="container-parent shippingPage profilePage">
+
+        <div class="container custom-container">
+            <div class="d-flex shippingFlex">
+                {% include 'profile-section.twig' with { 'section' : 'orders' } %}
+                <div class="flex-grow-1">
+                    {% include 'profile-title.twig' with { 'title' : locals.profile.orders } %}
+                    <div class="account-content">
+                        <section class="product-selection mt-5 mb-5">
+                            <div>
+                            {% if orders|length > 0 %}
+                                <div id="desktop-profile-card" class="mt-5 mb-5 d-none d-lg-block">
+                                    <div class="card">
+                                        <div class="card-body card-table-header">
+                                            <div class="row">
+                                                <div class="col">{{ locals.order_id }}</div>
+                                                <div class="col">{{ locals.order_status }}</div>
+                                                <div class="col">{{ locals.order_date }}</div>
+                                                <div class="col">{{ locals.order_total }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% for order in orders %}
+                                <div id="desktop-profileCard" class="mt-5 mb-5">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col"><a class="theme-text-primary" style="text-decoration: underline" href="/orders/{{ order.code }}/invoice">#{{ order.id }}</a></div>
+                                                <div class="col">{% if session.lang.code == 'ar' %} {{ order.order_status.name }}  {% else %} {{ order.order_status.code }} {% endif %}</div>
+                                                <div class="col">{{ datetimeFormat(order.created_at, 'd-m-Y g:i:s A', session.lang.code) }}</div>
+                                                <div class="col">{{ order.order_total_string }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                            <h5 class="empty">{{ locals.no_orders }}</h5>
+                            {% endif %}
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block footer %} {{ include('footer.twig') }} {% endblock %}

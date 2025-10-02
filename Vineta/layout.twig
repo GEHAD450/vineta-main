@@ -1,0 +1,2277 @@
+<!doctype html>
+<!doctype html>
+<html class="no-js" lang="{{ session.lang.code }}" dir="{% if session.lang.code == 'ar' %}rtl{% else %}ltr{% endif %}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    {{ header_meta_tags | raw }}
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+
+  <link rel="shortcut icon" type="image/jpg" href={{ store.icon }}/>
+    {#<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Changa">#}
+    <!--jquery UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+
+    <link rel="stylesheet" href="{{ asset_url ~ 'animate.css' }}" />
+
+     <link rel="stylesheet" href="{{ asset_url ~ 'icomoon.css'}}">
+     <link rel="stylesheet" href="{{ asset_url ~  'pe-icon-7-stroke.css' }}">
+     <link rel="stylesheet" href="{{ asset_url ~ 'font-awesomeV4-7.css'}}">
+
+    {% if session.lang.code == 'ar' %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'bootstrap-rtl.css' }}" />
+    {% else %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'bootstrap.min.css' }}" />
+    {% endif %}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'spacing.css' }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'bootstrap-fixes.css' }}" />
+
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'toastr.min.css' }}" />
+
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'jquery-ui.min.css' }}"  />
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'jquery-ui.structure.min.css' }}"  />
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'jquery-ui.theme.min.css' }}"  />
+
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'owl.carousel.min.css' }}"  />
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'owl.theme.default.min.css' }}"  />
+
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'slick.css' }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'slick-theme.css' }}" />
+
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'slide-menu.css' }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'icons.css' }}" />
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="{{ asset_url ~ 'magnific-popup.min.css' }}">
+    {% if session.lang.code == 'ar' %}
+    <link href="https://fonts.googleapis.com/css2?family={% if settings.fonts_name %}{{ settings.fonts_name }}{% else %}Tajawal{% endif %}:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="http://127.0.0.1:5500/assets/general.rtl.css" />
+        <link rel="stylesheet" href="http://127.0.0.1:5500/assets/header.rtl.css" />
+        <link rel="stylesheet" href="http://127.0.0.1:5500/assets/footer.rtl.css" />
+        <link rel="stylesheet" href="http://127.0.0.1:5500/assets/home-page.rtl.css" />
+       <link rel="stylesheet" href="http://127.0.0.1:5500/assets/product.rtl.css" />
+
+    {% else %}
+         <link href="https://fonts.googleapis.com/css2?family={% if settings.fonts_name %}{{ settings.fonts_name }}{% else %}Inter:ital,opsz{% endif %}:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="http://127.0.0.1:5500/assets/general.ltr.css" />
+        <link rel="stylesheet" href="http://127.0.0.1:5500/assets/header.ltr.css" />
+        <link rel="stylesheet" href="http://127.0.0.1:5500/assets/footer.ltr.css" />
+        <link rel="stylesheet" href="http://127.0.0.1:5500/assets/home-page.ltr.css" />
+    {% endif %}
+
+    <link rel="stylesheet" type="text/css" href="{{ assetUrl('custom.css') }}" />
+
+    {% block top_links %}{% endblock %}
+
+
+    <script data-cfasync="false">
+        window.open_cart_on_add_to_cart = {% if settings.globals_settings_products_open_cart_on_add_to_cart %} true {% else %} false {% endif %}
+    </script>
+
+  {% if user_custom_css %}
+    <link rel="stylesheet" href="{{ user_custom_css }}">
+  {% endif %}
+    <style>
+    
+        {% if session.lang.code == 'ar' %}
+            body,html,
+            .ui-widget {
+                font-family: {% if settings.fonts_name %}{{ strReplace('+', ' ', settings.fonts_name) }}{% else %}Tajawal{% endif %}, sans-serif;
+            }
+        {% else %}
+            body,html,
+            .ui-widget {
+                font-family: {% if settings.fonts_name %}{{ strReplace('+', ' ', settings.fonts_name) }}{% else %}Inter{% endif %}, sans-serif;
+            }
+        {% endif %}
+
+        html,body {
+            background: var(--website-bg);
+        }
+
+        :root {
+            --website-bg: {% if settings.globals_settings_website_bg_color %} {{ settings.globals_settings_website_bg_color }} {% else %} #fff {% endif %};
+            --primary-color: {% if store.colors.primary %} {{store.colors.primary}} {% else %} #1c799b {% endif %};
+            --text-color: {% if settings.globals_settings_text_color %} {{settings.globals_settings_text_color}} {% else %} {%if store.colors.text_of_primary_bg %} {{store.colors.text_of_primary_bg}} {% else %} #fff {% endif %}  {% endif %};
+            --product-main-color: {% if settings.globals_settings_products_product_main_color %} {{settings.globals_settings_products_product_main_color}} {% else %} var(--primary-color) {% endif %};
+            --sub-primary-color: #521B25;
+            --white-color: #fff;
+            --warning-color:  #FFCF57;
+            --danger-color:  #EC5550;
+            --sucess-color:  #5AA788;
+            --black-color:  #000;
+            --secondary-color: #DEDEDE;
+            --secondary-color-alt0:  #6B6B6B;
+            --secondary-color-alt1:  #5A5A5A;
+            --secondary-color-alt2:  #EFEFEF;
+            --secondary-color-alt3:  #494949;
+            --secondary-color-alt4:  #D9D9D9;
+            --secondary-color-alt5:   #E8E8E8;
+            --secondary-color-alt6:   #8B8B8B;
+            --secondary-color-alt7: #ebebeb;
+            --secondary-color-alt8: #484848;
+            --secondary-color-alt9: #A8A8A8;
+            --secondary-color-alt10: #4A4A4A;
+            --secondary-color-alt11: #606060;
+            --secondary-color-alt12: #767676;
+            --secondary-color-alt13: #F8F8F8;
+            /* font-wieght */
+            --font-weight-sizeOne: 400;
+            --font-wieght-sizeTwo: 700;
+
+            {% if settings.globals_settings_breadcrumb_breadcrumb_bg_color %}
+            --bread-bg: {{ settings.globals_settings_breadcrumb_breadcrumb_bg_color }};
+            {% else %}
+            --bread-bg: #e9eefb;
+            {% endif %}
+            {% if settings.globals_settings_breadcrumb_breadcrumb_text_color %}
+            --bread-text-color: {{ settings.globals_settings_breadcrumb_breadcrumb_text_color }};
+            {% else %}
+            --bread-text-color: var(--text-color);
+            {% endif %}
+
+            {% if settings.globals_settings_breadcrumb_breadcrumb_text_color_with_bg %}
+            --bread-text-color-with-bg: {{ settings.globals_settings_breadcrumb_breadcrumb_text_color_with_bg }};
+            {% else %}
+            --bread-text-color-with-bg: #fff;
+            {% endif %}
+
+            {% if settings.scrollbar_scrollbar_bg_color %}
+            --scrollbar-bg-color: {{ settings.scrollbar_scrollbar_bg_color }};
+            {% else %}
+            --scrollbar-bg-color: #ddd;
+            {% endif %}
+
+            {% if settings.scrollbar_scrollbar_thumb_color %}
+            --scrollbar-thumb-color: {{ settings.scrollbar_scrollbar_thumb_color }};
+            {% else %}
+            --scrollbar-thumb-color: var(--primary-color);
+            {% endif %}
+
+            {% if settings.scrollbar_scrollbar_hover_color %}
+            --scrollbar-hover-color: {{ settings.scrollbar_scrollbar_hover_color }};
+            {% else %}
+            --scrollbar-hover-color: #000;
+            {% endif %}
+
+            {% if settings.globals_settings_all_borders %}
+            --all-borders: {{ settings.globals_settings_all_borders }};
+            {% else %}
+            --all-borders: #e6e6e6;
+            {% endif %}
+
+            {% if settings.globals_settings_buttons_bg_color %}
+            --buttons-bg-color: {{ settings.globals_settings_buttons_bg_color }};
+            {% else %}
+            --buttons-bg-color: var(--primary-color);
+            {% endif %}
+
+            {% if settings.globals_settings_buttons_color %}
+            --buttons-color: {{ settings.globals_settings_buttons_color }};
+            {% else %}
+            --buttons-color: #fff;
+            {% endif %}
+        }
+
+
+
+        {% if settings.globals_settings_products_product_main_color %}
+            .product-item .mask .add-to-wishlist a.fa-heart-o.filled {
+                background-color: {{ settings.globals_settings_products_product_main_color }};
+                border-color: {{ settings.globals_settings_products_product_main_color }};
+                color:#fff;
+            }
+
+            .product-item .mask .labels .product-discount,
+            .product-item .offer-counter li,
+            .product-item .options small {
+                background-color: {{ settings.globals_settings_products_product_main_color }};
+                color:#fff;
+            }
+
+            .product-item .content .title:hover a{
+                color: {{ settings.globals_settings_products_product_main_color }};
+            }
+
+            .product-item:hover {
+                border-color: {{ settings.globals_settings_products_product_main_color }};
+            }
+
+            .product-item .mask .add-to-wishlist a.fa-heart-o:not(.filled):hover:before {
+                color: {{ settings.globals_settings_products_product_main_color }};
+            }
+            .price .salePrice {
+                color: {{ settings.globals_settings_products_product_main_color }};
+            }
+
+            .product-item .content .btns .addCart:not(.disabled) a span,
+            .product-item .content .btns .addCart:not(.disabled) a {
+                color:#fff!important;
+                background-color:{{ settings.globals_settings_products_product_main_color }}!important
+            }
+
+            .product-card-rating .fa-star {
+            color:{{ settings.globals_settings_products_product_main_color }}
+            }
+
+
+        {% endif %}
+
+
+    </style>
+
+  {{ settings.globals_settings_head_script | raw }}
+
+</head>
+
+<body class="{% if session.lang.code == 'ar' %}rtl{% else %}ltr{% endif %} {% if settings.globals_settings_all_sections_full_width %}full-width{% endif %}"
+      data-template="{{ template }}"
+        {% if template == 'category' and category is not empty %} data-category-id="{{ category.id }}" {% endif %}
+>
+
+
+
+
+{% block top_body %}{% endblock %}
+
+<div class="app d-flex flex-column visible">
+
+        {% if settings.globals_settings_show_loader %}
+            <div class="preloader" {% if settings.globals_settings_loader_bg %} style="background-color: {{ settings.globals_settings_loader_bg }};" {% endif %}>
+                <div class="preloader-inner">
+                {% if not settings.globals_settings_hide_loader_img %}
+                    {% if settings.globals_settings_loader_img %}
+                        <img src="{{ settings.globals_settings_loader_img }}" loading="lazy" alt="loader">
+                        {% else %}
+                        <img src="{{ asset_url ~ 'preloader.gif'}}" loading="lazy" alt="loader" />
+                    {% endif %}
+                {% endif %}
+                {% if not settings.globals_settings_hide_loader_anim %}
+                <span class="splashloader"></span>
+                {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="header">
+            {% block header %}{% endblock %}
+        </div>
+
+        <main class="main app-content" id="scrollsmoother-container">
+            {% block main_content %}{% endblock %}
+        </main>
+        <div class="footer">
+            {% block footer %}{% endblock %}
+        </div>
+
+        <div class="whatsChat">
+            {% if settings.whatsapp_section_show_back_top %}
+                <div class="progress-wrap" {% if settings.whatsapp_section_back_top_color %} style="background-color:{{ settings.whatsapp_section_back_top_color }};" {% endif %}>
+                    <span id="progressPercentage" style="{% if settings.whatsapp_section_back_top_text_color %} color:{{ settings.whatsapp_section_back_top_text_color }}; {% endif %}"></span>
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path style="{% if settings.whatsapp_section_back_top_line_color %} stroke:{{ settings.whatsapp_section_back_top_line_color }}; {% endif %}" d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            {% endif %}
+            
+                {% if settings.whatsapp_section_show_chat %}
+                <span class="whatsTitle">
+                    <svg class="circle-svg__spin">
+                <circle cx="50%" cy="50%" r="25px" stroke="{% if settings.whatsapp_section_svg_color %} {{ settings.whatsapp_section_svg_color }} {% else %} var(--primary-color){% endif %}"></circle>
+                    </svg>
+                    <i class="fa fa-whatsapp" style="{% if settings.whatsapp_section_background_whatsapp %} background-color:{{ settings.whatsapp_section_background_whatsapp }}; {% endif %} color:{% if settings.whatsapp_section_color_whatsapp %}{{ settings.whatsapp_section_color_whatsapp }}{% else %}#fff{% endif %}"></i>
+                </span>
+
+                <div class="angleDown">
+                    <div class="content">
+                        <div class="head">
+                            <div class="details">
+                                <div class="imgStyle">
+                                    <span class="circle" {% if settings.whatsapp_section_whatsapp_circle_color %}style="background-color:{{ settings.whatsapp_section_whatsapp_circle_color }}"{% endif %}></span>
+                                    {% if settings.whatsapp_section_chat_image %}
+                                    <img src="{{ settings.whatsapp_section_chat_image }}" loading="lazy" alt="" />
+                                    {% else %}
+                                    <img src="{{ asset_url ~ 'call.png' }}" loading="lazy" alt="" />
+                                    {% endif %}
+                                </div>
+                                {% if settings.whatsapp_section_whatsapp_title %}
+                                <span class="Name">{{ settings.whatsapp_section_whatsapp_title }}</span>
+                                {% else %}
+                                    <span class="Name">{{ locals.call_center }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="bodyMsgs custom-scroll" style="background:url({{ asset_url ~ 'bgWhats.png'}}) no-repeat var(--whatapp-bg-whatsapp);">
+                            <div class="messages">
+                                {% for message in settings.whatsapp_section_whatsapp_messages %}
+                                    <div class="messageStyle">
+                                        <div class="message">
+                                            <div class="messageContent">
+                                                <div class="desc">{{ message.message }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="footerWhats">
+                                {% if settings.whatsapp_section_footer_title %}
+                                    {{ settings.whatsapp_section_footer_title }}
+                                {% else %}
+                                    {{ locals.contact_us_whatsapp }}
+                                {% endif %}
+                                {% if settings.whatsapp_section_whatsapp_number %}
+                                <a href="https://api.whatsapp.com/send?phone={{ settings.whatsapp_section_whatsapp_number }}" style="color:{{ settings.whatsapp_section_whatsapp_number_color }}">
+                                {{ settings.whatsapp_section_whatsapp_number }}
+                                </a>
+                                {% endif %}
+                                
+                        </div>
+
+
+                    </div>
+                </div>
+
+                {% else %}
+                    {% if settings.whatsapp_section_whatsapp_number %}
+                        <a href="https://api.whatsapp.com/send?phone={{ settings.whatsapp_section_whatsapp_number }}" target="_blank" class="whatsTitle">
+                            <svg class="circle-svg__spin" >
+                                <circle cx="50%" cy="50%" r="25px" stroke="{% if settings.whatsapp_section_svg_color %} {{ settings.whatsapp_section_svg_color }} {% else %} var(--primary-color) {% endif %}"></circle>
+                            </svg>
+                            <i class="fa fa-whatsapp" style="{% if settings.whatsapp_section_background_whatsapp %} background-color:{{ settings.whatsapp_section_background_whatsapp }}; {% endif %} {% if settings.whatsapp_section_color_whatsapp %} color:{{ settings.whatsapp_section_color_whatsapp }}{% endif %}"></i>
+                        </a>
+                    {% endif %}
+                {% endif %}
+
+
+        </div>
+
+
+        {% if settings.ad_modal_display_ad %}
+            <!-- Modal -->
+            <div class="modal add-Modal gallery-section fade" id="popUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <button type="button" class="close pe-7s-close-circle" data-dismiss="modal" aria-label="Close"></button>
+
+                        <div class="mini-prods">
+                            <div class="promotional-banner owl-carousel {% if settings.ads_full_height %}ads-full-height{% endif %} {% if settings.select_style == 'style2' %}margin{% endif %}">
+                                {% for adItem in settings.ad_modal_ad_section %}
+                                    <div class="item">
+                                    {%  if adItem.ad_link and not adItem.link_text %}
+                                    <a href="{{ adItem.ad_link }}" style="display:block;height:100%;" {% if adItem.new_tab %}target="_blank"{% endif %}>
+                                    {% endif %}
+                                    <div class="promotional-banner-item" style="{% if adItem.ad_bg_color %}background-color:{{ adItem.ad_bg_color }};{% else %}background-color:#f8f8f8;{% endif %} {% if adItem.ad_bg_img %}background-image:url({{ imageUrl(adItem.ad_bg_img, { w: 'auto', q: 100, f:'auto' }) }});background-size: cover; background-position: center;{% endif %}">
+                                        {% if adItem.overlay %}
+                                            <div class="overlay" style="{% if adItem.overlay_color %}background-color:{{ adItem.overlay_color }};{% endif %} {% if adItem.overlay_opacity %}opacity:{{ adItem.overlay_opacity }};{% endif %}"></div>
+                                        {% endif %}
+                                        <div class="content {% if adItem.center_content %}center-content{% endif %}">
+                                            {% if adItem.label_text %}
+                                            <span class="label" style="{% if adItem.label_bg_color %}background-color:{{ adItem.label_bg_color }};{% endif %} {% if adItem.label_text_color %}color:{{ adItem.label_text_color }};{% endif %}">
+                                                {{ adItem.label_text }}
+                                            </span>
+                                            {% endif %}
+                                            {% if adItem.ad_title %}
+                                            <h6 class="title" style="{% if adItem.texts_color %}color:{{ adItem.texts_color }};{% endif %}">{{ adItem.ad_title }}</h6>
+                                            {% endif %}
+                                            {% if adItem.ad_subtitle %}
+                                            <span class="subtitle" style="{% if adItem.texts_color %}color:{{ adItem.texts_color }};{% endif %}">
+                                                {{ adItem.ad_subtitle }}
+                                                {% if adItem.ad_price %}
+                                                    <span class="price" style="{% if adItem.ad_price_color %}color:{{ adItem.ad_price_color }};{% endif %}">{{ adItem.ad_price }}</span>
+                                                {% endif %}
+                                            </span>
+                                            {% endif %}
+
+                                        {% if adItem.offer_date %}
+                                        <ul class="offer-counter" data-offer-date="{{ adItem.offer_date }}">
+                                            <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
+                                                <div class="day count-number">00</div><span class="count-name">{{ locals.days }}</span>
+                                            </li>
+                                            <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
+                                            <div class="hour count-number">00</div><span class="count-name">{{ locals.hours }}</span>
+                                            </li>
+                                            <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
+                                            <div class="minute count-number">00</div><span class="count-name">{{ locals.minutes }}</span>
+                                            </li>
+                                            <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
+                                            <div class="seconds count-number">00</div><span class="count-name">{{ locals.seconds }}</span>
+                                            </li>
+                                        </ul>
+                                        {% endif %}
+
+
+                                            {% if adItem.ad_link and adItem.link_text %}
+                                            <a href="{{ adItem.ad_link }}" {% if adItem.new_tab %}target="_blank"{% endif %} class="hbtn1 show-all" style="{% if adItem.link_color %}background-color:{{ adItem.link_color }};{% endif %}">
+                                                {{ adItem.link_text }}
+                                            </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {%  if adItem.ad_link and not adItem.link_text %}
+                                    </a>
+                                    {% endif %}
+                                    </div>
+                                {% endfor %}  
+                            </div>
+
+                        </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% block footer_sticky %}{% endblock %}
+    </div>
+
+
+
+{{ zidapi_script|raw }}
+
+<script>
+
+    window.payments_imgs = {% if settings.globals_settings_payments|length > 0 %} {{ settings.globals_settings_payments|json_encode()|raw }} {% else %} [] {% endif %};
+
+    window.appDirection = '{% if session.lang.code == 'ar' %}rtl{% else %}ltr{% endif %}';
+
+    window.loadToasterScriptIfNotLoaded = function (onCompleted) {
+        var list = document.getElementsByTagName('script');
+        var i = list.length, flag = false;
+        while (i--) {
+            if (list[i].src === "{{ asset_url ~ 'toastr.min.js' }}") {
+                flag = true;
+                break;
+            }
+        }
+
+        if (!flag) {
+            var script = document.createElement('script');
+            script.src = "{{ asset_url ~ 'toastr.min.js' }}";
+            document.getElementsByTagName('head')[0].appendChild(script);
+
+            var fileref = document.createElement("link");
+            fileref.rel = "stylesheet";
+            fileref.type = "text/css";
+            fileref.href = "{{ asset_url ~ 'toastr.min.css' }}";
+            document.getElementsByTagName("head")[0].appendChild(fileref)
+
+            script.onload = function () {
+                if(onCompleted)
+                    onCompleted();
+            }
+        }else{
+            if(onCompleted)
+                onCompleted();
+        }
+    }
+
+
+</script>
+
+<script src="{{ asset_url ~ 'jquery-3.6.0.min.js?v=1.0.0' }}" ></script>
+
+<script src="{{ asset_url ~ 'jquery-ui.min.js' }}" ></script>
+
+<script src="{{ asset_url ~ 'popper.min.js?v=1.0' }}" ></script>
+<script src="{{ asset_url ~ 'bootstrap2.min.js' }}" ></script>
+<script src="{{ asset_url ~ 'toastr.min.js' }}"></script>
+
+<script src="{{ asset_url ~ 'owl.carousel.min.js' }}" ></script>
+
+
+<script src="{{ asset_url ~ 'slide-menu.ie.js?v=1.06' }}" ></script>
+<script src="{{ asset_url ~ 'slick.min.js' }}" ></script>
+<script src="{{ asset_url ~ 'slick-animation.min.js' }}" ></script>
+<script src="{{ asset_url ~ 'jquery.countdown.min.js' }}" ></script>
+<script src="{{ asset_url ~ 'particles.min.js' }}" ></script>  
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
+  <!-- Magnific Popup -->
+  <script src="{{ asset_url ~ 'jquery.magnific-popup.min.js' }}"></script>
+  <script src="{{ asset_url ~ 'wow.min.js' }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+  <script src="{{ asset_url ~ 'jquery.countTo.js' }}"></script>
+  <script src="{{ asset_url ~ 'main.js' }}"></script>
+
+{% block footer_scripts %}{% endblock %}
+
+<script>
+{% if settings.ad_modal_display_ad %}
+
+    var arrowNextClass = (window.appDirection === 'ltr') ? 'fa fa-angle-right' : 'fa fa-angle-left';
+    var arrowPrevClass = (window.appDirection === 'ltr') ? 'fa fa-angle-left' : 'fa fa-angle-right';
+    var prevArrowHTML = '<i class="' + arrowPrevClass + '"></i>';
+    var nextArrowHTML = '<i class="' + arrowNextClass + '"></i>';
+
+    let swiftcartowlCarousel = $(".add-Modal .promotional-banner");
+    if (swiftcartowlCarousel.length) {
+      swiftcartowlCarousel.each(function () {
+        let elm = $(this);
+        elm.owlCarousel({
+          "loop": {% if settings.ad_modal_loop %}true{% else %}false{% endif %},
+          "autoplay": {% if settings.ad_modal_autoplay %}true{% else %}false{% endif %},
+          "autoplayTimeout": 7000,
+          "smartSpeed": 1000,
+		  "margin": 0,
+          "nav": {% if settings.ad_modal_show_arrows %}true{% else %}false{% endif %},
+          "navText": [prevArrowHTML, nextArrowHTML],
+          "dots": false,
+          "rtl": (window.appDirection === "rtl"),
+          "items": 1
+        });
+        elm.find("button").each(function () {
+          $(this).attr("aria-label", "carousel button");
+        });
+      });
+    }
+
+    var screenWidth = window.screen.width;
+    $(window).on('load', function() {
+        let shouldDisplayModal = false;
+
+        {% if settings.ad_modal_display_type == "0" %}
+            if (window.location.pathname == '/') {
+                shouldDisplayModal = true;
+            }
+        {% else %}
+            shouldDisplayModal = true;
+        {% endif %}
+
+        if (shouldDisplayModal) {
+            if (screenWidth > 768) {
+                $('#popUp').modal('show');
+            } else {
+                {% if not settings.ad_modal_hide_mobile %}
+                    $('#popUp').modal('show');
+                {% endif %}
+            }
+        }
+    });
+
+{% endif %}
+
+document.addEventListener("DOMContentLoaded", function(){
+    $(".preloader").fadeOut();
+
+
+// Select the path element for the progress indicator and get its total length
+var progressPath = document.querySelector(".progress-wrap path");
+var pathLength = progressPath.getTotalLength();
+
+// Initialize the stroke dash array and offset to create the animation effect
+progressPath.style.transition = progressPath.style.WebkitTransition = "none";
+progressPath.style.strokeDasharray = pathLength + " " + pathLength;
+progressPath.style.strokeDashoffset = pathLength;
+progressPath.getBoundingClientRect();
+progressPath.style.transition = progressPath.style.WebkitTransition = "stroke-dashoffset 10ms linear";
+
+// Function to update the progress bar based on scroll position
+var updateProgress = function () {
+    var scrollTop = $(window).scrollTop();
+    var documentHeight = $(document).height() - $(window).height();
+    var progress = pathLength - (scrollTop * pathLength) / documentHeight;
+    progressPath.style.strokeDashoffset = progress;
+
+    const progressPercentage = document.getElementById('progressPercentage');
+    const CIRCLE_RADIUS = 40;
+    const CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
+    const scrollPosition = window.scrollY;
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (totalHeight > 0) {
+        const scrollPercentage = (scrollPosition / totalHeight) * 100;
+        const offset = CIRCUMFERENCE * (1 - scrollPercentage / 100);
+        progressPercentage.textContent = `${Math.round(scrollPercentage)}%`
+    }
+
+};
+
+// Initial update and update on scroll
+updateProgress();
+$(window).scroll(updateProgress);
+
+// Scroll-to-top button functionality
+var offset = 50;  // The scroll position at which the button becomes visible
+var duration = 550;  // The animation duration for scrolling to the top
+
+$(window).on("scroll", function () {
+    if ($(this).scrollTop() > offset) {
+        $(".progress-wrap").addClass("active-progress");
+    } else {
+        $(".progress-wrap").removeClass("active-progress");
+    }
+});
+
+$(".progress-wrap").on("click", function (e) {
+    e.preventDefault();
+    $("html, body").animate({ scrollTop: 0 }, duration);
+    return false;
+});
+
+
+    $(".slide-menu__decorator").click(function (event) {
+         event.preventDefault();  
+        $(this).parents("a").siblings("ul").addClass("active");
+        
+        var href = $(this).parents("a").attr("href");
+        $(this).parents("a").siblings("ul").find("li:first-of-type a").each(function() {
+            $(this).attr("href", href);
+        });
+    });
+
+    $(".slide-menu-arrow-back").click(function (event) {
+        event.preventDefault();  
+        $(this).parents("ul").first().removeClass("active")
+    });
+
+       
+    $(document).ready(function() {
+
+        $(".vs-hero").addClass("animate-elements");
+
+    
+}); 
+ 
+        
+     
+
+});
+</script>
+
+{{ cart_view_scripts|raw }}
+
+<script>
+
+{% if customer is not null and customer.wishlist is not empty %}
+    {% for itemId in customer.wishlist %}
+        $('#wishlist-{{ itemId }}').addClass('filled');
+        $('#wishlist-{{ itemId }}').parent().attr('data-original-title', '{{ locals.remove_from_wishlist }}');
+        $('#wishlist-{{ itemId }}').children(".text").text('{{ locals.remove_from_wishlist }}');
+    {% endfor %}
+{% endif %}
+
+function getCartProducts() {
+    var img_name;
+    {% if settings.globals_settings_select_spinner == 'spinner1' %}
+        img_name = 'new-spinner-white.png';
+    {% else %}
+        img_name = 'new-spinner-black.png';
+    {% endif %}
+
+    $(".cartBox").html('<div class="overlay"></div>'+
+            '<div class="content"><i class="fa fa-close close"></i>'+
+            '<div class="loading">'+
+        '<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" class="fa-spin" version="1.0" viewBox="0 0 100.000000 100.000000" preserveAspectRatio="xMidYMid meet"><g transform="translate(0.000000,100.000000) scale(0.100000,-0.100000)" fill="var(--primary-color)" stroke="none"><path d="M407 880 c-62 -16 -136 -59 -184 -106 -45 -45 -96 -141 -107 -201 -5 -28 -3 -33 14 -33 14 0 22 11 31 43 28 106 97 188 198 236 47 22 70 26 141 26 76 0 93 -4 152 -33 77 -38 130 -92 167 -171 22 -47 26 -70 26 -141 0 -76 -4 -93 -33 -152 -56 -114 -161 -185 -288 -196 -56 -4 -64 -7 -64 -25 0 -19 5 -20 71 -14 141 12 261 96 322 225 29 61 32 76 32 162 0 86 -3 101 -32 162 -63 134 -185 217 -331 224 -42 2 -94 -1 -115 -6z"/></g></svg>'+
+    '</div></div>');
+    $.ajax({
+        url:'https://'+ window.location.hostname +'/api/v1/cart/view',
+        type: 'GET',
+        success: function (response) {
+                if(response.data.cart.products_count > 0 && response.data.cart.products.length > 0 ){
+
+                    
+                    if(response.data.cart.fee_shipping_discount_rules && response.data.cart.fee_shipping_discount_rules.conditions_subtotal) {
+                        var progressPercent = response.data.cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min > 100 ? 100 : response.data.cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min;
+                        var shippingMessage = response.data.cart.fee_shipping_discount_rules.conditions_subtotal.status.message;
+                    }
+                    var cart = response.data.cart;
+                    $(".cartBox").html(`
+                    <div class="overlay"></div>
+                    <div class="content">
+                        <i class="fa fa-close close"></i>
+                        <div style="max-height: calc(100% - 310px);overflow: hidden;">
+                            <h2 class="cartTitle">{{ locals.cart_title }}</h2>
+                            ${cart.fee_shipping_discount_rules && cart.fee_shipping_discount_rules.conditions_subtotal ? `
+                                <div id="cart-shipping" class="">
+                                    <div class="cart-shipping-header">
+                                        <div class="cart-shipping-notice">
+                                            <div class="cart-goal-wrap">
+                                                <div class="cart-goal">
+                                                    <div class="cart-goal-progress minimog-progress">
+                                                        <div class="progress-bar-wrap">
+                                                            <div class="minimog-progress-bar" role="progressbar" 
+                                                            style="width:${progressPercent}%;" 
+                                                            aria-valuenow="${progressPercent}" 
+                                                            aria-valuemin="0" 
+                                                            aria-valuemax="100">
+                                                                <div class="progress-value">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                                                        <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="shipping-alert">
+                                                <span class="free-shipping">${shippingMessage}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            <div class="items custom-scroll" tabindex="5000" style="outline: none;">
+                                ${cart.products.map(product => `
+                                    <div class="cart-item">
+                                        <h4>${product.name}</h4>
+                                        <p>${product.price}</p>
+                                        <p>الكمية: ${product.quantity}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div class="footerSub">
+                            <div class="cart-totals-div">
+                                <p>الإجمالي: ${cart.total}</p>
+                            </div>
+
+                            <div class="coupon-form mt-4">
+                                <form>
+                                    <div class="form-group">
+                                        <h4>{{ locals.coupon_discount }}</h4>
+                                        <div class="d-flex">
+                                            <input class="form-control send-coupon" type="text" placeholder="{{ locals.coupon_discount_enter }}" />
+                                            <button type="button" onclick="sendCoupon()">
+                                                <img class="send-coupon-progress d-none" src="{{ asset_url }}spinner.gif" loading="lazy" width="15" height="15"/>
+                                                {{ locals.coupon_discount_submit }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="Vineta-mini-cart__buttons buttons">
+                                {% if store.availability.closed_now %}
+                                    <a href="#" style="opacity: 0.5; pointer-events: none; cursor: not-allowed;" class="checkBtn button checkout">
+                                        {{ locals.cart_continue_to_purchase }}
+                                    </a>
+                                {% else %}
+                                    <a href="{% if customer %}/checkout/choose-address-and-shipping{% else %}/auth/login?redirect_to=/checkout/choose-address-and-shipping{% endif %}"
+                                    class="checkBtn button checkout">
+                                        {{ locals.cart_continue_to_purchase }}
+                                    </a>
+                                {% endif %}
+                                <a href="/cart/view" class="viewBag button">{{ locals.show_page_cart }}</a>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                var html = '';
+                for(var i = 0; i < response.data.cart.products.length; i++){
+                    if(!response.data.cart.products[i].bundle_name) {
+                       var product = response.data.cart.products[i];
+                        var prod_count = product.quantity > 0 ? '<p class="count">{{ locals.prod_count }} '+product.quantity+'</p>' : '';
+                        var img = (
+                                product.images &&
+                                Array.isArray(product.images) &&
+                                product.images.length > 0 &&
+                                product.images[0].origin
+                            ) ? product.images[0].origin : 'https://media.zid.store/static/missing_image.png';
+                            
+                        html +=                           '<div class="item clearfix" id="item-'+product.id+'">' +
+                            '                                    <a href="'+ product.url +'" class="img">' +
+                            '                                        <img src="'+ img +'" loading="lazy" alt="'+product.name+'">' +
+                            '                                    </a>' +
+                            '                                    <div class="details">' +
+                            '                                        <a class="title" href="'+product.url+'">'+product.name+'</a>' +
+                            '                                        <p class="price">'+product.total_string+'</p>' +
+                                                                        prod_count +
+                            '                                        <button onclick="removeProductFromCart('+product.id+')" class="remove fa fa-close">' +
+                            '                                        </button>' +
+                            '                                    </div>' +
+                            '                                </div>'     
+
+
+
+
+                    } else {
+
+
+                        for(var x = 0; x < response.data.cart.products[i].product_x.length; x++){
+                            var product = response.data.cart.products[i].product_x[x];
+                    var prod_count = product.quantity > 0 ? '<p class="count">{{ locals.prod_count }} '+product.quantity+'</p>' : '';
+                            var img = (
+                                product.images &&
+                                Array.isArray(product.images) &&
+                                product.images.length > 0 &&
+                                product.images[0].origin
+                            ) ? product.images[0].origin : 'https://media.zid.store/static/missing_image.png';
+                        
+                            html +=                           '<div class="item clearfix" id="item-'+product.id+'">' +
+                                '                                    <a href="'+ product.url +'" class="img">' +
+                                '                                        <img src="'+ img +'" loading="lazy" alt="'+product.name+'">' +
+                                '                                    </a>' +
+                                '                                    <div class="details">' +
+                                '                                        <a class="title" href="'+product.url+'">'+product.name+'</a>' +
+                                '                                        <p class="price">'+product.net_sale_price_string+'</p>' +
+                                                                            prod_count +
+                                '                                        <button onclick="removeProductFromCart('+product.id+')" class="remove fa fa-close">' +
+                                '                                        </button>' +
+                                '                                    </div>' +
+                                '                                </div>'
+                                
+                        }
+
+
+                        for(var y = 0; y < response.data.cart.products[i].product_y.length; y++){
+                            var product = response.data.cart.products[i].product_y[y];
+                    var prod_count = product.quantity > 0 ? '<p class="count">{{ locals.prod_count }} '+product.quantity+'</p>' : '';
+                            var img = (
+                                product.images &&
+                                Array.isArray(product.images) &&
+                                product.images.length > 0 &&
+                                product.images[0].origin
+                            ) ? product.images[0].origin : 'https://media.zid.store/static/missing_image.png';
+                        
+                            html +=                           '<div class="item clearfix" id="item-'+product.id+'">' +
+                                '                                    <a href="'+ product.url +'" class="img">' +
+                                '                                        <img src="'+ img +'" loading="lazy" alt="'+product.name+'">' +
+                                '                                    </a>' +
+                                '                                    <div class="details">' +
+                                '                                        <a class="title" href="'+product.url+'">'+product.name+'</a>' +
+                                '                                        <p class="price">'+product.net_sale_price_string+'</p>' +
+                                                                            prod_count +
+                                '                                        <button onclick="removeProductFromCart('+product.id+')" class="remove fa fa-close">' +
+                                '                                        </button>' +
+                                '                                    </div>' +
+                                '                                </div>'
+                                
+                        }
+
+                    }
+                
+
+                   
+                
+                 
+                } 
+                $(".cartBox .items").html(html);
+                
+                var totals = '';
+                for(var i = 0; i < response.data.cart.totals.length; i++){
+                    var total = response.data.cart.totals[i];
+                    if(total.code == 'coupon'){
+                        $(".cartBox .coupon-form").html('<div class="message-coupon" role="alert">'+
+                            '<span>'+ response.data.cart.coupon.message +'</span>'+
+                                '<button class="removeCoupon" onclick="deleteCoupon()" style="color: inherit; cursor: pointer">'+
+                                    '<span class="pe-7s-trash"></span>'+
+                                '</button>'+
+                        '</div>');
+                    }
+                    var checkTotal = total.code = "total" ? 'font-weight: bold;color: var( --primary-color);' : '';
+                        totals +=  '<div class="cart-product-row-wrapper cart-totals-row-wrapper">'+
+                            '                                <div class="flex-grow-1">'+total.title+'</div>'+
+                            '                                <div class="flex-shrink-0" style="width: 30%;">'+total.value_string+'</div>'+
+                            '                            </div>'    
+                }
+                $(".cartBox .cart-totals-div").html(totals);
+
+                } else {
+                $(".cartBox").html(`<div class="overlay"></div>
+           <div class="content"><i class="fa fa-close close"></i><div class="cart-empty">
+                    <span class="cart-icon">
+                        <img src="{{ asset_url }}empty-cart2.png" loading="lazy" alt="cart-empty">
+                    </span>
+                    <h1>{{ locals.cart_list_empty }}</h1>
+                </div></div>`)
+                }
+
+
+                $(".cartBox .overlay,.cartBox .close").click(function(){
+                    $(".cartBox").removeClass("active");
+                    $(".header .giftBox").removeClass("disabled");
+                    setTimeout(function(){
+                        $(".cartBox").html('');
+                    }, 300);
+                });
+
+
+
+        }
+    });
+}
+
+function removeProductFromCart(productId){
+    $(`#item-${productId}`).slideUp();
+    $.ajax({
+        url:'https://'+ window.location.hostname +'/api/v1/cart/'+productId+'/remove',
+        type: 'POST',
+        success: function (response) {
+            $.ajax({
+                url:'https://'+ window.location.hostname +'/api/v1/cart/view',
+                type: 'GET',
+                success: function (response) {
+                        if(response.data.cart.products.length > 0){
+
+                        if(response.data.cart.fee_shipping_discount_rules && response.data.cart.fee_shipping_discount_rules.conditions_subtotal) {
+                            var progressPercent = response.data.cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min > 100 ? 100 : response.data.cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min;
+                            $('.minimog-progress-bar').css('width', `${progressPercent}%`);
+                            $('.free-shipping').html(response.data.cart.fee_shipping_discount_rules.conditions_subtotal.status.message);
+                        }
+
+
+                        var html = '';
+                        for(var i = 0; i < response.data.cart.products.length; i++){
+                            var product = response.data.cart.products[i];
+                            var prod_count = product.quantity > 1 ? '<p class="count">{{ locals.prod_count }} '+product.quantity+'</p>' : '';
+
+                            html +=                           '<div class="item clearfix" id="item-'+product.id+'">' +
+                                '                                    <a href="'+ product.url +'" class="img">' +
+                                '                                        <img loading="lazy" src="'+ product.images[0].origin +'" alt="'+product.name+'">' +
+                                '                                    </a>' +
+                                '                                    <div class="details">' +
+                                '                                        <a class="title" href="'+product.url+'">'+product.name+'</a>' +
+                                '                                        <p class="price">'+product.total_string+'</p>' +
+                                                                            prod_count +
+                                '                                        <button onclick="removeProductFromCart('+product.id+')" class="remove fa fa-close">' +
+                                '                                        </button>' +
+                                '                                    </div>' +
+                                '                                </div>'                        
+                        } 
+                        $(".cartBox .items").html(html);
+                        
+                        var totals = '';
+                        for(var i = 0; i < response.data.cart.totals.length; i++){
+                            var total = response.data.cart.totals[i];
+                            if(total.code == 'coupon'){
+                                $(".cartBox .coupon-form").html('<div class="message-coupon" role="alert">'+
+                                    '<span>'+ response.data.cart.coupon.message +'</span>'+
+                                        '<button class="removeCoupon" onclick="deleteCoupon()" style="color: inherit; cursor: pointer">'+
+                                            '<span class="pe-7s-trash"></span>'+
+                                        '</button>'+
+                                '</div>');
+                            }
+                            var checkTotal = total.code = "total" ? 'font-weight: bold;color: var( --primary-color);' : '';
+                                totals +=  '<div class="cart-product-row-wrapper cart-totals-row-wrapper">'+
+                                    '                                <div class="flex-grow-1">'+total.title+'</div>'+
+                                    '                                <div class="flex-shrink-0" style="width: 30%;">'+total.value_string+'</div>'+
+                                    '                            </div>'    
+                        }
+                        $(".cartBox .cart-totals-div").html(totals);
+
+                        } else {
+                        $(".cartBox").html(`<div class="overlay"></div><div class="content"><i class="fa fa-close close"></i><div class="cart-empty">
+                            <span class="cart-icon">
+                                <img loading="lazy" src="{{ asset_url }}empty-cart2.png" alt="cart-empty">
+                            </span>
+                            <h1>{{ locals.cart_list_empty }}</h1>
+                        </div></div>`)
+                        }
+                    setCartTotalAndBadge(response.data.cart);
+
+                    $(".cartBox .overlay,.cartBox .close").click(function(){
+                        $(".cartBox").removeClass("active");
+                        $(".header .giftBox").removeClass("disabled");
+                        setTimeout(function(){
+                            $(".cartBox").html('');
+                        }, 300);
+                    });
+
+
+                }
+            });
+        },
+        error: function (response) {
+            toastr.error('{{ locals.faild_removed }}', null);
+            $(`#item-${productId}`).slideDown();
+        }
+    });
+};
+
+
+  document.addEventListener("DOMContentLoaded", function(){
+
+    $(".cart-toggle-btn").click(function(){
+        $(".cartBox").addClass("active");
+        $(".header .giftBox").addClass("disabled");
+        getCartProducts();
+
+    });
+
+    $('body,html').on('click', function(e) {
+        var container = $(".cart-toggle-btn,.cart-toggle-btn *,.cartBox .content,.cartBox .content *");
+        Sub = $(".cartBox .content");
+
+        if( !$(e.target).is(container) ){
+            Sub.removeClass("active");
+            $('body').removeClass('overflowH');
+            $(".header .giftBox").removeClass("disabled");
+            setTimeout(function(){
+                $(".cartBox").html('');
+            }, 300);
+        }
+    });
+    })
+
+
+
+    document.addEventListener("DOMContentLoaded", function(){
+      $( document ).ready(function() {
+          addDeleteProgressImage()
+      });
+    })
+
+    function addDeleteProgressImage(){
+        $('.cart-product-delete a .prefix', document).addClass('d-none');
+    var img_name;
+    {% if settings.globals_settings_select_spinner == 'spinner1' %}
+        img_name = 'new-spinner-black.png';
+    {% else %}
+        img_name = 'new-spinner-white.png';
+    {% endif %}
+
+
+        $('.cart-product-delete a .prefix', document).html('<img loading="lazy" class="send-coupon-progress fa-spin" width="50" height="50" style="display:inline-block" src="{{ asset_url }}'+img_name+'" width="15" height="15"/>');
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+
+        $(document).on('click','.cart-product-delete a', function(event) {
+            $('.icon-delete', event.currentTarget).addClass('d-none');
+            $('.prefix',event.currentTarget).removeClass('d-none');
+            setTimeout(function() {
+
+            if($(".cart-products-with-totals").hasClass("d-none")) {
+                $(".content").removeClass("d-none");
+                $(".wc-link button.cart-toggle-btn .cart-count.cart-badge").html("0");
+            }
+            },1000)
+        });
+    })
+
+    function sendCoupon() {
+        if($('.send-coupon').val() == "") {
+            toastr.error('{{ locals.coupon_not_empty }}')
+            return;
+        }
+        $('.send-coupon-progress').removeClass('d-none');
+        zid.store.cart.redeemCoupon($('.send-coupon').val())
+            .then(function (response) {
+                if(response.status  === 'success'){
+                    toastr.success('{{ locals.sent_successfully }}', null)
+                    window.location.reload();
+                }else{
+                    toastr.error(response.data.message)
+                }
+                $('.send-coupon-progress').addClass('d-none');
+            }).catch(function (err) {
+                $('.send-coupon-progress').addClass('d-none');
+            })
+    }
+
+    function deleteCoupon() {
+
+        $('.delete-coupon-progress').removeClass('d-none');
+        zid.store.cart.removeCoupon().then(function (response) {
+            if(response.status  === 'success'){
+                toastr.success('{{ locals.coupon_removed }}', null)
+                window.location.reload();
+            }else{
+                toastr.error(response.data.message)
+            }
+        })
+    }
+
+    async function cartProductsHtmlChanged(html, cart){
+        var prodUrl = event.currentTarget.responseURL;
+        var cartProductId = prodUrl.split('cart-product-id=')[1].split('&')[0];
+        var ProductId = prodUrl.split('&product-id=')[1].split('&')[0];
+        var quantity = prodUrl.split('quantity=')[1].split('&')[0];
+
+        if(cart.products_count <= 0){
+            $('.cart-products-with-totals').addClass('d-none');
+            $('.cart-empty').removeClass('d-none');
+            return;
+        }else{
+            $('.cart-products-with-totals').removeClass('d-none');
+            $('.cart-empty').addClass('d-none');
+        }
+
+        $('.template_for_cart_products_list').html(html);
+
+        if(cart &&  cart.totals){
+            var strCartTotlas = '';
+            for(var i = 0; i < cart.totals.length; i++){
+                var cartTotal = cart.totals[i];
+
+                var totalStyle = '';
+
+                if(cartTotal.code === 'total'){
+                    totalStyle = 'font-weight: bold; color: var( --primary-color)';
+                }
+        
+                var vat_included = '';
+                if(cartTotal.code === 'total'){
+
+                    var is_cart_total_vat_included = {{ store.is_cart_total_vat_included ? 'true' : 'false' }};
+                    var local_sys_lbl_cart_includes_vat = '{{ locals.sys_lbl_cart_includes_vat }}';
+                
+                    if(is_cart_total_vat_included){
+                        vat_included = '&nbsp;<small>'+local_sys_lbl_cart_includes_vat+'</small>';
+                    }
+                    
+                }
+
+
+                strCartTotlas += '<div class="cart-product-row-wrapper cart-totals-row-wrapper">' +
+                    '                                <div class="flex-grow-1">'+cartTotal.title+vat_included+'</div>' +
+                    '                                <div class="flex-shrink-0" style="width: 30%; '+totalStyle+'">'+cartTotal.value_string+'</div>' +
+                    '                            </div>'
+            }
+
+            $('.cart-totals-div').html(strCartTotlas);
+        }
+
+        if(cart.fee_shipping_discount_rules){
+            $('.free-shipping-rule-section').removeClass('d-none')
+            $('.free-shipping-rule-message').html(cart.fee_shipping_discount_rules.conditions_subtotal.status.message)
+            $('.free-shipping-rule-progress').css('width', `${cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min}%`)
+            if (cart.fee_shipping_discount_rules.conditions_subtotal.status.code === 'applied') {
+                $('.free-shipping-rule-done').removeClass('d-none')
+                $('.free-shipping-rule-read-more').addClass('d-none')
+                $('.free-shipping-rule-progress').html('{{ locals.coupon_discount_free_shipping }}')
+            }else {
+                $('.free-shipping-rule-done').addClass('d-none')
+                $('.free-shipping-rule-read-more').removeClass('d-none')
+                $('.free-shipping-rule-progress').html(`${cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min}%`)
+            }
+        }else{
+            $('.free-shipping-rule-section').addClass('d-none')
+        }
+        if(quantity > 0){
+            try {
+                await zid.store.cart.updateProduct(cartProductId, quantity).then(function (response) {
+                    if(response.status  === 'success') {
+                        window.loadToasterScriptIfNotLoaded(function () {
+                        toastr.success( (window.appDirection === 'rtl') ? "تمت الإضافة إلى السلة بنجاح" : "Added to cart successfully" );
+                        });
+                    }
+                    else{
+                        window.loadToasterScriptIfNotLoaded(function () {
+                            toastr.error(response.data.message);
+                        });
+                    }
+                    $('.add-to-cart-progress').addClass('d-none');
+                })
+
+            } catch (error) {
+                console.error("Error updating cart:", error);
+            }
+            addDeleteProgressImage();
+            setCartTotalAndBadge(cart);
+            
+        }
+        else {
+            setCartTotalAndBadge(cart);
+            addDeleteProgressImage();
+        }
+        $('.cart-product-quantity-dropdown.form-group option:first-of-type').remove();
+        
+    }
+
+    {% if settings.globals_settings_disable_right_click %}
+    window.addEventListener(
+        "contextmenu",
+        function (e) {
+            e.preventDefault();
+        },
+        !1
+    ),
+        (document.onkeydown = function (e) {
+            return (
+                123 != event.keyCode &&
+                (!e.ctrlKey || !e.shiftKey || e.keyCode != "I".charCodeAt(0)) &&
+                (!e.ctrlKey || !e.shiftKey || e.keyCode != "C".charCodeAt(0)) &&
+                (!e.ctrlKey || !e.shiftKey || e.keyCode != "J".charCodeAt(0)) &&
+                (!e.ctrlKey || e.keyCode != "U".charCodeAt(0)) &&
+                void 0
+            );
+        });
+    {% endif %}
+
+</script>
+
+  {{ settings.globals_settings_footer_script | raw }}
+
+
+</body>
+
+</html>
+
+{% schema %}
+{
+    "globals_settings": {
+        "name": {
+            "ar": "الاعدادات العامة",
+            "en": "Global Settings"
+        },
+        "icon": "fa fa-cogs",
+        "display": true,
+        "settings": {
+            "all_sections_full_width": {
+                "type": "checkbox",
+                "label": {
+                    "ar": " ",
+                    "en": " "
+                },
+                "option": {
+                    "ar": "جعل كل الأقسام في الموقع بكامل العرض",
+                    "en": "Make all sections in the website in full width"
+                },
+                "noLabel": true,
+                "default": false
+            },
+            "disable_right_click": {
+                "type": "checkbox",
+                "label": {
+                    "ar": " ",
+                    "en": " "
+                },
+                "option": {
+                    "ar": "تعطيل النقر بالزر الأيمن",
+                    "en": "Disable right click"
+                },
+                "info": {
+                    "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+                    "en": "You must click on save to activate this option"
+                },
+                "noLabel": true,
+                "default": true
+            },
+            "show_loader": {
+                "type": "checkbox",
+                "label": {
+                    "ar": " ",
+                    "en": " "
+                },
+                "option": {
+                    "ar": "إظهار شاشة التحميل عند فتح الموقع",
+                    "en": "Show loader"
+                },
+                "info": {
+                    "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+                    "en": "You must click on save to activate this option"
+                },
+                "noLabel": true,
+                "default": true
+            },
+            "hide_loader_img": {
+                "type": "checkbox",
+                "label": {
+                    "ar": " ",
+                    "en": " "
+                },
+                "option": {
+                    "ar": "إخفاء لوجو شاشة التحميل",
+                    "en": "hide loader logo"
+                },
+                "info": {
+                    "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+                    "en": "You must click on save to activate this option"
+                },
+                "noLabel": true,
+                "default": true
+            },
+            "loader_img": {
+                "type": "image",
+                "label": {
+                    "ar": "لوجو شاشة التحميل",
+                    "en": "logo image"
+                }
+            },
+            "hide_loader_anim":{
+                "type": "checkbox",
+                "label": {
+                    "ar": " ",
+                    "en": " "
+                },
+                "option": {
+                    "ar": "اخفاء الخط المتحرك من شاشة التحميل",
+                    "en": "Hide the moving font from the loading screen"
+                },
+                "info": {
+                    "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+                    "en": "You must click on save to activate this option"
+                },
+                "noLabel": true,
+                "default": true
+            },
+            "select_spinner": {
+                "type":"select",
+                "label": {
+                    "ar": "ايقونة التحميل داخل الموقع (spinner)",
+                    "en": "Select spinner icon"
+                },
+                "options": [
+                    {
+                    "value": "spinner1",
+                        "label": {
+                            "ar": "أيقونة سودة",
+                            "en": "black spinner"
+                        }
+                    },
+                    {
+                    "value": "spinner2",
+                        "label": {
+                            "ar": "أيقونة بيضة",
+                            "en": "white spinner"
+                        }
+                    }
+                ],
+                "default": "spinner1"
+            },
+            "text_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون النص في الموقع (يجب الضغط علي حفظ لتفعيل هذا الخيار)",
+                    "en": "Text color in the website (You must click on save to activate this option)"
+                }
+            },
+            "website_bg_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون خلفية الموقع (يجب الضغط علي حفظ لتفعيل هذا الخيار)",
+                    "en": "Website background color (You must click on save to activate this option)"
+                },
+                "noLabel": true,
+                "default": true
+            },
+            "buttons_bg_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون خلفية الأزرار (يجب الضغط علي حفظ لتفعيل هذا الخيار)",
+                    "en": "Buttons background color (You must click on save to activate this option)"
+                }
+            },
+            "buttons_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون النص في الأزرار (يجب الضغط علي حفظ لتفعيل هذا الخيار)",
+                    "en": "Buttons text color (You must click on save to activate this option)"
+                }
+            },
+            "all_borders":{
+                "type":"color",
+                "label": {
+                    "ar": "لون الحدود في كامل الموقع (يجب الضغط علي حفظ لتفعيل هذا الخيار)",
+                    "en": "All borders in the website color (You must click on save to activate this option)"
+                }
+            },
+            "head_script": {
+                "type": "textarea",
+                "label": {
+                    "ar": "أضافة سكربت في نهاية ال head",
+                    "en": "Add Script in the end of the head"
+                }
+            },
+            "footer_script": {
+                "type": "textarea",
+                "label": {
+                    "ar": "أضافة سكربت في نهاية ال body",
+                    "en": "Add Script in the end of the body"
+                }
+            },
+            "payments": {
+            "type": "list",
+            "settings_label": {
+                "ar": "صور وسائل الدفع",
+                "en": "Payment methods images"
+            },
+            "noLabel": true,
+            "settings": {
+                "img": {
+                    "type": "image",
+                    "label": {
+                        "ar": "صورة",
+                        "en": "Image"
+                    }
+                }
+            },
+            "max": 10
+            },
+            "breadcrumb": {
+                "type": "fieldset",
+                "label": {
+                    "ar": "العنوان في الصفحات الداخلية",
+                    "en": "Breadcrumb"
+                },
+                "icon": "font_awesome",
+                "expandable": true,
+                "settings": {
+                    "breadcrumb_bg_color": {
+                        "type": "color",
+                        "label": {
+                            "ar": "لون الخلفية",
+                            "en": "background color"
+                        }
+                    },
+                    "breadcrumb_text_color": {
+                        "type": "color",
+                        "label": {
+                            "ar": "لون النص",
+                            "en": "text color"
+                        }
+                    },
+                    "breadcrumb_text_color_with_bg": {
+                        "type": "color",
+                        "label": {
+                            "ar": "لون النص مع الخلفية",
+                            "en": "text color with background"
+                        }
+                    },
+                    "breadcrumb_bg_image": {
+                        "type": "image",
+                        "label": {
+                            "ar": "خلفية العنوان في الصفحات الداخلية",
+                            "en": "Breadcrumb background image in inner pages" 
+                        }
+                    }
+                }
+            },
+            "products": {
+                "type": "fieldset",
+                "label": {
+                    "ar": "المنتجات",
+                    "en": "Products"
+                },
+                "icon": "font_awesome",
+                "expandable": true,
+                "settings": {
+                    "product_main_color": {
+                        "type": "color",
+                        "label": {
+                            "ar": "اللون الرئيسي للمنتجات في الصفحات الجانبية",
+                            "en": "Products main color in the sidebar pages"
+                        }
+                    },
+                    "show_payments": {
+                        "type": "checkbox",
+                        "label": {
+                            "ar": "",
+                            "en": ""
+                        },
+                        "option": {
+                            "ar": "إظهار صور طرق الدفع داخل كارت المنتج",
+                            "en": "Show payment method images inside the product card"
+                        },
+                        "noLabel": true,
+                        "default": false
+                    },
+                    "open_cart_on_add_to_cart": {
+                        "type": "checkbox",
+                        "label": {
+                            "ar": " ",
+                            "en": " "
+                        },
+                        "noLabel": true,
+                        "option": {
+                            "ar": "فتح السلة مباشرة عند إضافة المنتج إليها",
+                            "en": "Open cart directly when adding product to it"
+                        }
+                    },
+                    "select_prod_style": {
+                    "type": "select",
+                    "label": {
+                        "ar": "اختر تصميم المنتجات",
+                        "en": "Select Products Style"
+                    },
+                    "info": {
+                        "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+                        "en": "You must click on save to activate this option"
+                    },
+                    "options": [
+                        {
+                        "value": "style1",
+                        "label": {
+                            "ar": "تصميم 1",
+                            "en": "Style 1"
+                        }
+                        },
+                        {
+                        "value": "style2",
+                        "label": {
+                            "ar": "تصميم 2",
+                            "en": "Style 2"
+                        }
+                        }
+                    ],
+                    "default": "style1"
+                    },
+                    "card_list_border": {
+                        "type": "color",
+                        "label": {
+                            "ar": "لون حدود المنتج (يعمل مع تصميم 2)",
+                            "en": "Product border color (with style 2)"
+                        }
+                    },
+                    "hide_description": {
+                    "type": "checkbox",
+                    "label": {
+                        "ar": "",
+                        "en": ""
+                    },
+                    "option": {
+                        "ar": "إخفاء الوصف (يعمل مع تصميم 2)",
+                        "en": "Hide Description (with style 2)"
+                    },
+                    "noLabel": true,
+                    "default": false
+                    },
+                    "show_count": {
+                        "type": "checkbox",
+                        "option": {
+                            "ar": "إظهار عدد الأيام المتبقية لانتهاء العروض",
+                            "en": "Show count of days left for the end of the offers"
+                        },
+                        "label": {
+                            "ar": "",
+                            "en": ""
+                        },
+                        "noLabel": true,
+                        "default": true
+                    },
+                    "hide_rate": {
+                        "type": "checkbox",
+                        "label": {
+                            "ar": "",
+                            "en": ""
+                        },
+                        "option": {
+                            "ar": "إخفاء التقييمات في بطاقة المنتجات",
+                            "en": "Hide ratings in products card"
+                        },
+                        "info": {
+                            "ar": "(ينطبق هذا الخيار على الصفحات الداخلية)",
+                            "en": "(This option applies to inner pages)"
+                        },
+                        "noLabel": true,
+                        "default": false
+                    }
+                }
+            },
+            "product_page": {
+                "type": "fieldset",
+                "label": {
+                    "ar": "صفحة المنتج",
+                    "en": "Product Page"
+                },
+                "icon": "font_awesome",
+                "expandable": true,
+                "settings": {
+                    "show_payments": {
+                        "type": "checkbox",
+                        "label": {
+                            "ar": "",
+                            "en": ""
+                        },
+                        "option": {
+                            "ar": "إظهار صور طرق الدفع",
+                            "en": "Show payment methods images"
+                        },
+                        "noLabel": true,
+                        "default": false
+                    }
+                }
+            }
+        }
+    },
+    "fonts":{
+        "name": {
+        "ar": "الخطوط",
+        "en": "fonts"
+        },
+        "icon": "fa fa-font",
+        "display": true,
+        "settings": {
+        "name": {
+            "type": "select",
+            "label": {
+            "ar": "اسم الخط",
+            "en": "Font name"
+            },
+            "info": {
+                "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+                "en": "You must click on save to activate this option"
+            },
+            "options": [
+            {
+                "value": "Open+Sans",
+                "label": {
+                "ar": "Open Sans",
+                "en": "Open Sans"
+                }
+            },
+            {
+                "value": "Inter:ital,opsz",
+                "label": {
+                "ar": "Inter",
+                "en": "Inter"
+                }
+            },
+            {
+                "value": "Changa",
+                "label": {
+                "ar": "Changa",
+                "en": "Changa"
+                }
+            },
+            {
+                "value": "Cairo",
+                "label": {
+                "ar": "Cairo",
+                "en": "Cairo"
+                }
+            },
+            {
+                "value": "Amiri",
+                "label": {
+                "ar": "Amiri",
+                "en": "Amiri"
+                }
+            },
+            {
+                "value": "Mada",
+                "label": {
+                "ar": "Mada",
+                "en": "Mada"
+                }
+            },
+            {
+                "value": "Tajawal",
+                "label": {
+                "ar": "Tajawal",
+                "en": "Tajawal"
+                }
+            },
+            {
+                "value": "Almarai",
+                "label": {
+                "ar": "Almarai",
+                "en": "Almarai"
+                }
+            },
+            {
+                "value": "El+Messiri",
+                "label": {
+                "ar": "El Messiri",
+                "en": "El Messiri"
+                }
+            },
+            {
+                "value": "Lalezar",
+                "label": {
+                "ar": "Lalezar",
+                "en": "Lalezar"
+                }
+            },
+            {
+                "value": "Scheherazade",
+                "label": {
+                "ar": "Scheherazade",
+                "en": "Scheherazade"
+                }
+            },
+            {
+                "value": "Lemonada",
+                "label": {
+                "ar": "Lemonada",
+                "en": "Lemonada"
+                }
+            },
+            {
+                "value": "Markazi+Text",
+                "label": {
+                "ar": "Markazi",
+                "en": "Markazi"
+                }
+            },
+            {
+                "value": "Lateef",
+                "label": {
+                "ar": "Lateef",
+                "en": "Lateef"
+                }
+            },
+            {
+                "value": "Reem+Kufi",
+                "label": {
+                "ar": "Reem Kufi",
+                "en": "Reem Kufi"
+                }
+            },
+            {
+                "value": "IBM+Plex+Sans+Arabic",
+                "label": {
+                "ar": "IBM Arabic",
+                "en": "IBM Arabic"
+                }
+            },
+            {
+                "value": "Harmattan",
+                "label": {
+                "ar": "Harmattan",
+                "en": "Harmattan"
+                }
+            },
+            {
+                "value": "Mirza",
+                "label": {
+                "ar": "Mirza",
+                "en": "Mirza"
+                }
+            },
+            {
+                "value": "Rakkas",
+                "label": {
+                "ar": "Rakkas",
+                "en": "Rakkas"
+                }
+            },
+            {
+                "value": "Katibeh",
+                "label": {
+                "ar": "Katibeh",
+                "en": "Katibeh"
+                }
+            },
+            {
+                "value": "Scheherazade+New",
+                "label": {
+                "ar": "Scheherazade New",
+                "en": "Scheherazade New"
+                }
+            },
+            {
+                "value": "Aref+Ruqaa",
+                "label": {
+                "ar": "Aref Ruqaa",
+                "en": "Aref Ruqaa"
+                }
+            },
+            {
+                "value": "Qahiri",
+                "label": {
+                "ar": "Qahiri",
+                "en": "Qahiri"
+                }
+            },
+            {
+                "value": "Jomhuria",
+                "label": {
+                "ar": "Jomhuria",
+                "en": "Jomhuria"
+                }
+            },
+            {
+                "value": "Kufam",
+                "label": {
+                "ar": "Kufam",
+                "en": "Kufam"
+                }
+            },
+            {
+                "value": "Vibes",
+                "label": {
+                "ar": "Vibes",
+                "en": "Vibes"
+                }
+            },
+            {
+                "value": "Noto+Kufi+Arabic",
+                "label": {
+                "ar": "Noto Kufi",
+                "en": "Noto Kufi"
+                }
+            },
+            {
+                "value": "Noto+Sans+Arabic",
+                "label": {
+                "ar": "Noto Sans",
+                "en": "Noto Sans"
+                }
+            },
+            {
+                "value": "Noto+Naskh+Arabic",
+                "label": {
+                "ar": "Noto Naskh",
+                "en": "Noto Naskh"
+                }
+            },
+            {
+                "value": "Noto+Nastaliq+Urdu",
+                "label": {
+                "ar": "Noto Nastaliq Urdu",
+                "en": "Noto Nastaliq Urdu"
+                }
+            }
+            ],
+            "default": "Changa"
+        }
+        }
+    },
+    "ad_modal": {
+        "name": {
+            "ar": "نافذة الاعلان",
+            "en": "Ad modal"
+        },
+        "icon": "fa fa-window-maximize",
+        "display": true,
+        "settings": {
+            "display_ad": {
+                "type": "checkbox",
+                "label": {
+                    "ar": " ",
+                    "en": " "
+                },
+                "option": {
+                    "ar": "تشغيل الاعلان",
+                    "en": "display Ad"
+                },
+                "noLabel": true,
+                "default": false
+            },
+            "display_type": {
+                "type": "select",
+                "label": {
+                    "ar": "عرض الاعلان",
+                    "en": "Display Ad"
+                },
+                "options": [
+                    {
+                        "value": "0",
+                        "label": {
+                            "ar": "تشغيل الاعلان في الرئيسية فقط",
+                            "en": "display ad on home page only"
+                        }
+                    },
+                    {
+                        "value": "1",
+                        "label": {
+                            "ar": "تشغيل الاعلان في جميع الصفحات",
+                            "en": "display ad on all pages"
+                        }
+                    }
+                ],
+                "default": "style2"
+            },
+            "loop": {
+            "type": "checkbox",
+            "label": {
+                "ar": " ",
+                "en": " "
+            },
+            "option": {
+                "ar": "تكرار السلايدر",
+                "en": "Loop Slider"
+            },
+            "noLabel": true,
+            "default": true
+            },
+            "autoplay": {
+            "type": "checkbox",
+            "label": {
+                "ar": " ",
+                "en": " "
+            },
+            "option": {
+                "ar": "تشغيل تلقائي",
+                "en": "Auto Play"
+            },
+            "noLabel": true,
+            "default": true
+            },
+            "show_arrows": {
+            "type": "checkbox",
+            "label": {
+                "ar": " ",
+                "en": " "
+            },
+            "option": {
+                "ar": "إظهار الأسهم",
+                "en": "Show Arrows"
+            },
+            "noLabel": true,
+            "default": true
+            },
+            "ad_section": {
+            "type": "list",
+            "noLabel": true,
+            "settings_label":{
+                "ar": "العناصر",
+                "en": "Items"
+            },
+            "settings": {
+                "center_content": {
+                "type": "checkbox",
+                "option": {
+                    "ar": "توسيط المحتوى",
+                    "en": "Center Content"
+                },
+                "noLabel": true
+                },
+                "ad_bg_img": {
+                "type": "image",
+                "label": {
+                    "ar": "صورة الخلفية",
+                    "en": "Background Image"
+                }
+                },
+                "ad_bg_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون خلفية العنصر",
+                    "en": "Item Background Color"
+                }
+                },
+                "overlay": {
+                "type": "checkbox",
+                "label": {
+                    "ar": " ",
+                    "en": " "
+                },
+                "option": {
+                    "ar": "إظهار الغطاء المتداخل",
+                    "en": "Show Overlay"
+                },
+                "noLabel": true
+                },
+                "overlay_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون الغطاء المتداخل",
+                    "en": "Overlay Color"
+                },
+                "default": "#000000"
+                },
+                "overlay_opacity": {
+                "type": "number",
+                "label": {
+                    "ar": "شفافية الغطاء المتداخل",
+                    "en": "Overlay Opacity"
+                },
+                "info": {
+                    "ar": "يمكنك تحديد شفافية الغطاء بين 0 و 1 مثل 0.5",
+                    "en": "You can set the overlay opacity between 0 and 1 like 0.5"
+                },
+                "min": 0,
+                "max": 1
+                },
+                "label_text": {
+                "type": "text",
+                "label": {
+                    "ar": "نص بخلفية",
+                    "en": "Text with background"
+                }
+                },
+                "label_text_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون النص بخلفية",
+                    "en": "Text color with background"
+                }
+                },
+                "label_bg_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون خلفية النص بخلفية",
+                    "en": "Background color with text"
+                }
+                },
+                "texts_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون النصوص الفرعية والعنوان",
+                    "en": "Text Color"
+                }
+                },
+                "ad_title": {
+                "type": "text",
+                "label": {
+                    "ar": "عنوان العنصر",
+                    "en": "Item Title"
+                }
+                },
+                "ad_subtitle": {
+                "type": "text",
+                "label": {
+                    "ar": "العنوان الفرعي للعنصر",
+                    "en": "Item Sub Title"
+                }
+                },
+                "ad_price": {
+                "type": "text",
+                "label": {
+                    "ar": "نص العنوان الفرعي بلون مختلف",
+                    "en": "Sub Title with different color"
+                }
+                },
+                "ad_price_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون النص المختلف للعنوان الفرعي",
+                    "en": "Sub Title color"
+                }
+                },
+                "offer_date": {
+                    "type": "text",
+                    "label": {
+                    "ar": "تاريخ العرض",
+                    "en": "Offer Date"
+                    },
+                    "info": {
+                        "ar": "يجب ان يكون بالصيغة التالية: 2025/01/01",
+                        "en": "should be in this format: 2025/01/01"
+                    }
+                },
+                "offer_date_bg_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون خلفية العرض",
+                    "en": "Offer Date Background Color"
+                }
+                },
+                "offer_date_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون النص للعرض",
+                    "en": "Offer Date Color"
+                }
+                },
+                "ad_link": {
+                "type": "url",
+                "label": {
+                    "ar": "رابط العنصر",
+                    "en": "Item Link"
+                }
+                },
+                "link_text": {
+                "type": "text",
+                "label": {
+                    "ar": "نص الرابط للزر الموجود داخل العنصر",
+                    "en": "Link text for the button inside the item"
+                }
+                },
+                "link_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون خلفية الزر الموجود داخل العنصر",
+                    "en": "Link background color for the button inside the item"
+                }
+                },
+                "new_tab": {
+                "type": "checkbox",
+                "option": {
+                    "ar": "فتح الرابط في علامة تبويب جديدة",
+                    "en": "Open link in new tab"
+                },
+                "noLabel": true
+                }
+            }
+            }
+        }
+    },
+    "whatsapp_section": {
+        "icon": "fa fa-whatsapp",
+        "name": {
+            "ar": "الواتساب وزر الرجوع لاعلي الصفحة",
+            "en": "Whatsapp and back to top button"
+        },
+        "display": true,
+        "settings": {
+            "show_back_top": {
+            "type": "checkbox",
+            "label": {
+            "ar": " ",
+            "en": " "
+            },
+            "option": {
+            "ar": "إظهار زر الرجوع لأعلى",
+            "en": "Show back to top button"
+            },
+            "noLabel": true,
+            "default": true
+            },
+            "back_top_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون خلفية زر الرجوع لأعلى",
+                    "en": "Back to top button background color"
+                }
+            },
+            "back_top_text_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون النص لزر الرجوع لأعلى",
+                    "en": "Back to top button text color"
+                }
+            },
+            "back_top_line_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون خط زر الرجوع لأعلى",
+                    "en": "Back to top button line color"
+                }
+            },
+            "whatsapp_number": {
+            "type": "text",
+            "label": {
+            "ar": "رقم الواتساب",
+            "en": "Whatsapp Number"
+            }
+            },
+            "show_chat": {
+            "type": "checkbox",
+            "label": {
+            "ar": " ",
+            "en": " "
+            },
+            "option": {
+            "ar": "إظهار صندوق الدردشة", 
+            "en": "Show chat box"
+            },
+            "noLabel": true,
+            "default": true
+            },
+            "background_container_wp": {
+            "type": "color",
+            "label": {
+            "ar": "لون خلفية الرأس العلوي و السفلي",
+            "en": "Top and bottom container background color"
+            }
+            },
+            "background_wp": {
+            "type": "color",
+            "label": {
+            "ar": "لون خلفية صندوق الرسائل",
+            "en": "Chat box background color"
+            }
+            },
+            "background_msg": {
+            "type": "color",
+            "label": {
+            "ar": "لون خلفية الرسائل",
+            "en": "Messages Background color"
+            }
+            },
+            "background_whatsapp": {
+            "type": "color",
+            "label": {
+            "ar": "لون خلفية أيقونة الواتساب",
+            "en": "whatsapp icon Background color"
+            }
+            },
+            "color_whatsapp": {
+            "type": "color",
+            "label": {
+            "ar": "لون ايقونة الواتساب",
+            "en": "whatsapp Icon color"
+            }
+            },
+            "svg_color": {
+            "type": "color",
+            "label": {
+            "ar": "لون الدائرة",
+            "en": "Circle color"
+            }
+            },
+            "whatsapp_title": {
+            "type": "text",
+            "label": {
+            "ar": "عنوان المحادثة",
+            "en": "Chat Title"
+            }
+            },
+            "chat_image": {
+            "type": "image",
+            "label": {
+            "ar": "صورة الدردشة",
+            "en": "Chat Image"
+            }
+            },
+            "whatsapp_circle_color": {
+            "type": "color",
+            "label": {
+            "ar": "لون الدائرة فوق الصورة",
+            "en": "Circle color above the image"
+            }
+            },
+            "whatsapp_messages": {
+            "type": "list",
+            "settings_label": {
+            "ar": "الرسائل",
+            "en": "Messages"
+            },
+            "noLabel": true,
+            "settings": {
+                "message": {
+                "type": "textarea",
+                "label": {
+                "ar": "الرسالة",
+                "en": "Message"
+                }
+                }
+            }
+            },
+            "footer_title": {
+            "type": "text",
+            "label": {
+            "ar": "عنوان الفوتر",
+            "en": "Footer Title"
+            }
+            },
+            "whatsapp_number_color": {
+            "type": "color",
+            "label": {
+            "ar": "لون رقم الواتساب داخل المحادثة",
+            "en": "Whatsapp Number color inside the chat"
+            }
+            }
+        }
+    },
+    "scrollbar": {
+        "name": {
+            "ar": "شريط التمرير",
+            "en": "Scrollbar"
+        },
+        "icon": "fa fa-arrows-v",
+        "display": true,
+        "settings": {
+            "scrollbar_thumb_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون عنصر التمرير",
+                    "en": "Scrollbar thumb color"
+                }
+            },
+            "scrollbar_bg_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون خلفية شريط التمرير",
+                    "en": "Scrollbar background color"
+                }
+            },
+            "scrollbar_hover_color": {
+                "type": "color",
+                "label": {
+                    "ar": "لون شريط التمرير عند المرور عليه",
+                    "en": "Scrollbar hover color"
+                }
+            }
+
+        }
+    }
+}
+
+{% endschema %}

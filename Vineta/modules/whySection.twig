@@ -1,0 +1,823 @@
+{% if not settings.hide_all_section %}
+<section section-id="{{ sectionId }}"
+         data-lg-scroll-offset="130"
+         data-md-scroll-offset="130"
+         style="{% if settings.bg_color %}background-color:{{ settings.bg_color }};{% endif %} {% if settings.bg_img %}background-image:url({{ settings.bg_img }});background-size: cover; background-position: center; {% if settings.bg_attachment %} background-attachment: fixed;{% endif %}{% endif %}"
+         data-sm-scroll-offset="94" class="whySection pb-{% if settings.padding_bottom and settings.padding_bottom != 'default' %}{{ settings.padding_bottom }}{% else %}80{% endif %} pt-{% if settings.padding_top and settings.padding_top != 'default' %}{{ settings.padding_top }}{% else %}80{% endif %}">
+      
+      {% if settings.overlay %}
+        <div class="overlay" style="{% if settings.overlay_color %}background-color:{{ settings.overlay_color }};{% endif %} {% if settings.overlay_opacity %}opacity:{{ settings.overlay_opacity }};{% endif %}"></div>
+      {% endif %}
+      
+      <div class="{% if settings.full_width == false %} container custom-container {% else %} container-fluid {% endif %}">
+
+        {% if settings.sub_title or settings.section_title %}
+        <div class="title-area {% if settings.title_center %}center{% endif %} pb-{% if settings.title_padding_bottom and settings.title_padding_bottom != 'default' %}{{ settings.title_padding_bottom }}{% else %}50{% endif %}">
+          {% if settings.sub_title %}
+            <h4 class="sub-title" style="{% if settings.sub_title_color %}color:{{ settings.sub_title_color }};{% endif %}">{{ settings.sub_title }}</h4>
+          {% endif %}
+          {% if settings.section_title %}
+            <h2 class="section-title"  style="{% if settings.title_color %}color:{{ settings.title_color }};{% endif %}">
+              {{ settings.section_title }}
+            </h2>
+          {% endif %}
+        </div>
+        {% endif %}
+
+				<div class="row">
+          {% for item in settings.items %}
+              <div class="
+                col-sm-6 col-md-6
+                {% if settings.columns == "2" %}
+                  col-lg-6
+                {% elseif settings.columns == "3" %}
+                  col-lg-4
+                {% elseif settings.columns == "4" %}
+                  col-lg-3
+                {% else %}
+                  col-lg-3
+                {% endif %}
+              ">
+              <div class="item" style="{% if settings.item_bg_color %}background-color: {{ settings.item_bg_color }};{% endif %} {% if settings.content_center %}text-align: center;flex-direction: column;padding-top:40px;padding-bottom:40px;{% endif %}">
+                {% if item.icon %}
+                  <img src="{{ item.icon }}" loading="lazy" alt="" style="filter: {{ settings.icons_color_is_white ? 'invert(1)' : 'none' }};">
+                {% endif %}
+                {% if item.number or item.title %}
+                <div class="content-item">
+                {% if item.number %}
+                  <span class="numb" {% if settings.number_color %} style="color: {{ settings.number_color }};" {% endif %} data-from="0" data-to="{{ item.number }}" data-speed="3000"
+                    data-refresh-interval="50"></span>
+                {% endif %}
+                {% if item.title %}
+                    <h2 class="titleItem" {% if settings.text_color %} style="color: {{ settings.text_color }};" {% endif %}>{{ item.title }}</h2>
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+				</div>
+
+      </div>
+
+</section>
+
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", function(){
+    $('.numb').waypoint({
+      handler: function () {
+        $(this.element).countTo();
+        this.destroy(); // يمنع تكرار التفعيل
+      },
+      offset: "90%"
+    });
+  });
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": {
+    "ar": "لماذا نحن",
+    "en": "Why Us"
+  },
+  "icon": "fal fa-question-circle",
+  "display": true,
+  "settings": {
+    "hide_all_section": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إخفاء القسم",
+        "en": "Hide Section"
+      },
+      "noLabel": true
+    },
+    "full_width": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "عرض كامل الشاشة",
+        "en": "Full Width"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "padding_top" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد العلوي للقسم القيمة الافتراضية هي (80)",
+        "en": "Section Padding Top (Default is 80)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "padding_bottom" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد السفلي للقسم القيمة الافتراضية هي (80)",
+        "en": "Section Padding Bottom (Default is 80)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "sub_title": {
+      "type": "text",
+      "label": {
+        "ar": "العنوان الفرعي",
+        "en": "Sub Title"
+      }
+    },
+    "sub_title_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان الفرعي",
+        "en": "Sub Title Color"
+      }
+    },
+    "section_title": {
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      }
+    },
+    "title_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان",
+        "en": "Title Color"
+      }
+    },
+    "title_center": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "توسيط العنوان والعنوان الفرعي",
+        "en": "Center Title and Sub Title"
+      },
+      "noLabel": true
+    },
+    "title_padding_bottom" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد السفلي للعنوان القيمة الافتراضية هي (50)",
+        "en": "Title Padding Bottom (Default is 50)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "bg_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الخلفية",
+        "en": "Background Color"
+      }
+    },
+    "bg_img": {
+      "type": "image",
+      "label": {
+        "ar": "صورة الخلفية",
+        "en": "Background Image"
+      }
+    },
+    "bg_attachment": {
+      "type": "checkbox",
+      "option": {
+        "ar": "صورة الخلفية متحركة",
+        "en": "Background Image is Fixed"
+      },
+      "info": {
+        "ar": "يمكنك تحديد ما إذا كانت صورة الخلفية ستكون متحركة أو ثابتة",
+        "en": "You can set if the background image will be fixed or not"
+      },
+      "noLabel": true
+    },
+    "overlay": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إظهار الغطاء المتداخل",
+        "en": "Show Overlay"
+      },
+      "noLabel": true
+    },
+    "overlay_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الغطاء المتداخل",
+        "en": "Overlay Color"
+      },
+      "default": "#000000"
+    },
+    "overlay_opacity": {
+      "type": "number",
+      "label": {
+        "ar": "شفافية الغطاء المتداخل",
+        "en": "Overlay Opacity"
+      },
+      "info": {
+        "ar": "يمكنك تحديد شفافية الغطاء بين 0 و 1 مثل 0.5",
+        "en": "You can set the overlay opacity between 0 and 1 like 0.5"
+      },
+      "min": 0,
+      "max": 1
+    },
+    "columns": {
+      "type": "select",
+      "label": {
+        "ar": "عدد العناصر في الصف الواحد",
+        "en": "Items per Row"
+      },
+      "options": [
+        {
+          "value": "4",
+          "label": {
+            "ar": "4 عنصر في الصف",
+            "en": "4 items per row"
+          }
+        },
+        {
+          "value": "3",
+          "label": {
+            "ar": "3 عنصر في الصف",
+            "en": "3 items per row"
+          }
+        },
+        {
+          "value": "2",
+          "label": {
+            "ar": "2 عنصر في الصف",
+            "en": "2 items per row"
+          }
+        }
+      ],
+      "default": "4"
+    },
+    "content_center": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "توسيط المحتوي الموجود داخل العناصر",
+        "en": "Center Text inside items"
+      },
+      "noLabel": true
+    },
+    "item_bg_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون خلفية العناصر",
+        "en": "Item Background Color"
+      }
+    },
+    "icons_color_is_white": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "تحويل الأيقونات إلى أبيض",
+        "en": "Convert Icons to White"
+      },
+      "noLabel": true
+    },
+    "number_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العدد الموجود داخل العناصر",
+        "en": "Number Color inside items"
+      }
+    },
+    "text_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان الموجود داخل العناصر",
+        "en": "Title Color inside items"
+      }
+    },
+    "items": {
+      "type": "list",
+      "noLabel": true,
+      "maxItems": 20,
+      "info": {
+        "ar": "",
+        "en": ""
+      },
+      "settings_label":{
+        "ar": "عنصر",
+        "en": "item"
+      },
+      "settings": {
+        "icon": {
+          "type": "image",
+          "label": {
+            "ar": "الصورة",
+            "en": "Image"
+          },
+          "info": {
+            "ar": "ارفع صورة بحجم ٦٤ *٦٤ ينصح بأستخدام موقع flaticon.com",
+            "en": "Upload an image with a size of 64 * 64, it is recommended to use the flaticon.com site"
+          }
+        },
+        "number": {
+          "type": "number",
+          "label": {
+            "ar": "العدد المراد عرضه",
+            "en": "The number to display"
+          }
+        },
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        }
+      }
+    }
+  }
+}
+{% endschema %}

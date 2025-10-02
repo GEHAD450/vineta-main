@@ -1,0 +1,200 @@
+{% extends "layout.twig" %}
+
+
+
+{% block header %} {{ include('header.twig') }} {% endblock %}
+
+
+{% block main_content %}
+
+    <section class="breadcrumb-section {% if category.cover_image or settings.globals_settings_breadcrumb_breadcrumb_bg_image %} withBg {% endif %}" 
+{% if category.cover_image %} style="background-image:url({{ category.cover_image }})" 
+{% elseif settings.globals_settings_breadcrumb_breadcrumb_bg_image %} 
+style="background-image:url({{ settings.globals_settings_breadcrumb_breadcrumb_bg_image }})" {% endif %}>
+        <nav aria-label="breadcrumb">
+        
+            <div class="container custom-container">
+                <div>
+                    <h1 class="bread-title">{{ locals.cart_view_title }}</h1>
+                </div>
+            </div>
+    
+        </nav>
+    </section>
+
+   <div class="paddingPage">
+        <div class="container custom-container">
+            <div class="cart-view">
+                <div class="row cart-products-with-totals {% if cart.products_count <= 0 %}d-none{% endif %}">
+                    <div class="col-12 col-lg-8">
+                        <div class="section-cart-products">
+                            {% if locals.cart_products_title %}
+                            <h1 class="section-title">{{ locals.cart_products_title }} <span class="underTitle"><i></i></span></h1>
+                            {% endif %}
+                            <div class="header-wrapper">
+                                <div class="section-cart-products-row d-flex">
+                                    <div class="section-cart-products-col-1"></div>
+                                    <div class="section-cart-products-col-2 flex-grow-1">{{ locals.cart_header_product }}</div>
+                                    <div class="section-cart-products-col-3">{{ locals.cart_header_quantity }}</div>
+                                    <div class="section-cart-products-col-4">{{ locals.cart_header_price }}</div>
+                                </div>
+                            </div>
+
+                            <div class="template_for_cart_products_list">
+                                {{ template_for_cart_products_list }}
+                            </div>
+
+                            {% if cart.gift_card_details | length > 0 %}
+                                <div class="cart-gift-card">
+                                    <p class="font-weight-bold mb-2">
+                                        <img src="{{ asset_url }}gift_icon.png" loading="lazy" style="display: inline-block" />
+                                        {{ locals.cart_send_as_gift_info }}
+                                    </p>
+                                    <p class="mb-2">
+                                        <span>{{ locals.products_list_filter_price_from }}: {{cart.gift_card_details.sender_name}}</span>
+                                        <span class="mx-2">{{ locals.products_list_filter_price_to }}: {{cart.gift_card_details.receiver_name}}</span>
+                                    </p>
+                                    {% if cart.gift_card_details.gift_message | length > 0 %}
+                                        <p class="mb-0">
+                                            <span>{{ locals.cart_gift_card_info_message }}: </span> {{ cart.gift_card_details.gift_message }}
+                                        </p>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="section-cart-products">
+                            <h1 class="section-title ">{{ locals.cart_break_down_summary }} <span class="underTitle"><i></i></span></h1>
+                            <div class="header-wrapper">
+                                <div class="section-cart-products-row section-cart-totals-row  d-flex">
+                                    <div class="flex-grow-1">{{ locals.cart_totals_title }}</div>
+                                    <div class="flex-shrink-0" style="width: 30%">{{ locals.cart_totals_description }}</div>
+                                </div>
+                            </div>
+                            <div class="cart-totals-div">
+                                {% for cartTotal in cart.totals %}
+                                    <div class="cart-product-row-wrapper cart-totals-row-wrapper">
+                                        <div class="flex-grow-1">
+                                            {{ cartTotal.title }}
+                                            {% if cartTotal.code == 'total' and store.is_cart_total_vat_included %}&nbsp;<small>{{ locals.sys_lbl_cart_includes_vat }}</small>{% endif %}
+                                        </div>
+                                        <div class="flex-shrink-0" style="width: 30%; {% if cartTotal.code == 'total' %} font-weight: bold; color: var( --primary-color); {% endif %}">
+                                            {{ cartTotal.value_string }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div>{{ template_for_cart_payments_widget }}</div>
+                            <div>{{ template_for_cart_loyalty_points_widget }}</div>
+
+                            <div class="coupon-form mt-5">
+                                {% if cart.coupon.message %}
+                                    <div class="message-coupon" role="alert">
+                                        <span>{{ cart.coupon.message }}</span>
+                                        <button class="removeCoupon" onclick="deleteCoupon()" style="color: inherit; cursor: pointer">
+                                            <span class="pe-7s-trash"></span>
+                                        </button>
+                                    </div>
+                                    {% else %}
+                                    <form>
+                                        <div class="form-group">
+                                            <h4>{{ locals.coupon_discount }}</h4>
+                                            <div class="d-flex">
+                                                <input class="form-control send-coupon" type="text" placeholder="{{ locals.coupon_discount_enter }}" />
+                                                <button type="button" class="hbtn1" onclick="sendCoupon()">
+                                                    <img class="send-coupon-progress d-none" loading="lazy" src="{{ asset_url }}spinner.gif" width="15" height="15"/>
+                                                    {{ locals.coupon_discount_submit }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                {% endif %}
+
+                            </div>
+
+                            <div class="cart-discount-rule-wrapper free-shipping-rule-section mt-5 {% if cart.fee_shipping_discount_rules %}d-block{% else %}d-none{% endif %}">
+                                <div class="d-flex align-items-center">
+                                    <div class="message flex-grow-1 free-shipping-rule-message">
+                                        {{ cart.fee_shipping_discount_rules.conditions_subtotal.status.message }}
+                                    </div>
+                                    <div class="discount-progress flex-shrink-0">
+                                        <span class="free-shipping-rule-done {% if cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'applied' %}d-inline-block{% else %}d-none{% endif %}">
+                                            <span style="font-size: 28px"  class="icon-done text-color-primary"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="discount-progress-linear" class="{% if cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'min_not_reached' %}d-block{% else %}d-none{% endif %}">
+                                    <div class="progress-bar free-shipping-rule-progress" style="background-color:var(--primary-color);color:#000!important;padding-top:7px;padding-bottom:7px;max-width:100%;font-weight:700;width: {{ cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min }}%">
+                                        {% if cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'applied' %}
+                                            <span>{{ locals.coupon_discount_free_shipping }}</span>
+                                        {% else %}
+                                            <span>{{ cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min }}%</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <div class="mt-5">
+                                    {% if store.availability.closed_now %}
+                                        <a href="#"
+                                        style="opacity: 0.5; pointer-events: none; cursor: not-allowed;"
+                                        class="checkBtn"
+                                        >
+                                            {{ locals.cart_continue_to_purchase }}
+                                        </a>
+                                    {% else %}
+                                        <a href="{% if customer %}/checkout/choose-address-and-shipping{% else %}/auth/login?redirect_to=/checkout/choose-address-and-shipping{% endif %}"
+                                        class="checkBtn"
+                                        >
+                                            {{ locals.cart_continue_to_purchase }}
+                                        </a>
+                                    {% endif %}
+
+                                </div>
+                                {% if store.gift_order_settings.is_gift_order_enabled == '1' %}
+                                <div class="card border-0 mt-3 text-body">
+                                    {{ template_for_cart_gifts_widget }}
+                                </div>
+                                {% endif %}
+                                <div class="mt-3">
+                                    <a href="/" class="checkBtn" style="background-color:#000;color:#fff">
+                                        {{ locals.cart_back_to_store }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content {% if cart.products_count > 0 %}d-none{% endif %}">
+                    <div class="cart-empty">
+                        <span class="cart-icon">
+                            <img src="{{ asset_url }}cart-empty.png" loading="lazy" alt="cart-empty">
+                        </span>
+                        <h1>{{ locals.cart_list_empty }}</h1>
+                        <div>
+                            <a href="/" class="btnEmpty hbtn1">
+                                {{ locals.cart_back_to_store }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+    $('.cart-product-quantity-dropdown.form-group option:first-of-type').remove();
+});
+
+</script>
+
+{% endblock %}
+
+
+
+{% block footer %} {{ include('footer.twig') }} {% endblock %}

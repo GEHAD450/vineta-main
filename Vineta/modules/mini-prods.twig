@@ -1,0 +1,1595 @@
+{% if not settings.hide_all_section %}
+<section section-id="{{ sectionId }}"
+         data-lg-scroll-offset="130"
+         data-md-scroll-offset="130"
+         data-sm-scroll-offset="94"
+        style="{% if settings.bg_color %}background-color:{{ settings.bg_color }};{% endif %} {% if settings.bg_img %}background-image:url({{ settings.bg_img }});background-size: cover; background-position: center; {% if settings.bg_attachment %} background-attachment: fixed;{% endif %}{% endif %}"
+         class="mini-prods pb-{% if settings.padding_bottom and settings.padding_bottom != 'default' %}{{ settings.padding_bottom }}{% else %}80{% endif %} pt-{% if settings.padding_top and settings.padding_top != 'default' %}{{ settings.padding_top }}{% else %}80{% endif %}">
+
+    {% if settings.overlay %}
+    <div class="overlay" style="{% if settings.overlay_color %}background-color:{{ settings.overlay_color }};{% endif %} {% if settings.overlay_opacity %}opacity:{{ settings.overlay_opacity }};{% endif %}"></div>
+  {% endif %}
+
+    <div class="{% if settings.full_width %}container-fluid{% else %}container custom-container{% endif %}">
+
+    {% if settings.sub_title or settings.section_title %}
+    <div class="title-area {% if settings.title_center %}center{% endif %} pb-{% if settings.title_padding_bottom and settings.title_padding_bottom != 'default' %}{{ settings.title_padding_bottom }}{% else %}50{% endif %}">
+      {% if settings.sub_title %}
+        <h4 class="sub-title" style="{% if settings.sub_title_color %}color:{{ settings.sub_title_color }};{% endif %}">{{ settings.sub_title }}</h4>
+      {% endif %}
+      {% if settings.section_title %}
+        <h2 class="section-title"  style="{% if settings.title_color %}color:{{ settings.title_color }};{% endif %}">
+          {{ settings.section_title }}
+        </h2>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if settings.show_ads_section %}
+    <div class="row {% if settings.reverse_section %} flex-row-reverse {% endif %}">
+      <div class="col-lg-4 p-0">
+          <div class="promotional-banner owl-carousel {% if settings.ads_full_height %}ads-full-height{% endif %}">
+              {% for adItem in settings.ad_section %}
+                <div class="item">
+                  {%  if adItem.ad_link and not adItem.link_text %}
+                  <a href="{{ adItem.ad_link }}" style="display:block;height:100%;" {% if adItem.new_tab %}target="_blank"{% endif %}>
+                  {% endif %}
+                  <div class="promotional-banner-item" style="{% if adItem.ad_bg_color %}background-color:{{ adItem.ad_bg_color }};{% else %}background-color:#f8f8f8;{% endif %} {% if adItem.ad_bg_img %}background-image:url({{ imageUrl(adItem.ad_bg_img, { w: 'auto', q: 100, f:'auto' }) }});background-size: cover; background-position: center;{% endif %}">
+                      {% if adItem.overlay %}
+                        <div class="overlay" style="{% if adItem.overlay_color %}background-color:{{ adItem.overlay_color }};{% endif %} {% if adItem.overlay_opacity %}opacity:{{ adItem.overlay_opacity }};{% endif %}"></div>
+                      {% endif %}
+                      <div class="content {% if adItem.center_content %}center-content{% endif %}">
+                        {% if adItem.label_text %}
+                          <span class="label" style="{% if adItem.label_bg_color %}background-color:{{ adItem.label_bg_color }};{% endif %} {% if adItem.label_text_color %}color:{{ adItem.label_text_color }};{% endif %}">
+                            {{ adItem.label_text }}
+                          </span>
+                        {% endif %}
+                        {% if adItem.ad_title %}
+                          <h6 class="title" style="{% if adItem.texts_color %}color:{{ adItem.texts_color }};{% endif %}">{{ adItem.ad_title }}</h6>
+                        {% endif %}
+                        {% if adItem.ad_subtitle %}
+                          <span class="subtitle" style="{% if adItem.texts_color %}color:{{ adItem.texts_color }};{% endif %}">
+                            {{ adItem.ad_subtitle }}
+                            {% if adItem.ad_price %}
+                                  <span class="price" style="{% if adItem.ad_price_color %}color:{{ adItem.ad_price_color }};{% endif %}">{{ adItem.ad_price }}</span>
+                            {% endif %}
+                          </span>
+                        {% endif %}
+
+                      {% if adItem.offer_date %}
+                      <ul class="offer-counter" data-offer-date="{{ adItem.offer_date }}">
+                          <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
+                            <div class="day count-number">00</div><span class="count-name">{{ locals.days }}</span>
+                          </li>
+                          <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
+                          <div class="hour count-number">00</div><span class="count-name">{{ locals.hours }}</span>
+                          </li>
+                          <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
+                          <div class="minute count-number">00</div><span class="count-name">{{ locals.minutes }}</span>
+                          </li>
+                          <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
+                          <div class="seconds count-number">00</div><span class="count-name">{{ locals.seconds }}</span>
+                          </li>
+                      </ul>
+                      {% endif %}
+
+
+                        {% if adItem.ad_link and adItem.link_text %}
+                          <a href="{{ adItem.ad_link }}" {% if adItem.new_tab %}target="_blank"{% endif %} class="hbtn1 show-all" style="{% if adItem.link_color %}background-color:{{ adItem.link_color }};{% endif %}">
+                              {{ adItem.link_text }}
+                          </a>
+                        {% endif %}
+                      </div>
+                  </div>
+                  {%  if adItem.ad_link and not adItem.link_text %}
+                  </a>
+                  {% endif %}
+                </div>
+                {% endfor %}  
+          </div>
+      </div>
+
+      <div class="col-lg-8">
+    {% endif %}
+
+    <div class="{% if settings.select_slider_or_horizontal == 'style2' %}
+    row
+    {% else %}
+      miniSlider {% if not settings.show_ads_section %} row {% endif %}
+    {% endif %}">
+
+        {% for column in settings.columns %}
+
+        <div class="miniSliderItem
+        {% if settings.select_slider_or_horizontal == 'style2' %}
+        {% if settings.show_ads_section %} styleOneWithAd {% endif %}
+          col-xs-12 col-sm-6 col-md-6 
+          {% if settings.count_per_col == "2" %}
+            col-lg-6
+          {% elseif settings.count_per_col == "3" %}
+            col-lg-4
+          {% elseif settings.count_per_col == "4" %}
+            col-lg-3
+          {% else %}
+            {% if settings.select_slider_or_horizontal == 'style2' and settings.show_ads_section %}
+              col-lg-4
+            {% else %}
+              col-lg-3
+            {% endif %}
+          {% endif %}
+        {% endif %}
+        
+        ">
+
+            <div class="list" data-color="{% if column.main_color %}{{ column.main_color }}{% else %}var(--primary-color){% endif %}">
+              {% if column.title or (column.view_all_url and column.view_all_text) %}
+                {% if column.view_all_url and not column.view_all_text %}
+                <a href="{{ column.view_all_url }}">
+                {% endif %}
+                  <div class="section__title-wrap section__title-wrap--single" data-color="{% if column.main_color %}{{ column.main_color }}{% else %}var(--primary-color){% endif %}">
+                    <h2 class="section__title section__title--small" 
+                    {% if not column.view_all_url or not column.view_all_text %} style="width:100%;"{% endif %}
+                    data-color="{% if column.main_color %}{{ column.main_color }}{% else %}var(--primary-color){% endif %}">{{ column.title }}</h2>
+                    {% if column.view_all_url and column.view_all_text %}
+                    <div class="section__nav-wrap">
+                      <a href="{{ column.view_all_url }}" class="section__view hbtn1" {% if column.new_tab %}target="_blank"{% endif %} style="{% if column.main_color %}background-color:{{ column.main_color }};{% endif %}">{{ column.view_all_text }}</a>
+                    </div>
+                    {% endif %}
+                  </div>
+              {% if column.view_all_url and not column.view_all_text %}
+              </a>
+              {% endif %}
+              {% endif %}
+              <div class="slider">
+                {% set products = column.products.products|slice(0, column.items_count != 'default' ? column.items_count : column.products.products|length) %}
+                {% set perSlide = settings.count_products_to_show_per_slide is defined and settings.count_products_to_show_per_slide != '' ? settings.count_products_to_show_per_slide + 0 : 4 %}
+                {% set counter = 0 %}
+
+                {% for key, product in products %}
+
+                  {% if loop.index0 % perSlide == 0 %}
+                    <div class="item">
+                  {% endif %}
+
+                    <div class="list__item">
+                      {% if product.images[0]['image']['medium'] %}
+                        <a href="/products/{{ product.slug }}" class="list__cover">
+                          <img  loading="lazy"
+                            style="{% if product.is_infinite == false and product.quantity <= 0 %}opacity: 0.5;{% endif %}"
+                            src="{{ imageUrl(product.images[0]['image']['medium'], { w: 'auto', q: 'auto', f: 'auto' }) }}"
+                            alt="{{ product.name }}">
+                          {% if product.discount_percentage and (product.is_infinite or product.quantity > 0) %}
+                            <b class="product-discount" style="{% if column.main_color %}background-color:{{ column.main_color }};{% endif %}">
+                              -{{ product.discount_percentage }}%
+                            </b>
+                          {% endif %}
+                        </a>
+                      {% endif %}
+
+                      <div class="list__wrap">
+                        {% if product.name %}
+                          <h3 class="list__title">
+                            <a href="/products/{{ product.slug }}" data-color="{% if column.main_color %}{{ column.main_color }}{% else %}var(--primary-color){% endif %}">{{ product.name }}</a>
+                          </h3>
+                        {% endif %}
+
+                        {% if product.formatted_sale_price is not null %}
+                          <div class="list__price">
+                            <span class="salePrice" style="{% if column.main_color %}color:{{ column.main_color }};{% endif %}">{{ product.formatted_sale_price }}</span>
+                            {% if product.formatted_price %}
+                              <s class="oldPrice">{{ product.formatted_price }}</s>
+                            {% endif %}
+                          </div>
+                        {% else %}
+                          <div class="list__price">
+                            <span class="salePrice" style="{% if column.main_color %}color:{{ column.main_color }};{% endif %}">{{ product.formatted_price }}</span>
+                          </div>
+                        {% endif %}
+                      </div>
+
+                      {% if product.is_infinite == true or product.quantity >= 0 %}
+                        <div class="list__buy {% if column.radius %}radius{% endif %} {% if product.is_infinite == false and product.quantity <= 0 %} disabled {% endif %}"
+                            style="{% if product.is_infinite == false and product.quantity <= 0 %}pointer-events: none;{% endif %}">
+                          {% if product.has_options or product.has_fields %}
+                            <a class="btn-product-card hbtn1" href="/products/{{ product.slug }}" style="background-color:{% if column.main_color %}{{ column.main_color }}{% else %}var(--primary-color){% endif %};">
+                              <span class="add-to-cart-progress d-none"
+                                    style="position:absolute;left:0;width:100%;height:100%;background-color:{% if column.main_color %}{{ column.main_color }}{% else %}var(--primary-color){% endif %};color:#fff;z-index:1;">
+                                <i class="fa fa-refresh fa-spin"></i>
+                              </span>
+                              <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'>
+                                <line x1='256' y1='112' x2='256' y2='400' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/>
+                                <line x1='400' y1='256' x2='112' y2='256' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/>
+                              </svg>
+                            </a>
+                          {% else %}
+                            <a href="javascript:void(0)" class="btn-product-card hbtn1 a-shopping-cart" onclick="productCartAddToCart(this,'{{ product.id }}')"
+                              style="background-color:{% if column.main_color %}{{ column.main_color }}{% else %}var(--primary-color){% endif %};">
+                              <span class="add-to-cart-progress d-none"
+                                    style="position:absolute;left:0;width:100%;height:100%;background-color:{% if column.main_color %}{{ column.main_color }}{% else %}var(--primary-color){% endif %};color:#fff;z-index:1;">
+                                <i class="fa fa-refresh fa-spin"></i>
+                              </span>
+                              <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'>
+                                <line x1='256' y1='112' x2='256' y2='400' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/>
+                                <line x1='400' y1='256' x2='112' y2='256' style='fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/>
+                              </svg>
+                            </a>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                    </div>
+
+                  {% if loop.index0 % perSlide == perSlide - 1 or loop.last %}
+                    </div>
+                  {% endif %}
+
+                  {% set counter = counter + 1 %}
+                {% endfor %}
+
+
+
+              </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+      {% if settings.select_slider_or_horizontal == 'style2' %}
+      {% endif %}
+
+    </div>
+
+    {% if settings.show_ads_section %}
+      </div>
+    {% endif %}
+
+    
+  </div>
+    {% if settings.more_link and settings.more_text %}
+        <center>
+            <a href="{{ settings.more_link }}" class="all-products hbtn1" style="{% if settings.more_link_bg %}background-color:{{ settings.more_link_bg }};{% endif %}">{{ settings.more_text }}</a>
+        </center>
+    {% endif %}
+</section>
+{% if settings.hide_ads_section_on_mobile and settings.show_ads_section %}
+<style>
+  @media (max-width: 768px) {
+    .home-products-section[section-id="{{ sectionId }}"] .col-lg-4.p-0
+    {
+      display:none!important;
+    }
+  }
+</style>
+{% endif %}
+<script>
+
+    document.addEventListener("DOMContentLoaded", function(){
+        {% if settings.select_slider_or_horizontal == 'style1' or not settings.select_slider_or_horizontal %}
+        var slidesToShowInWeb = {% if settings.columns|length == 1 %}1{% elseif settings.columns|length == 2 %}2{% elseif settings.columns|length == 3 %}3{% elseif settings.columns|length == 4 %}4 {% elseif settings.columns|length > 4 %} 4 {% endif %};
+        var slidesToShowInWebWithAds = {% if settings.columns|length == 1 %}1{% elseif settings.columns|length == 2 %}2{% elseif settings.columns|length == 3 %}3 {% elseif settings.columns|length > 3 %} 3 {% endif %};
+
+        $('section[section-id={{ sectionId }}] .miniSlider').slick({
+          infinite: false,
+          autoplay: true,
+          slidesToShow: {% if settings.show_ads_section %} slidesToShowInWebWithAds {% else %} slidesToShowInWeb {% endif %},
+          slidesToScroll: {% if settings.show_ads_section %} slidesToShowInWebWithAds {% else %} slidesToShowInWeb {% endif %},
+          dots: false,
+          rtl: !(window.appDirection === 'ltr'),
+          arrows: false,
+          responsive: [
+            {% if settings.show_ads_section %}
+            {
+              breakpoint: 1500,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+              }
+            },
+            {% else %}
+            {
+              breakpoint: 1500,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3
+              }
+            },
+            {% endif %}
+            {
+              breakpoint: 991,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+              }
+            },
+            {
+                breakpoint: 767,
+                settings: {
+                    centerMode: true,
+                    centerPadding: '80px',
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+          ]
+        });
+        {% endif %}
+
+
+        var prodsSlider = $('section[section-id={{ sectionId }}] .slider');
+        if (prodsSlider.length) {
+          prodsSlider.each(function () {
+            $(this).slick({
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: false,
+              autoplay: true,
+              dots: false,
+              rtl: !(window.appDirection === 'ltr'),
+              arrows: false
+            });
+          });
+        }
+
+        $('section[section-id={{ sectionId }}] .slider,section[section-id={{ sectionId }}] .slider *').on('focus', function (e) {
+          $('section[section-id={{ sectionId }}] .miniSlider').slick('slickSetOption', 'draggable', false, false);
+          $('section[section-id={{ sectionId }}] .miniSlider').slick('slickSetOption', 'autoplay', false, false);
+          $('section[section-id={{ sectionId }}] .miniSlider').slick('slickPause');
+        });
+        $('section[section-id={{ sectionId }}] .slider,section[section-id={{ sectionId }}] .slider *').on('blur', function (e) {
+          $('section[section-id={{ sectionId }}] .miniSlider').slick('slickSetOption', 'draggable', true, true);
+          $('section[section-id={{ sectionId }}] .miniSlider').slick('slickSetOption', 'autoplay', true, true);
+          $('section[section-id={{ sectionId }}] .miniSlider').slick('slickPlay');
+        });
+
+        {% if settings.show_ads_section and settings.ad_section|length > 0 %}
+            var arrowNextClass = (window.appDirection === 'ltr') ? 'fa fa-angle-right': 'fa fa-angle-left';
+            var arrowPrevClass = (window.appDirection === 'ltr') ? 'fa fa-angle-left' : 'fa fa-angle-right';
+            var prevArrowHTML = '<i class="' + arrowPrevClass + '"></i>';
+            var nextArrowHTML = '<i class="' + arrowNextClass + '"></i>';
+
+            let CateowlCarousel = $("section[section-id='{{ sectionId }}'] .promotional-banner.owl-carousel");
+            if (CateowlCarousel.length) {
+              CateowlCarousel.each(function () {
+                let elm = $(this);
+                elm.owlCarousel({
+                  "loop": {% if (settings.adLoop) %}true{% else %}false{% endif %},
+                  "animateOut": "fadeOut",
+                  "animateIn": "fadeIn",
+                  "autoplay": {% if (settings.adAutoplay) %}true{% else %}false{% endif %},
+                  "autoplayTimeout": 7000,
+                  "smartSpeed": 1000,
+                  "nav": {% if (settings.adArrows) %}true{% else %}false{% endif %},
+                  "navText": [prevArrowHTML,nextArrowHTML],
+                  "dots": false,
+                  "items": 1,
+                  "rtl": (window.appDirection === "rtl") ? true : false
+                });
+                elm.find("button").each(function () {
+                  $(this).attr("aria-label", "carousel button");
+                });
+              });
+            }
+        {% endif %}
+
+
+    });
+</script>
+{% endif %}
+{% schema %}
+{
+    "name": {
+        "ar": "منتجات مصغرة مع إعلانات",
+        "en": "Mini Products with Ads"
+    },
+    "icon": "fal fa-box",
+    "display": true,
+    "settings": {
+        "hide_all_section": {
+        "type": "checkbox",
+        "label": {
+            "ar": " ",
+            "en": " "
+        },
+        "option": {
+            "ar": "إخفاء القسم",
+            "en": "Hide Section"
+        },
+        "noLabel": true
+        },
+        "full_width": {
+            "type": "checkbox",
+            "label": {
+                "ar": " ",
+                "en": " "
+            },
+            "option": {
+                "ar": "عرض كامل الشاشة",
+                "en": "Full Width"
+            },
+            "noLabel": true,
+            "default": false
+        },
+        "padding_top": {
+            "type": "select",
+            "label": {
+                "ar": "التباعد العلوي للقسم القيمة الافتراضية هي (80)",
+                "en": "Section Padding Top (Default is 80)"
+            },
+            "options": [
+                {
+                    "value": "default",
+                    "label": {
+                        "ar": "القيمة الافتراضية",
+                        "en": "Default"
+                    }
+                },
+                {
+                    "value": "00",
+                    "label": {
+                        "ar": "0",
+                        "en": "0"
+                    }
+                },
+                {
+                    "value": "10",
+                    "label": {
+                        "ar": "10",
+                        "en": "10"
+                    }
+                },
+                {
+                    "value": "20",
+                    "label": {
+                        "ar": "20",
+                        "en": "20"
+                    }
+                },
+                {
+                    "value": "30",
+                    "label": {
+                        "ar": "30",
+                        "en": "30"
+                    }
+                },
+                {
+                    "value": "40",
+                    "label": {
+                        "ar": "40",
+                        "en": "40"
+                    }
+                },
+                {
+                    "value": "50",
+                    "label": {
+                        "ar": "50",
+                        "en": "50"
+                    }
+                },
+                {
+                    "value": "60",
+                    "label": {
+                        "ar": "60",
+                        "en": "60"
+                    }
+                },
+                {
+                    "value": "70",
+                    "label": {
+                        "ar": "70",
+                        "en": "70"
+                    }
+                },
+                {
+                    "value": "80",
+                    "label": {
+                        "ar": "80",
+                        "en": "80"
+                    }
+                },
+                {
+                    "value": "90",
+                    "label": {
+                        "ar": "90",
+                        "en": "90"
+                    }
+                },
+                {
+                    "value": "100",
+                    "label": {
+                        "ar": "100",
+                        "en": "100"
+                    }
+                },
+                {
+                    "value": "110",
+                    "label": {
+                        "ar": "110",
+                        "en": "110"
+                    }
+                },
+                {
+                    "value": "120",
+                    "label": {
+                        "ar": "120",
+                        "en": "120"
+                    }
+                },
+                {
+                    "value": "130",
+                    "label": {
+                        "ar": "130",
+                        "en": "130"
+                    }
+                },
+                {
+                    "value": "140",
+                    "label": {
+                        "ar": "140",
+                        "en": "140"
+                    }
+                },
+                {
+                    "value": "150",
+                    "label": {
+                        "ar": "150",
+                        "en": "150"
+                    }
+                },
+                {
+                    "value": "160",
+                    "label": {
+                        "ar": "160",
+                        "en": "160"
+                    }
+                },
+                {
+                    "value": "170",
+                    "label": {
+                        "ar": "170",
+                        "en": "170"
+                    }
+                },
+                {
+                    "value": "180",
+                    "label": {
+                        "ar": "180",
+                        "en": "180"
+                    }
+                },
+                {
+                    "value": "190",
+                    "label": {
+                        "ar": "190",
+                        "en": "190"
+                    }
+                },
+                {
+                    "value": "200",
+                    "label": {
+                        "ar": "200",
+                        "en": "200"
+                    }
+                }
+            ],
+            "default": "80"
+        },
+        "padding_bottom": {
+            "type": "select",
+            "label": {
+                "ar": "التباعد السفلي للقسم القيمة الافتراضية هي (80)",
+                "en": "Section Padding Bottom (Default is 80)"
+            },
+            "options": [
+                {
+                    "value": "default",
+                    "label": {
+                        "ar": "القيمة الافتراضية",
+                        "en": "Default"
+                    }
+                },
+                {
+                    "value": "00",
+                    "label": {
+                        "ar": "0",
+                        "en": "0"
+                    }
+                },
+                {
+                    "value": "10",
+                    "label": {
+                        "ar": "10",
+                        "en": "10"
+                    }
+                },
+                {
+                    "value": "20",
+                    "label": {
+                        "ar": "20",
+                        "en": "20"
+                    }
+                },
+                {
+                    "value": "30",
+                    "label": {
+                        "ar": "30",
+                        "en": "30"
+                    }
+                },
+                {
+                    "value": "40",
+                    "label": {
+                        "ar": "40",
+                        "en": "40"
+                    }
+                },
+                {
+                    "value": "50",
+                    "label": {
+                        "ar": "50",
+                        "en": "50"
+                    }
+                },
+                {
+                    "value": "60",
+                    "label": {
+                        "ar": "60",
+                        "en": "60"
+                    }
+                },
+                {
+                    "value": "70",
+                    "label": {
+                        "ar": "70",
+                        "en": "70"
+                    }
+                },
+                {
+                    "value": "80",
+                    "label": {
+                        "ar": "80",
+                        "en": "80"
+                    }
+                },
+                {
+                    "value": "90",
+                    "label": {
+                        "ar": "90",
+                        "en": "90"
+                    }
+                },
+                {
+                    "value": "100",
+                    "label": {
+                        "ar": "100",
+                        "en": "100"
+                    }
+                },
+                {
+                    "value": "110",
+                    "label": {
+                        "ar": "110",
+                        "en": "110"
+                    }
+                },
+                {
+                    "value": "120",
+                    "label": {
+                        "ar": "120",
+                        "en": "120"
+                    }
+                },
+                {
+                    "value": "130",
+                    "label": {
+                        "ar": "130",
+                        "en": "130"
+                    }
+                },
+                {
+                    "value": "140",
+                    "label": {
+                        "ar": "140",
+                        "en": "140"
+                    }
+                },
+                {
+                    "value": "150",
+                    "label": {
+                        "ar": "150",
+                        "en": "150"
+                    }
+                },
+                {
+                    "value": "160",
+                    "label": {
+                        "ar": "160",
+                        "en": "160"
+                    }
+                },
+                {
+                    "value": "170",
+                    "label": {
+                        "ar": "170",
+                        "en": "170"
+                    }
+                },
+                {
+                    "value": "180",
+                    "label": {
+                        "ar": "180",
+                        "en": "180"
+                    }
+                },
+                {
+                    "value": "190",
+                    "label": {
+                        "ar": "190",
+                        "en": "190"
+                    }
+                },
+                {
+                    "value": "200",
+                    "label": {
+                        "ar": "200",
+                        "en": "200"
+                    }
+                }
+            ],
+            "default": "80"
+        },
+        "sub_title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان الفرعي",
+            "en": "Sub Title"
+          }
+        },
+        "sub_title_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون العنوان الفرعي",
+            "en": "Sub Title Color"
+          }
+        },
+        "section_title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        },
+        "title_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون العنوان",
+            "en": "Title Color"
+          }
+        },
+        "title_center": {
+          "type": "checkbox",
+          "label": {
+            "ar": " ",
+            "en": " "
+          },
+          "option": {
+            "ar": "توسيط العنوان والعنوان الفرعي",
+            "en": "Center Title and Sub Title"
+          },
+          "noLabel": true
+        },
+        "title_padding_bottom" : {
+          "type":"select",
+          "label": {
+            "ar": "التباعد السفلي للعنوان القيمة الافتراضية هي (50)",
+            "en": "Title Padding Bottom (Default is 50)"
+          },
+          "options": [
+            {
+              "value": "default",
+              "label": {
+                "ar": "القيمة الافتراضية",
+                "en": "Default"
+              }
+            },
+            {
+              "value": "00",
+              "label": {
+                "ar": "0",
+                "en": "0"
+              }
+            },
+            {
+              "value": "10",
+              "label": {
+                "ar": "10",
+                "en": "10"
+              }
+            },
+            {
+              "value": "20",
+              "label": {
+                "ar": "20",
+                "en": "20"
+              }
+            },
+            {
+              "value": "30",
+              "label": {
+                "ar": "30",
+                "en": "30"
+              }
+            },
+            {
+              "value": "40",
+              "label": {
+                "ar": "40",
+                "en": "40"
+              }
+            },
+            {
+              "value": "50",
+              "label": {
+                "ar": "50",
+                "en": "50"
+              }
+            },
+            {
+              "value": "60",
+              "label": {
+                "ar": "60",
+                "en": "60"
+              }
+            },
+            {
+              "value": "70",
+              "label": {
+                "ar": "70",
+                "en": "70"
+              }
+            },
+            {
+              "value": "80",
+              "label": {
+                "ar": "80",
+                "en": "80"
+              }
+            },
+            {
+              "value": "90",
+              "label": {
+                "ar": "90",
+                "en": "90"
+              }
+            },
+            {
+              "value": "100",
+              "label": {
+                "ar": "100",
+                "en": "100"
+              }
+            },
+            {
+              "value": "110",
+              "label": {
+                "ar": "110",
+                "en": "110"
+              }
+            },
+            {
+              "value": "120",
+              "label": {
+                "ar": "120",
+                "en": "120"
+              }
+            },
+            {
+              "value": "130",
+              "label": {
+                "ar": "130",
+                "en": "130"
+              }
+            },
+            {
+              "value": "140",
+              "label": {
+                "ar": "140",
+                "en": "140"
+              }
+            },
+            {
+              "value": "150",
+              "label": {
+                "ar": "150",
+                "en": "150"
+              }
+            },
+            {
+              "value": "160",
+              "label": {
+                "ar": "160",
+                "en": "160"
+              }
+            },
+            {
+              "value": "170",
+              "label": {
+                "ar": "170",
+                "en": "170"
+              }
+            },
+            {
+              "value": "180",
+              "label": {
+                "ar": "180",
+                "en": "180"
+              }
+            },
+            {
+              "value": "190",
+              "label": {
+                "ar": "190",
+                "en": "190"
+              }
+            },
+            {
+              "value": "200",
+              "label": {
+                "ar": "200",
+                "en": "200"
+              }
+            }
+          ],
+          "default": "80"
+        },
+        "select_slider_or_horizontal" : {
+          "type": "select",
+          "label": {
+            "ar": "اختر اذا كان سيكون القسم علي شكل سلايدر أو قائمة",
+            "en": "Select if the section will be in the form of a slider or list"
+          },
+          "options": [
+            {
+              "value": "style1",
+              "label": {
+                "ar": "سلايدر",
+                "en": "Slider"
+              }
+            },
+            {
+              "value": "style2",
+              "label": {
+                "ar": "قائمة",
+                "en": "List"
+              }
+            }
+          ],
+          "default": "style1"
+        },
+        "count_per_col": {
+          "type": "select",
+          "label": {
+            "ar": "عدد العناصر في الصف الواحد",
+            "en": "Items per Row"
+          },
+          "options": [
+            {
+              "value": "4",
+              "label": {
+                "ar": "4 عنصر في الصف",
+                "en": "4 items per row"
+              }
+            },
+            {
+              "value": "3",
+              "label": {
+                "ar": "3 عنصر في الصف",
+                "en": "3 items per row"
+              }
+            },
+            {
+              "value": "2",
+              "label": {
+                "ar": "2 عنصر في الصف",
+                "en": "2 items per row"
+              }
+            }
+          ],
+          "info": {
+            "ar": "يعمل فقط مع القائمة",
+            "en": "Only works with list"
+          },
+          "default": "4"
+        },
+        "bg_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون الخلفية",
+            "en": "Background Color"
+          }
+        },
+        "bg_img": {
+          "type": "image",
+          "label": {
+            "ar": "صورة الخلفية",
+            "en": "Background Image"
+          }
+        },
+        "bg_attachment": {
+          "type": "checkbox",
+          "option": {
+            "ar": "صورة الخلفية متحركة",
+            "en": "Background Image is Fixed"
+          },
+          "info": {
+            "ar": "يمكنك تحديد ما إذا كانت صورة الخلفية ستكون متحركة أو ثابتة",
+            "en": "You can set if the background image will be fixed or not"
+          },
+          "noLabel": true
+        },
+        "overlay": {
+          "type": "checkbox",
+          "label": {
+            "ar": " ",
+            "en": " "
+          },
+          "option": {
+            "ar": "إظهار الغطاء المتداخل",
+            "en": "Show Overlay"
+          },
+          "noLabel": true
+        },
+        "overlay_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون الغطاء المتداخل",
+            "en": "Overlay Color"
+          },
+          "default": "#000000"
+        },
+        "overlay_opacity": {
+          "type": "number",
+          "label": {
+            "ar": "شفافية الغطاء المتداخل",
+            "en": "Overlay Opacity"
+          },
+          "info": {
+            "ar": "يمكنك تحديد شفافية الغطاء بين 0 و 1 مثل 0.5",
+            "en": "You can set the overlay opacity between 0 and 1 like 0.5"
+          },
+          "min": 0,
+          "max": 1
+        },
+        "count_products_to_show_per_slide": {
+          "type": "select",
+          "label": {
+            "ar": "عدد المنتجات للعرض في كل شريط",
+            "en": "Count Products to Show per Slide"
+          },
+          "options": [
+            {
+              "value": "1",
+              "label": {
+                "ar": "1",
+                "en": "1"
+              }
+            },
+            {
+              "value": "2",
+              "label": {
+                "ar": "2",
+                "en": "2"
+              }
+            },
+            {
+              "value": "3",
+              "label": {
+                "ar": "3",
+                "en": "3"
+              }
+            },
+            {
+              "value": "4",
+              "label": {
+                "ar": "4",
+                "en": "4"
+              }
+            },
+            {
+              "value": "5",
+              "label": {
+                "ar": "5",
+                "en": "5"
+              }
+            },
+            {
+              "value": "6",
+              "label": {
+                "ar": "6",
+                "en": "6"
+              }
+            }
+          ],
+          "default": "4",
+          "info": {
+            "ar": "يجب الضغط على زر حفظ لتفعيل هذا الخيار",
+            "en": "You must click on save to activate this option"
+          }
+        },
+        "columns": {
+            "type": "list",
+            "label": {
+                "ar": "الأعمدة",
+                "en": "Columns"
+            },
+            "settings_label": {
+                "ar": "عمود",
+                "en": "Column"
+            },
+            "maxItems": 8,
+            "settings": {
+                "main_color": {
+                    "type": "color",
+                    "label": {
+                        "ar": "اللون الرئيسي للعمود",
+                        "en": "Main Color"
+                    }
+                },
+                "title": {
+                    "type": "text",
+                    "label": {
+                        "ar": "عنوان العمود",
+                        "en": "Column Title"
+                    }
+                },
+                "view_all_text": {
+                    "type": "text",
+                    "label": {
+                        "ar": "نص زر الكل",
+                        "en": "View All Text"
+                    }
+                },
+                "view_all_url": {
+                    "type": "url",
+                    "label": {
+                        "ar": "رابط زر الكل",
+                        "en": "View All Link"
+                    }
+                },
+                "new_tab": {
+                  "type": "checkbox",
+                  "option": {
+                    "ar": "فتح في علامة تبويب جديدة",
+                    "en": "Open in new tab"
+                  },
+                  "noLabel": true
+                },
+                "products": {
+                  "type": "products",
+                  "label": {
+                    "ar": "اختر قائمة المنتجات ",
+                    "en": "Select ad products"
+                  }
+                },
+                "items_count": {
+                  "type": "select",
+                  "label": {
+                    "ar": "عدد المنتجات (القيمة الافتراضية هي 4)",
+                    "en": "Items count (Default is 4)"
+                  },
+                  "options": [
+                    {
+                      "value": "default",
+                      "label": {
+                        "ar": "القيمة الافتراضية",
+                        "en": "Default"
+                      }
+                    },
+                    {
+                      "value": "1",
+                      "label": {
+                        "ar": "1",
+                        "en": "1"
+                      }
+                    },
+                    {
+                      "value": "2",
+                      "label": {
+                        "ar": "2",
+                        "en": "2"
+                      }
+                    },
+                    {
+                      "value": "3",
+                      "label": {
+                        "ar": "3",
+                        "en": "3"
+                      }
+                    },
+                    {
+                      "value": "4",
+                      "label": {
+                        "ar": "4",
+                        "en": "4"
+                      }
+                    },
+                    {
+                      "value": "5",
+                      "label": {
+                        "ar": "5",
+                        "en": "5"
+                      }
+                    },
+                    {
+                      "value": "6",
+                      "label": {
+                        "ar": "6",
+                        "en": "6"
+                      }
+                    },
+                    {
+                      "value": "7",
+                      "label": {
+                        "ar": "7",
+                        "en": "7"
+                      }
+                    },
+                    {
+                      "value": "8",
+                      "label": {
+                        "ar": "8",
+                        "en": "8"
+                      }
+                    },
+                    {
+                      "value": "9",
+                      "label": {
+                        "ar": "9",
+                        "en": "9"
+                      }
+                    },
+                    {
+                      "value": "10",
+                      "label": {
+                        "ar": "10",
+                        "en": "10"
+                      }
+                    },
+                    {
+                      "value": "11",
+                      "label": {
+                        "ar": "11",
+                        "en": "11"
+                      }
+                    },
+                    {
+                      "value": "12",
+                      "label": {
+                        "ar": "12",
+                        "en": "12"
+                      }
+                    },
+                    {
+                      "value": "13",
+                      "label": {
+                        "ar": "13",
+                        "en": "13"
+                      }
+                    },
+                    {
+                      "value": "14",
+                      "label": {
+                        "ar": "14",
+                        "en": "14"
+                      }
+                    }
+                  ],
+                  "default": 4
+                },
+                "radius": {
+                  "type": "checkbox",
+                  "option": {
+                    "ar": "حدود زر الشراء علي شكل دائرة",
+                    "en": "Buy button borders in the form of a circle"
+                  },
+                  "noLabel": true
+                }
+            }
+        },
+        "more_text": {
+            "type": "text",
+            "label": {
+                "ar": "نص الكل",
+                "en": "More Text"
+            }
+        },
+        "more_link": {
+            "type": "url",
+            "label": {
+                "ar": "رابط الكل",
+                "en": "More Link"
+            }
+        },
+        "more_link_bg": {
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية زر الكل",
+            "en": "More Link Background"
+          }
+        },
+        "show_ads_section": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إظهار الإعلان",
+            "en": "Show Ads"
+          },
+          "noLabel": true
+        },
+        "hide_ads_section_on_mobile": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إخفاء الإعلان على الموبايل",
+            "en": "Hide Ads on Mobile"
+          },
+          "noLabel": true,
+          "info": {
+            "ar": "يعمل مع إظهار الإعلان",
+            "en": "Works with showing ads"
+          }
+        },
+        "ads_full_height": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إظهار الإعلان بكامل الطول",
+            "en": "Show Ads Full Height"
+          },
+          "noLabel": true
+        },
+        "reverse_section": {
+          "type": "checkbox",
+          "option": {
+            "ar": "عكس الترتيب",
+            "en": "Reverse Order"
+          },
+          "noLabel": true,
+          "info": {
+            "ar": "يعمل مع إظهار الإعلان",
+            "en": "Works with showing ads"
+          }
+        },
+        "adLoop" : {
+          "type": "checkbox",
+          "label": {
+            "ar": "",
+            "en": ""
+          },
+          "option": {
+            "ar": "تكرار العناصر",
+            "en": "Infinite"
+          },
+          "info": {
+            "ar": "خاص بالإعلان",
+            "en": "For Ads Section"
+          },
+          "noLabel": true,
+          "default": true
+        },
+        "adAutoplay" : {
+          "type": "checkbox",
+          "label": {
+            "ar": "",
+            "en": ""
+          },
+          "option": {
+            "ar": "تشغيل تلقائي",
+            "en": "Autoplay"
+          },
+          "info": {
+            "ar": "خاص بالإعلان",
+            "en": "For Ads Section"
+          },
+          "noLabel": true,
+          "default": true
+        },
+        "adArrows" : {
+          "type": "checkbox",
+          "label": {
+            "ar": "",
+            "en": ""
+          },
+          "info": {
+            "ar": "خاص بالإعلان",
+            "en": "For Ads Section"
+          },
+          "option": {
+            "ar": "أسهم التنقل",
+            "en": "Arrows"
+          },
+          "noLabel": true,
+          "default": true
+        },
+        "ad_section": {
+          "type": "list",
+          "noLabel": true,
+          "settings_label":{
+            "ar": "العناصر",
+            "en": "Items"
+          },
+          "settings": {
+            "center_content": {
+              "type": "checkbox",
+              "option": {
+                "ar": "توسيط المحتوى",
+                "en": "Center Content"
+              },
+              "noLabel": true
+            },
+            "ad_bg_img": {
+              "type": "image",
+              "label": {
+                "ar": "صورة الخلفية",
+                "en": "Background Image"
+              }
+            },
+            "ad_bg_color": {
+              "type": "color",
+              "label": {
+                "ar": "لون خلفية العنصر",
+                "en": "Item Background Color"
+              }
+            },
+            "overlay": {
+              "type": "checkbox",
+              "label": {
+                "ar": " ",
+                "en": " "
+              },
+              "option": {
+                "ar": "إظهار الغطاء المتداخل",
+                "en": "Show Overlay"
+              },
+              "noLabel": true
+            },
+            "overlay_color": {
+              "type": "color",
+              "label": {
+                "ar": "لون الغطاء المتداخل",
+                "en": "Overlay Color"
+              },
+              "default": "#000000"
+            },
+            "overlay_opacity": {
+              "type": "number",
+              "label": {
+                "ar": "شفافية الغطاء المتداخل",
+                "en": "Overlay Opacity"
+              },
+              "info": {
+                "ar": "يمكنك تحديد شفافية الغطاء بين 0 و 1 مثل 0.5",
+                "en": "You can set the overlay opacity between 0 and 1 like 0.5"
+              },
+              "min": 0,
+              "max": 1
+            },
+            "label_text": {
+              "type": "text",
+              "label": {
+                "ar": "نص بخلفية",
+                "en": "Text with background"
+              }
+            },
+            "label_text_color": {
+              "type": "color",
+              "label": {
+                "ar": "لون النص بخلفية",
+                "en": "Text color with background"
+              }
+            },
+            "label_bg_color": {
+              "type": "color",
+              "label": {
+                "ar": "لون خلفية النص بخلفية",
+                "en": "Background color with text"
+              }
+            },
+            "texts_color": {
+              "type": "color",
+              "label": {
+                "ar": "لون النصوص الفرعية والعنوان",
+                "en": "Text Color"
+              }
+            },
+            "ad_title": {
+              "type": "text",
+              "label": {
+                "ar": "عنوان العنصر",
+                "en": "Item Title"
+              }
+            },
+            "ad_subtitle": {
+              "type": "text",
+              "label": {
+                "ar": "العنوان الفرعي للعنصر",
+                "en": "Item Sub Title"
+              }
+            },
+            "ad_price": {
+              "type": "text",
+              "label": {
+                "ar": "نص العنوان الفرعي بلون مختلف",
+                "en": "Sub Title with different color"
+              }
+            },
+            "ad_price_color": {
+              "type": "color",
+              "label": {
+                "ar": "لون النص المختلف للعنوان الفرعي",
+                "en": "Sub Title color"
+              }
+            },
+            "offer_date": {
+                "type": "text",
+                "label": {
+                "ar": "تاريخ العرض",
+                "en": "Offer Date"
+                },
+                "info": {
+                    "ar": "يجب ان يكون بالصيغة التالية: 2025/01/01",
+                    "en": "should be in this format: 2025/01/01"
+                }
+            },
+            "offer_date_bg_color": {
+              "type": "color",
+              "label": {
+                "ar": "لون خلفية العرض",
+                "en": "Offer Date Background Color"
+              }
+            },
+            "offer_date_color": {
+              "type": "color",
+              "label": {
+                "ar": "لون النص للعرض",
+                "en": "Offer Date Color"
+              }
+            },
+            "ad_link": {
+              "type": "url",
+              "label": {
+                "ar": "رابط العنصر",
+                "en": "Item Link"
+              }
+            },
+            "link_text": {
+              "type": "text",
+              "label": {
+                "ar": "نص الرابط للزر الموجود داخل العنصر",
+                "en": "Link text for the button inside the item"
+              }
+            },
+            "link_color": {
+              "type": "color",
+              "label": {
+                "ar": "لون خلفية الزر الموجود داخل العنصر",
+                "en": "Link background color for the button inside the item"
+              }
+            },
+            "new_tab": {
+              "type": "checkbox",
+              "option": {
+                "ar": "فتح الرابط في علامة تبويب جديدة",
+                "en": "Open link in new tab"
+              },
+              "noLabel": true
+            }
+          }
+        }
+    }
+}
+{% endschema %}

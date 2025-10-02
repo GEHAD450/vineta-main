@@ -1,0 +1,1002 @@
+{% if not settings.hide_all_section %}
+<section section-id="{{ sectionId }}" data-lg-scroll-offset="130" data-md-scroll-offset="130" data-sm-scroll-offset="94" 
+style="{% if settings.bg_color %}background-color:{{ settings.bg_color }};{% endif %} {% if settings.bg_img %}background-image:url({{ settings.bg_img }});background-size: cover; background-position: center; {% if settings.bg_attachment %} background-attachment: fixed;{% endif %}{% endif %}"
+class="testimonials z-index-common overflow-hidden pb-{% if settings.padding_bottom and settings.padding_bottom != 'default' %}{{ settings.padding_bottom }}{% else %}80{% endif %} pt-{% if settings.padding_top and settings.padding_top != 'default' %}{{ settings.padding_top }}{% else %}80{% endif %}">
+   
+     
+  {% if settings.overlay %}
+    <div class="overlay" style="{% if settings.overlay_color %}background-color:{{ settings.overlay_color }};{% endif %} {% if settings.overlay_opacity %}opacity:{{ settings.overlay_opacity }};{% endif %}"></div>
+  {% endif %}
+      
+    <div class="{% if settings.full_width %} container-fluid {% else %} container custom-container {% endif %}">
+
+        {% if settings.sub_title or settings.section_title %}
+        <div class="title-area {% if settings.title_center %}center{% endif %} pb-{% if settings.title_padding_bottom and settings.title_padding_bottom != 'default' %}{{ settings.title_padding_bottom }}{% else %}50{% endif %}">
+          {% if settings.sub_title %}
+            <h4 class="sub-title" style="{% if settings.sub_title_color %}color:{{ settings.sub_title_color }};{% endif %}">{{ settings.sub_title }}</h4>
+          {% endif %}
+          {% if settings.section_title %}
+            <h2 class="section-title"  style="{% if settings.title_color %}color:{{ settings.title_color }};{% endif %}">
+              {{ settings.section_title }}
+            </h2>
+          {% endif %}
+        </div>
+        {% endif %}
+        <div class="testi-inner z-index-common">
+          <div class="testi-carousel vs-carousel">
+          {% if settings.select_slider_or_horizontal == 'style2' %}
+          <div class="row">
+          {% endif %}
+            {% for testimonial in settings.testimonials %}    
+                  <div class="testimonial-item
+                              {% if settings.select_slider_or_horizontal == 'style2' %}
+                                col-sm-6 col-xs-6 col-md-4
+                                  {% if settings.columns == "2" %}
+                                    col-lg-6
+                                  {% elseif settings.columns == "3" %}
+                                    col-lg-4
+                                  {% elseif settings.columns == "4" %}
+                                    col-lg-3
+                                  {% else %}
+                                    col-lg-3
+                                  {% endif %}
+                                {% endif %}">
+                      <div class="Vineta-testimonial" style="{% if settings.card_bg_color %}background-color: {{ settings.card_bg_color }};{% endif %}">
+                          {% if testimonial.review %}
+                            <p class="desc" {% if settings.text_color %}style="color: {{ settings.text_color }};"{% endif %}>{{ testimonial.review }}</p>
+                          {% endif %}
+                          <div class="testimonial-info" {% if not testimonial.image_src %}style="text-align: center;"{% endif %}>
+                              {% if testimonial.image_src %}
+                                <div class="thumb">
+                                  <img class="img" src="{{ testimonial.image_src }}" loading="lazy" alt="testi thumb">
+                                </div>
+                              {% endif %}
+                              <div class="intro">
+                                  {% if testimonial.name %}
+                                    <h3 class="name" {% if settings.text_color %}style="color: {{ settings.text_color }};"{% endif %}>{{ testimonial.name }}</h3>
+                                  {% endif %}
+                                  {% if testimonial.show_stars %}
+                                    <div class="stars">
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                      <i class="fa fa-star"></i>
+                                    </div>
+                                  {% endif %}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+            {% endfor %}
+            {% if settings.select_slider_or_horizontal == 'style2' %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+    </div>
+</section>
+
+{% if settings.select_slider_or_horizontal == 'style1' or not settings.select_slider_or_horizontal %}
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+
+    var arrowNextClass = (window.appDirection === 'ltr') ? 'fa fa-angle-right': 'fa fa-angle-left';
+    var arrowPrevClass = (window.appDirection === 'ltr') ? 'fa fa-angle-left' : 'fa fa-angle-right';
+
+    $('section[section-id={{ sectionId }}] .testi-carousel.vs-carousel').slick({
+        dots: {% if settings.dots %}true{% else %}false{% endif %},
+        arrows: {% if settings.arrows %}true{% else %}false{% endif %},
+        autoplay: {% if settings.autoplay %}true{% else %}false{% endif %},
+        infinite: {% if settings.loop %}true{% else %}false{% endif %},
+        rtl: window.appDirection === 'rtl',
+        nextArrow:'<span class="slick-next hbtn1"><i class="'+arrowNextClass+'"></i></span>',
+        prevArrow:'<span class="slick-prev hbtn1"><i class="'+arrowPrevClass+'"></i></span>',
+        slidesToShow: {% if settings.items_web %}{{ settings.items_web }}{% else %}3{% endif %},
+        slidesToScroll: {% if settings.items_web %}{{ settings.items_web }}{% else %}3{% endif %},
+              responsive: [
+                  {
+                      breakpoint: 992,
+                      settings: {
+                          slidesToShow: 3,
+                          slidesToScroll: 3
+                      }
+                  },
+                  {
+                      breakpoint: 767,
+                      settings: {
+                          centerMode: true,
+                          centerPadding: '80px',
+                          slidesToShow: 1,
+                          slidesToScroll: 1
+                      }
+                  },
+                  {
+                      breakpoint: 480,
+                      settings: {
+                          centerMode: true,
+                          centerPadding: '40px',
+                          slidesToShow: 1,
+                          slidesToScroll: 1
+                      }
+                  }
+              ]
+
+      });
+
+  });
+</script>
+{% endif %}
+{% endif %}
+
+{% schema %}
+{
+  "name": {
+    "ar": "اراء العملاء",
+    "en": "Testimonials"
+  },
+  "icon": "fal fa-users",
+  "display": true,
+  "settings": {
+    "hide_all_section": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إخفاء القسم",
+        "en": "Hide Section"
+      },
+      "noLabel": true
+    },
+    "full_width": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "عرض كامل الشاشة",
+        "en": "Full Width"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "padding_top" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد العلوي للقسم القيمة الافتراضية هي (80)",
+        "en": "Section Padding Top (Default is 80)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "padding_bottom" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد السفلي للقسم القيمة الافتراضية هي (80)",
+        "en": "Section Padding Bottom (Default is 80)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "bg_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الخلفية",
+        "en": "Background Color"
+      }
+    },
+    "bg_img": {
+      "type": "image",
+      "label": {
+        "ar": "صورة الخلفية",
+        "en": "Background Image"
+      }
+    },
+    "bg_attachment": {
+      "type": "checkbox",
+      "option": {
+        "ar": "صورة الخلفية متحركة",
+        "en": "Background Image is Fixed"
+      },
+      "info": {
+        "ar": "يمكنك تحديد ما إذا كانت صورة الخلفية ستكون متحركة أو ثابتة",
+        "en": "You can set if the background image will be fixed or not"
+      },
+      "noLabel": true
+    },
+    "overlay": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إظهار الغطاء المتداخل",
+        "en": "Show Overlay"
+      },
+      "noLabel": true
+    },
+    "overlay_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الغطاء المتداخل",
+        "en": "Overlay Color"
+      },
+      "default": "#000000"
+    },
+    "overlay_opacity": {
+      "type": "number",
+      "label": {
+        "ar": "شفافية الغطاء المتداخل",
+        "en": "Overlay Opacity"
+      },
+      "info": {
+        "ar": "يمكنك تحديد شفافية الغطاء بين 0 و 1 مثل 0.5",
+        "en": "You can set the overlay opacity between 0 and 1 like 0.5"
+      },
+      "min": 0,
+      "max": 1
+    },
+    "select_slider_or_horizontal" : {
+      "type": "select",
+      "label": {
+        "ar": "اختر اذا كان سيكون القسم علي شكل سلايدر أو قائمة",
+        "en": "Select if the section will be in the form of a slider or list"
+      },
+      "options": [
+        {
+          "value": "style1",
+          "label": {
+            "ar": "سلايدر",
+            "en": "Slider"
+          }
+        },
+        {
+          "value": "style2",
+          "label": {
+            "ar": "قائمة",
+            "en": "List"
+          }
+        }
+      ],
+      "default": "style1"
+    },
+    "columns": {
+      "type": "select",
+      "label": {
+        "ar": "عدد العناصر في الصف الواحد",
+        "en": "Items per Row"
+      },
+      "options": [
+        {
+          "value": "2",
+          "label": {
+            "ar": "2 عنصر في الصف",
+            "en": "2 items per row"
+          }
+        },
+        {
+          "value": "3",
+          "label": {
+            "ar": "3 عنصر في الصف",
+            "en": "3 items per row"
+          }
+        },
+        {
+          "value": "4",
+          "label": {
+            "ar": "4 عنصر في الصف",
+            "en": "4 items per row"
+          }
+        },
+        {
+          "value": "6",
+          "label": {
+            "ar": "6 عناصر في الصف",
+            "en": "6 items per row"
+          }
+        }
+      ],
+      "info": {
+        "ar": "يعمل فقط مع القائمة",
+        "en": "Only works with list"
+      },
+      "default": "4"
+    },
+    "items_web": {
+      "type": "select",
+      "label": {
+        "ar": "عدد العناصر في الويب",
+        "en": "Items count web"
+      },
+      "options": [
+        {
+          "value": "1",
+          "label": {
+            "ar": "1 عنصر",
+            "en": "1 item"
+          }
+        },
+        {
+          "value": "2",
+          "label": {
+            "ar": "2 عناصر",
+            "en": "2 items"
+          }
+        },
+        {
+          "value": "3",
+          "label": {
+            "ar": "3 عناصر",
+            "en": "3 items"
+          }
+        },
+        {
+          "value": "4",
+          "label": {
+            "ar": "4 عناصر",
+            "en": "4 items"
+          }
+        },
+        {
+          "value": "5",
+          "label": {
+            "ar": "5 عناصر",
+            "en": "5 items"
+          }
+        }
+      ],
+      "info": {
+        "ar": "يعمل فقط مع السلايدر (يجب الحفظ لتفعيل هذا الخيار)",
+        "en": "Only works with slider (you must save to activate this option)"
+      },
+      "default": 4
+    },
+    "card_bg_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون خلفية البطاقة",
+        "en": "Card Background Color"
+      }
+    },
+    "text_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون النص",
+        "en": "Text Color"
+      }
+    },
+    "sub_title": {
+      "type": "text",
+      "label": {
+        "ar": "العنوان الفرعي",
+        "en": "Sub Title"
+      }
+    },
+    "sub_title_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان الفرعي",
+        "en": "Sub Title Color"
+      }
+    },
+    "section_title": {
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      }
+    },
+    "title_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان",
+        "en": "Title Color"
+      }
+    },
+    "title_center": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "توسيط العنوان والعنوان الفرعي",
+        "en": "Center Title and Sub Title"
+      },
+      "noLabel": true
+    },
+    "title_padding_bottom" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد السفلي للعنوان القيمة الافتراضية هي (50)",
+        "en": "Title Padding Bottom (Default is 50)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "autoplay": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "تشغيل تلقائي",
+        "en": "Autoplay"
+      },
+      "info": {
+        "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+        "en": "You must click on save to activate this option"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "loop": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "تكرار",
+        "en": "Infinite"
+      },
+      "info": {
+        "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+        "en": "You must click on save to activate this option"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "dots": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إظهار النقاط",
+        "en": "Show Dots"
+      },
+      "info": {
+        "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+        "en": "You must click on save to activate this option"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "arrows": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إظهار السهم",
+        "en": "Show Arrows"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "testimonials": {
+      "type": "list",
+      "noLabel": true,
+      "maxItems": 20,
+      "info": {
+        "ar": "Client",
+        "en": "Client"
+      },
+      "settings_label":{
+        "ar": "رأي العميل",
+        "en": "Testimonial"
+      },
+      "settings": {
+        "review": {
+          "type": "textarea",
+          "label": {
+            "ar": "رأي العميل",
+            "en": "Client Review"
+          }
+        },
+        "show_stars": {
+          "type": "checkbox",
+          "label": {
+            "ar": "",
+            "en": ""
+          },
+          "option": {
+            "ar": "إظهار النجوم",
+            "en": "Show Stars"
+          },
+          "noLabel": true,
+          "default": true
+        },
+        "image_src": {
+          "type": "image",
+          "label": {
+            "ar": "صورة العميل",
+            "en": "Client Image"
+          }
+        },
+        "name": {
+          "type": "text",
+          "label": {
+            "ar": "اسم العميل",
+            "en": "Client Name"
+          }
+        }
+      }
+    }
+  }
+}
+{% endschema %}
+

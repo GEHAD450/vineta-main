@@ -1,0 +1,54 @@
+{% extends "layout.twig" %}
+
+{% block header %} {{ include('header.twig') }} {% endblock %}
+
+{% block main_content %}
+
+    <section class="breadcrumb-section {% if category.cover_image or settings.globals_settings_breadcrumb_breadcrumb_bg_image %} withBg {% endif %}" 
+{% if category.cover_image %} style="background-image:url({{ category.cover_image }})" 
+{% elseif settings.globals_settings_breadcrumb_breadcrumb_bg_image %} 
+style="background-image:url({{ settings.globals_settings_breadcrumb_breadcrumb_bg_image }})" {% endif %}>
+        <nav aria-label="breadcrumb">
+        
+            <div class="container custom-container">
+                <div>
+                    <h1 class="bread-title">{{ locals.wishlist }}</h1>
+                </div>
+            </div>
+    
+        </nav>
+    </section>
+
+
+    <div class="home-products-section style2 pt-50 pb-50">
+        <div class="container custom-container">
+            <div id="wishlist-list" class="row products-slider">
+                {% if wishlist.data|length == 0 %}
+                    <h5 class="empty">
+                    <img src="{{ asset_url ~ 'box64.png' }}" loading="lazy" style="margin-bottom:20px;width:auto" class="empty-wishlist" alt="empty-wishlist">
+                        <br>
+                    {{ locals.no_wishlist }}</h5>
+                {% else %}
+                {% for product in wishlist.data %}
+                    <div class="{% if settings.globals_settings_products_select_prod_style == 'style2' %} col-md-6 col-sm-6 col-12 {% else %} col-md-3 col-sm-6 col-12 {% endif %}">
+                        <div class="prod-col">
+                            {% include 'product-card.twig' with {'product' : product, 'index': key,
+                            'parentId':1111,'hide_rate':settings.globals_settings_products_hide_rate,
+                            'select_prod_style':settings.globals_settings_products_select_prod_style,
+                            'show_count':settings.globals_settings_products_show_count,
+                            'show_payments': settings.globals_settings_products_show_payments,
+                            'card_list_border':settings.globals_settings_products_card_list_border,
+                            'hide_description':settings.globals_settings_products_hide_description} %}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            {% include 'pagination.twig' with { 'totalPages' : products.last_page , 'currentPage' : products.current_page } %}
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block footer %} {{ include('footer.twig') }} {% endblock %}

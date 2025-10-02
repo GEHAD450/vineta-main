@@ -1,0 +1,538 @@
+{% if not settings.hide_all_section %}
+<section section-id="{{ sectionId }}" data-lg-scroll-offset="130" data-md-scroll-offset="130" data-sm-scroll-offset="94" 
+{% if settings.bg_color %} style="background-color:{{ settings.bg_color }};" {% endif %}>
+   <!-- Video Area -->
+    <div class="video-layout pb-{% if settings.padding_bottom and settings.padding_bottom != 'default' %}{{ settings.padding_bottom }}{% else %}100{% endif %} pt-{% if settings.padding_top and settings.padding_top != 'default' %}{{ settings.padding_top }}{% else %}100{% endif %}">
+      {% if settings.bg_img %}
+      <div class="bg-position" style="background-image: url({{ settings.bg_img }});background-size: cover; background-position: center; {% if settings.bg_attachment %} background-attachment: fixed;{% endif %}" id="bg-position-video-{{ sectionId }}"></div>
+       {% endif %}
+       {% if settings.overlay %}
+          <div class="overlay" style="{% if settings.overlay_color %} background-color:{{ settings.overlay_color }};{% endif %}{% if settings.overlay_opacity %} opacity:{{ settings.overlay_opacity }} {% endif %}"></div>
+        {% endif %}
+      <div class="container">
+          {% if  settings.upload_video %} 
+            <a href="{{ settings.upload_video }}"  class="play-btn popup-video">
+              <i>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="var(--primary-color)" height="80px" width="80px" version="1.1" id="Capa_1" viewBox="0 0 60 60" xml:space="preserve" style="margin-left: -3px;">
+                  <g>
+                    <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30   c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15   C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"></path>
+                  </g>
+                </svg>
+              </i>
+            </a>
+          {% elseif settings.video_link %}
+            <a href="{{ settings.video_link }}"  class="play-btn popup-video">
+              <i>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="var(--primary-color)" height="80px" width="80px" version="1.1" id="Capa_1" viewBox="0 0 60 60" xml:space="preserve" style="margin-left: -3px;">
+                  <g>
+                    <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30   c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15   C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"></path>
+                  </g>
+                </svg>
+              </i>
+            </a>
+          {% endif %}
+          {% if settings.sub_title or settings.title %}
+            <div class="text-center">
+              {% if settings.title %}
+                <h2 class="sec-title" style="{% if settings.text_color %}color:{{ settings.text_color }};{% endif %}">{{ settings.title }}</h2>
+              {% endif %}
+              {% if settings.subtitle %}
+                <span class="sec-subtitle" style="{% if settings.text_color %}color:{{ settings.text_color }};{% endif %}">{{ settings.subtitle }}</span>
+              {% endif %}
+            </div>
+          {% endif %}
+          {% if settings.button_text and settings.button_link %}
+            <a href="{{ settings.button_link }}" class="video-btn hbtn1" {% if settings.new_tab %} target="_blank" {% endif %}>{{ settings.button_text }}</a>
+          {% endif %}
+
+      </div>
+    </div>
+    <!-- Video Area End -->
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    $('.popup-video').magnificPopup({
+      type: 'iframe'
+    });
+    
+  });
+
+</script>
+{% endif %}
+{% schema %}
+{
+  "name": {
+    "ar": "فيديو",
+    "en": "Video"
+  },
+  "icon": "fal fa-video",
+  "display": true,
+  "settings": {
+    "hide_all_section": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إخفاء القسم",
+        "en": "Hide Section"
+      },
+      "noLabel": true
+    },
+    "padding_top" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد العلوي للقسم القيمة الافتراضية هي (100)",
+        "en": "Section Padding Top (Default is 100)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "padding_bottom" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد السفلي للقسم القيمة الافتراضية هي (100)",
+        "en": "Section Padding Bottom (Default is 100)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "bg_img": {
+      "label": {
+        "ar": "صورة الخلفية",
+        "en": "Background Image"
+      },
+      "type": "image"
+    },
+    "bg_color": {
+      "label": {
+        "ar": "لون الخلفية",
+        "en": "Background Color"
+      },
+      "type": "color"
+    },
+    "bg_attachment": {
+      "type": "checkbox",
+      "option": {
+        "ar": "صورة الخلفية متحركة",
+        "en": "Background Image is Fixed"
+      },
+      "info": {
+        "ar": "يمكنك تحديد ما إذا كانت صورة الخلفية ستكون متحركة أو ثابتة",
+        "en": "You can set if the background image will be fixed or not"
+      },
+      "noLabel": true
+    },
+    "overlay": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إظهار الغطاء",
+        "en": "Show Overlay"
+      },
+      "noLabel": true
+    },
+    "overlay_color": {
+      "label": {
+        "ar": "لون الغطاء",
+        "en": "Overlay Color"
+      },
+      "type": "color"
+    },
+    "overlay_opacity": {
+      "label": {
+        "ar": "شفافية الغطاء",
+        "en": "Overlay Opacity"
+      },
+      "info": {
+        "ar": "يمكنك تحديد شفافية الغطاء بين 0 و 1 مثل 0.5",
+        "en": "You can set the overlay opacity between 0 and 1 like 0.5"
+      },
+      "type": "number",
+      "max": 1,
+      "step": 0.1
+    },
+    "video_link": {
+      "label": {
+        "ar": "رابط الفيديو من اليوتيوب مباشرة",
+        "en": "Video Link from Youtube"
+      },
+      "type": "text"
+    },
+    "upload_video": {
+      "type": "video",
+      "label": {
+        "ar": "تحميل فيديو",
+        "en": "Upload Video"
+      },
+      "info": {
+        "ar": "يمكنك تحميل فيديو من جهازك المحلي",
+        "en": "You can upload a video from your local device"
+      }
+    },
+    "title": {
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      },
+      "type": "text"
+    },
+    "subtitle": {
+      "label": {
+        "ar": "العنوان الفرعي",
+        "en": "Subtitle"
+      },
+      "type": "text"
+    },
+    "text_color": {
+      "label": {
+        "ar": "لون النص",
+        "en": "Text Color"
+      },
+      "type": "color"
+    },
+    "button_text": {
+      "type": "text",
+      "label": {
+        "ar": "نص الزر",
+        "en": "Button Text"
+      }
+    },
+    "button_link": {
+      "type": "url",
+      "label": {
+        "ar": "رابط الزر",
+        "en": "Button Link"
+      }
+    },
+    "new_tab": {
+      "type": "checkbox",
+      "label": {
+        "ar": "",
+        "en": ""
+      },
+      "option": {
+        "ar": "فتح في علامة تبويب جديدة",
+        "en": "Open in a new tab"
+      },
+      "noLabel": true,
+      "default": false
+    }
+  }
+}
+{% endschema %}

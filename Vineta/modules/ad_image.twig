@@ -1,0 +1,605 @@
+{% if not settings.hide_all_section %}
+<div section-id="{{ sectionId }}" data-lg-scroll-offset="130" data-md-scroll-offset="130" data-sm-scroll-offset="94" 
+class="xc-ads-one pb-{% if settings.padding_bottom and settings.padding_bottom != 'default' %}{{ settings.padding_bottom }}{% else %}0{% endif %} pt-{% if settings.padding_top and settings.padding_top != 'default' %}{{ settings.padding_top }}{% else %}0{% endif %}">
+    <!-- ads start -->
+    <div class="container custom-container">
+        <div class="row">
+            {% for adItem in settings.ads %}
+                <div class="{% if loop.index == 1 and loop.last %}col-12{% else %}col-lg-6 col-md-6 col-sm-12{% endif %}">
+                    {% if adItem.image %}
+                    <div class="banner-shop style-abs hover-img radius-20 overflow-hidden position-relative">
+                        <div class="image img-style">
+                            <img src="{{ adItem.image }}" loading="{% if loop.first %}eager{% else %}lazy{% endif %}" alt="{{ adItem.alt_text ? adItem.alt_text : 'إعلان' }}" class="w-100 h-100 object-fit-cover">
+                        </div>
+                        
+                        <!-- محتوى الإعلان -->
+                        <div class="content position-absolute top-50 start-50 translate-middle text-center w-100 px-4">
+                            <div class="box-content">
+                                {% if adItem.subtitle %}
+                                <p class="subtitle  ">{{ adItem.subtitle }}</p>
+                                {% endif %}
+                                
+                                {% if adItem.title %}
+                                <h3 class="title fw-bold mb-3 display-6">{{ adItem.title }}</h3>
+                                {% endif %}
+                                
+                                {% if adItem.button_text and adItem.image_link %}
+                                <div class="box-btn">
+                                    <a href="{{ adItem.image_link }}" 
+                                       class="tf-btn animate-btn btn-green-2 btn-space1 text-decoration-none" 
+                                       {% if adItem.open_in_new_tab %}target="_blank"{% endif %}>
+                                        {{ adItem.button_text }}
+                                        <i class="fa fa-arrow-left ms-2"></i>
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <!-- طبقة overlay متدرجة -->
+                        {% if settings.overlay_enable %}
+                        <div class="ad-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- ads end -->
+</div>
+{% endif %}
+
+<style>
+/* CSS Variables للإعدادات - تُستخدم في home-page.rtl.css */
+:root {
+    --ad-text-color: {{ settings.ad_image_text_color ? settings.ad_image_text_color : '#ffffff' }};
+    --ad-subtitle-color: {{ settings.ad_image_subtitle_color ? settings.ad_image_subtitle_color : '#ffffff' }};
+    --ad-button-bg: {{ settings.ad_image_button_bg_color ? settings.ad_image_button_bg_color : '#28a745' }};
+    --ad-button-hover: {{ settings.ad_image_button_hover_color ? settings.ad_image_button_hover_color : '#20c997' }};
+    --ad-button-text: {{ settings.ad_image_button_text_color ? settings.ad_image_button_text_color : '#ffffff' }};
+    --ad-overlay-color: {{ settings.ad_image_overlay_color ? settings.ad_image_overlay_color : '#000000' }};
+    --ad-overlay-opacity: {{ settings.ad_image_overlay_opacity ? settings.ad_image_overlay_opacity : 50 }};
+    --ad-border-radius: {{ settings.ad_image_border_radius ? settings.ad_image_border_radius : 20 }}px;
+}
+</style>
+
+<!-- الاستايلات الأساسية موجودة في home-page.rtl.css -->
+
+{% if settings.hover_effects %}
+<style>
+/* تفعيل تأثيرات التمرير */
+.banner-shop:hover .img-style img {
+    transform: scale(1.06) !important;
+}
+.tf-btn:hover {
+    background: linear-gradient(135deg, var(--ad-button-hover) 0%, var(--ad-button-bg) 100%) !important;
+    transform: translateY(-2px) !important;
+    color: var(--ad-button-text) !important;
+}
+.banner-shop:hover::before {
+    opacity: 1 !important;
+}
+</style>
+{% else %}
+<style>
+/* إلغاء تأثيرات التمرير */
+.banner-shop:hover .img-style img {
+    transform: none !important;
+}
+.tf-btn:hover {
+    background: var(--ad-button-bg) !important;
+    transform: none !important;
+    color: var(--ad-button-text) !important;
+}
+.banner-shop:hover::before {
+    opacity: 0 !important;
+}
+</style>
+{% endif %}
+
+
+{% schema %}
+{
+  "name": {
+    "ar": "صور إعلانية متعددة",
+    "en": "Multiple Ad Images"
+  },
+  "icon": "fal fa-magic",
+  "display": true,
+  "settings": {
+    "hide_all_section": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إخفاء القسم",
+        "en": "Hide Section"
+      },
+      "noLabel": true
+    },
+    "padding_top" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد العلوي للقسم القيمة الافتراضية هي (0)",
+        "en": "Section Padding Top (Default is 0)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "0"
+    },
+    "padding_bottom" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد السفلي للقسم القيمة الافتراضية هي (0)",
+        "en": "Section Padding Bottom (Default is 0)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "00"
+    },
+    "ads": {
+      "type": "list",
+      "noLabel": true,
+      "settings_label": {
+        "ar": "الإعلان",
+        "en": "Advertisement"
+      },
+      "settings": {
+        "image": {
+          "type": "image",
+          "label": {
+            "ar": "صورة الإعلان",
+            "en": "Ad Image"
+          }
+        },
+        "image_link": {
+          "type": "url",
+          "label": {
+            "ar": "رابط الإعلان",
+            "en": "Ad Link"
+          }
+        },
+        "alt_text": {
+          "type": "text",
+          "label": {
+            "ar": "النص البديل",
+            "en": "Alt Text"
+          },
+          "default": "إعلان تجاري"
+        },
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان الرئيسي",
+            "en": "Main Title"
+          },
+          "default": "عنوان الإعلان"
+        },
+        "subtitle": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان الفرعي",
+            "en": "Subtitle"
+          },
+          "default": "عنوان فرعي"
+        },
+        "button_text": {
+          "type": "text",
+          "label": {
+            "ar": "نص الزر",
+            "en": "Button Text"
+          },
+          "default": "اكتشف المزيد"
+        },
+        "open_in_new_tab": {
+          "type": "checkbox",
+          "noLabel": true,
+          "option": {
+            "ar": "فتح الرابط في تبويب جديد",
+            "en": "Open Link in New Tab"
+          }
+        }
+      }
+    },
+    "ad_image_text_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون النصوص",
+        "en": "Text Color"
+      },
+      "default": "#ffffff"
+    },
+    "ad_image_subtitle_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان الفرعي",
+        "en": "Subtitle Color"
+      },
+      "default": "#ffffff"
+    },
+    "ad_image_button_bg_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون خلفية الزر",
+        "en": "Button Background Color"
+      },
+      "default": "#28a745"
+    },
+    "ad_image_button_hover_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الزر عند التمرير",
+        "en": "Button Hover Color"
+      },
+      "default": "#20c997"
+    },
+    "ad_image_button_text_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون نص الزر",
+        "en": "Button Text Color"
+      },
+      "default": "#ffffff"
+    },
+    "overlay_enable": {
+      "type": "checkbox",
+      "label": {
+        "ar": "تفعيل الطبقة الشفافة",
+        "en": "Enable Overlay"
+      },
+      "default": true
+    },
+    "ad_image_overlay_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الطبقة الشفافة",
+        "en": "Overlay Color"
+      },
+      "default": "#000000"
+    },
+    "ad_image_overlay_opacity": {
+      "type": "range",
+      "label": {
+        "ar": "شفافية الطبقة",
+        "en": "Overlay Opacity"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    "hover_effects": {
+      "type": "checkbox",
+      "label": {
+        "ar": "تأثيرات التمرير",
+        "en": "Hover Effects"
+      },
+      "default": true
+    },
+    "ad_image_border_radius": {
+      "type": "range",
+      "label": {
+        "ar": "انحناء الزوايا",
+        "en": "Border Radius"
+      },
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20,
+      "unit": "px"
+    }
+  }
+}
+{% endschema %}

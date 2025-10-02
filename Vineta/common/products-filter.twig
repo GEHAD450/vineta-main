@@ -1,0 +1,114 @@
+<div class="d-flex align-items-center justify-content-between products-filter">
+    <div class="d-flex filter-buttons-container btns">
+            <div class="d-flex">
+                {% if not has_products_filtration %}
+                    <button id="products-list-filter-mob"
+                            type="button"
+                            class="btn btn-filter filter-block-width products-list-filter-sm {% if requestGet('on_sale') == 'on' %} active {% endif %}"
+                            data-toggle="collapse"
+                            style="margin-left:5px;"
+                            data-target="#filters-form-collapse-sm"
+
+                    >
+                        <span>{{ locals.products_list_filter }}</span>
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+
+                    </button>
+                {% endif %}
+
+                    <button id="products-list-filter-web"
+                            type="button"
+                            class="btn btn-filter d-none {% if requestGet('on_sale') or  requestGet('from_price') or requestGet('to_price') %} active {% endif %}"
+                            data-toggle="modal"
+                            data-target="#filterModal"
+                            style="margin-left:5px;"
+                    >
+                        <span>{{ locals.products_list_filter }}</span>
+                        
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </button>
+                    {% if requestGet('on_sale') or  requestGet('from_price') or requestGet('to_price') %}
+                    <form method="get" action="{{ requestUri() }}">
+                    <button class="btn-filter active removeFilter" onclick="clearFilters();" type="submit">
+                        <i class="fa fa-close" aria-hidden="true"></i>
+                    </button>
+                    </form>
+                    {% endif %}
+
+
+            </div>
+
+            <div class="d-inline-block filter-block-width sort-block-width">
+                <div class="dropdown d-inline-block">
+                    <button id="products-list-sort" type="button" data-toggle="dropdown" aria-expanded="false" class="btn btn-filter dropdown-toggle">
+                        <span>
+                            {% if requestGet('sort_by') == 'popularity_order' %}
+                                {{ locals.products_list_filter_popularity }}
+                            {% elseif requestGet('sort_by') == 'price' and  requestGet('order') == 'asc'%}
+                                {{ locals.products_list_filter_price_low }}
+                            {% elseif requestGet('sort_by') == 'price' and  requestGet('order') == 'desc'%}
+                                {{ locals.products_list_filter_price_high }}
+                            {% elseif requestGet('sort_by') == 'created_at' %}
+                                {{ locals.products_list_filter_latest }}
+                            {% else%}
+                                {{ locals.sort }}
+                            {% endif %}
+                        </span>
+                        
+                        <i class="fa fa-sort-amount-asc"></i>
+
+                    </button>
+                    <div class="dropdown-menu select-dropdown dropdown-menu" >
+                            <a class="dropdown-item" href="{{ requestAdd({sort_by: 'created_at', order: 'desc'}) }}">
+                                {{ locals.products_list_filter_latest }}
+                            </a>
+                            <a class="dropdown-item" href="{{ requestAdd({sort_by: 'popularity_order', order: 'asc'}) }}">
+                                {{ locals.products_list_filter_popularity }}
+                            </a>
+                            <a class="dropdown-item" href="{{ requestAdd({sort_by: 'price', order: 'asc'}) }}">
+                                {{ locals.products_list_filter_price_low }}
+                            </a>
+                            <a class="dropdown-item" href="{{ requestAdd({sort_by: 'price', order: 'desc'}) }}">
+                                {{ locals.products_list_filter_price_high }}
+                            </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="count-products">
+            {% if count > 0 %}
+                    <div>
+                        <span class="text-line-height d-inline-block">{{ locals.products_list_result }}</span>
+                        <span class="text text-line-height d-inline-block" style="font-weight: bold">{{count}}</span>
+                        <span class="text-line-height d-inline-block">
+                                    {{ locals.products_list_result_products }}
+                                </span>
+                    </div>
+                {% endif %}
+        </div>
+
+</div>
+
+<div id="filters-form-collapse-sm" class="collapse mt-3">
+    {% include 'products-filter-form.twig' %}
+</div>
+<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body" style="position: relative">
+                <button id="products-list-filter-form-close"
+                        type="button"
+                        class="close btn" data-dismiss="modal" aria-label="Close">
+                    <span class="icon-times2"></span>
+                </button>
+                {% include 'products-filter-form.twig' %}
+            </div>
+        </div>
+    </div>
+</div>
+

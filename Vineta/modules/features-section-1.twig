@@ -1,0 +1,835 @@
+{% if not settings.hide_all_section %}
+<section section-id="{{ sectionId }}" 
+style="{% if settings.bg_color %}background-color:{{ settings.bg_color }};{% endif %} {% if settings.bg_img %}background-image:url({{ settings.bg_img }});background-size: cover; background-position: center; {% if settings.bg_attachment %} background-attachment: fixed;{% endif %}{% endif %}"
+class="featured__product--section pb-{% if settings.padding_bottom and settings.padding_bottom != 'default' %}{{ settings.padding_bottom }}{% else %}80{% endif %} pt-{% if settings.padding_top and settings.padding_top != 'default' %}{{ settings.padding_top }}{% else %}80{% endif %}">
+   
+       
+  {% if settings.overlay %}
+    <div class="overlay" style="{% if settings.overlay_color %}background-color:{{ settings.overlay_color }};{% endif %} {% if settings.overlay_opacity %}opacity:{{ settings.overlay_opacity }};{% endif %}"></div>
+  {% endif %}
+   
+  <div class="{% if settings.full_width %} container-fluid {% else %} container custom-container {% endif %}">
+      
+    {% if settings.sub_title or settings.section_title %}
+    <div class="title-area {% if settings.title_center %}center{% endif %} pb-{% if settings.title_padding_bottom and settings.title_padding_bottom != 'default' %}{{ settings.title_padding_bottom }}{% else %}50{% endif %}">
+      {% if settings.sub_title %}
+        <h4 class="sub-title" style="{% if settings.sub_title_color %}color:{{ settings.sub_title_color }};{% endif %}">{{ settings.sub_title }}</h4>
+      {% endif %}
+      {% if settings.section_title %}
+        <h2 class="section-title"  style="{% if settings.title_color %}color:{{ settings.title_color }};{% endif %}">
+          {{ settings.section_title }}
+        </h2>
+      {% endif %}
+    </div>
+    {% endif %}
+
+      <div class="row row-cols-lg-3 row-cols-1">
+        <div class="col">
+          <div class="featured__product--list">
+            {% for item in settings.items|slice(0, 2) %}
+              <div class="featured__product--card mb-30" style="{% if item.bg_color %}background-color: {{ item.bg_color }};{% endif %}">
+                {% if item.icon %}
+                  <div class="featured__product--card__icon--img">
+                        <span class="featured__product--card__icon" style="{% if item.icon_bg_color %}background-color: {{ item.icon_bg_color }};{% endif %}">
+                            <img loading="lazy" class="display-block" src="{{ imageUrl(item.icon, { w: 'auto', q: 'auto', f: 'auto' }) }}" alt="{{ item.title }}">
+                        </span>
+                  </div>
+                {% endif %}
+                <div class="featured__product--card__content">
+                  {% if item.title %}
+                    <h2 class="featured__product--card__title h3" style="{% if item.text_color %}color: {{ item.text_color }};{% endif %}">{{ item.title }}</h2>
+                  {% endif %}
+                  {% if item.description %}
+                    <p class="featured__product--card__desc" style="{% if item.text_color %}color: {{ item.text_color }};{% endif %}">{{ item.description }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="col col-md-order">
+            <div class="featured__product--thumbnail">
+              <div class="slider center-slider" id="featured-slider-{{ sectionId }}">
+                {% for image in settings.slider_images %}
+                {% if image.image %}
+                  <div class="slide-item">
+                    {% if image.link %}
+                      <a href="{{ image.link }}" {% if image.new_tab %} target="_blank" {% endif %}>
+                        <img loading="lazy" class="featured__product--thumbnail__img display-block"
+                            src="{{ imageUrl(image.image, { w: 'auto', q: 'auto', f: 'auto' }) }}"
+                            alt="Slider Image">
+                      </a>
+                    {% else %}
+                      <img loading="lazy" class="featured__product--thumbnail__img display-block"
+                          src="{{ imageUrl(image.image, { w: 'auto', q: 'auto', f: 'auto' }) }}"
+                          alt="Slider Image">
+                    {% endif %}
+                  </div>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+
+        <!-- العمود الأيمن -->
+        <div class="col">
+          <div class="featured__product--list">
+            {% for item in settings.items|slice(2, 2) %}
+              <div class="featured__product--card mb-30" style="{% if item.bg_color %}background-color: {{ item.bg_color }};{% endif %}">
+                {% if item.icon %}
+                  <div class="featured__product--card__icon--img">
+                        <span class="featured__product--card__icon" style="{% if item.icon_bg_color %}background-color: {{ item.icon_bg_color }};{% endif %}">
+                            <img loading="lazy" class="display-block" src="{{ imageUrl(item.icon, { w: 'auto', q: 'auto', f: 'auto' }) }}" alt="{{ item.title }}">
+                        </span>
+                  </div>
+                {% endif %}
+                <div class="featured__product--card__content">
+                  {% if item.title %}
+                    <h2 class="featured__product--card__title h3" style="{% if item.text_color %}color: {{ item.text_color }};{% endif %}">{{ item.title }}</h2>
+                  {% endif %}
+                  {% if item.description %}
+                    <p class="featured__product--card__desc" style="{% if item.text_color %}color: {{ item.text_color }};{% endif %}">{{ item.description }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+   </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // slick slider for featured-slider-{{ sectionId }}
+  $('#featured-slider-{{ sectionId }}').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    autoplay: true,
+    loop: true,                              
+    infinite: true,
+    {% if settings.slider_vertical %}
+    vertical: true,
+    verticalSwiping: true
+    {% else %}
+    rtl: window.appDirection === 'rtl'
+    {% endif %}
+  });
+});
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": {
+    "ar": "مميزات المنتج مع سلايدر الصور",
+    "en": "Features with slider images"
+  },
+  "icon": "fal fa-sparkles",
+  "display": true,
+  "settings": {
+    "hide_all_section": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إخفاء القسم",
+        "en": "Hide Section"
+      },
+      "noLabel": true
+    },
+    "full_width": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "عرض كامل الشاشة",
+        "en": "Full Width"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "padding_top" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد العلوي للقسم القيمة الافتراضية هي (80)",
+        "en": "Section Padding Top (Default is 80)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "padding_bottom" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد السفلي للقسم القيمة الافتراضية هي (80)",
+        "en": "Section Padding Bottom (Default is 80)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "sub_title": {
+      "type": "text",
+      "label": {
+        "ar": "العنوان الفرعي",
+        "en": "Sub Title"
+      }
+    },
+    "sub_title_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان الفرعي",
+        "en": "Sub Title Color"
+      }
+    },
+    "section_title": {
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      }
+    },
+    "title_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان",
+        "en": "Title Color"
+      }
+    },
+    "title_center": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "توسيط العنوان والعنوان الفرعي",
+        "en": "Center Title and Sub Title"
+      },
+      "noLabel": true
+    },
+    "title_padding_bottom" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد السفلي للعنوان القيمة الافتراضية هي (50)",
+        "en": "Title Padding Bottom (Default is 50)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "bg_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الخلفية",
+        "en": "Background Color"
+      }
+    },
+    "bg_img": {
+      "type": "image",
+      "label": {
+        "ar": "صورة الخلفية",
+        "en": "Background Image"
+      }
+    },
+    "bg_attachment": {
+      "type": "checkbox",
+      "option": {
+        "ar": "صورة الخلفية متحركة",
+        "en": "Background Image is Fixed"
+      },
+      "info": {
+        "ar": "يمكنك تحديد ما إذا كانت صورة الخلفية ستكون متحركة أو ثابتة",
+        "en": "You can set if the background image will be fixed or not"
+      },
+      "noLabel": true
+    },
+    "overlay": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إظهار الغطاء المتداخل",
+        "en": "Show Overlay"
+      },
+      "noLabel": true
+    },
+    "overlay_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الغطاء المتداخل",
+        "en": "Overlay Color"
+      },
+      "default": "#000000"
+    },
+    "overlay_opacity": {
+      "type": "number",
+      "label": {
+        "ar": "شفافية الغطاء المتداخل",
+        "en": "Overlay Opacity"
+      },
+      "info": {
+        "ar": "يمكنك تحديد شفافية الغطاء بين 0 و 1 مثل 0.5",
+        "en": "You can set the overlay opacity between 0 and 1 like 0.5"
+      },
+      "min": 0,
+      "max": 1
+    },
+    "slider_vertical": {
+      "type": "checkbox",
+      "option": {
+        "ar": "سلايدر الصور عمودي",
+        "en": "Vertical Slider"
+      },
+      "info": {
+        "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+        "en": "You must click on save to activate this option"
+      },
+      "noLabel":true
+    },
+    "slider_images": {
+      "type": "list",
+      "noLabel": true,
+      "settings_label": { "ar": "صورة", "en": "Image" },
+      "maxItems": 6,
+      "settings": {
+        "image": {
+          "type": "image",
+          "label": { "ar": "صورة", "en": "Image" }
+        },
+        "link": {
+          "type": "url",
+          "label": { "ar": "الرابط", "en": "Link" }
+        },
+        "new_tab": {
+          "type": "checkbox",
+          "option": { "ar": "فتح في علامة تبويب جديدة", "en": "Open in new tab" },
+          "noLabel": true
+        }
+      }
+    },
+    "items": {
+      "type": "list",
+      "maxItems": 4,
+      "settings_label": { "ar": "عنصر", "en": "Item" },
+      "settings": {
+        "icon": {
+          "type": "image",
+          "label": {
+            "ar": "أيقونة",
+            "en": "Icon"
+          }
+        },
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        },
+        "description": {
+          "type": "textarea",
+          "label": {
+            "ar": "الوصف",
+            "en": "Description"
+          }
+        },
+        "bg_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون الخلفية",
+            "en": "Background Color"
+          }
+        },
+        "icon_bg_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية الأيقونة",
+            "en": "Icon Background Color"
+          }
+        },
+        "text_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون النص",
+            "en": "Text Color"
+          }
+        }
+      }
+    }
+  }
+}
+{% endschema %}

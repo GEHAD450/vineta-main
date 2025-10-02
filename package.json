@@ -1,0 +1,14 @@
+{
+  "name": "zid-theme-uploader",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "axios-cookiejar-support": "^2.0.5",
+    "chokidar": "^3.6.0",
+    "dotenv": "^16.5.0",
+    "form-data": "^4.0.2",
+    "puppeteer": "^24.14.0",
+    "tough-cookie": "^4.1.4"
+  }
+}

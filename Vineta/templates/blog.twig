@@ -1,0 +1,32 @@
+{% extends "layout.twig" %}
+
+{% block header %} {{ include('header.twig') }} {% endblock %}
+
+{% block main_content %}
+    {% if blog.title != '' and blog.content != '' %}
+        <section class="blog mt-5 mb-5 ">
+            <div class="container">
+
+                <div class="blog-title mt-5 mb-5">
+                    <h1>
+                        {{ blog.title }}
+                    </h1>
+                </div>
+                <div class="blog-text mt-3 mb-5">
+                    {{ blog.content | raw }}
+                </div>
+
+
+            </div>
+        </section>
+    {% else %}
+        <div class="container text-center" style="margin-top:10rem;margin-bottom:10rem">
+            <div class="mt-5 mb-5">
+                <h1 style="color: var( --primary-color); font-size: 5rem">404</h1>
+            </div>
+            <h1 style="font-size: 2rem" class="theme-text-primary">{{ locals.title_404 }}</h1>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block footer %} {{ include('footer.twig') }} {% endblock %}

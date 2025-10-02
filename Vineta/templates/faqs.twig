@@ -1,0 +1,51 @@
+{% extends "layout.twig" %}
+
+{% block header %} {{ include('header.twig') }} {% endblock %}
+
+{% block main_content %}
+
+    <section class="breadcrumb-section {% if category.cover_image or settings.globals_settings_breadcrumb_breadcrumb_bg_image %} withBg {% endif %}" 
+{% if category.cover_image %} style="background-image:url({{ category.cover_image }})" 
+{% elseif settings.globals_settings_breadcrumb_breadcrumb_bg_image %} 
+style="background-image:url({{ settings.globals_settings_breadcrumb_breadcrumb_bg_image }})" {% endif %}>
+        <nav aria-label="breadcrumb">
+        
+            <div class="container custom-container">
+                <div>
+                    <h1 class="bread-title">{{ locals.faqs }}</h1>
+                </div>
+            </div>
+    
+        </nav>
+    </section>
+
+    <div class="paddingPage">
+        <div class="container custom-container">
+            <div id="accordion">
+
+                {% for key, faq in faqs %}
+                        <div class="faq">
+                            <div id="heading{{ key }}">
+
+                                <h2 class="faqs-title" data-toggle="collapse" data-target="#collapse{{ key }}" aria-expanded="{% if key == 0 %}true{% else %}false{% endif %}" aria-controls="collapse{{ key }}">
+                                    {{ faq.question }}
+                                </h2>
+
+                            </div>
+
+
+                            <div id="collapse{{ key }}" class="collapse desc {% if key == 0 %}show{% endif %}" aria-labelledby="heading{{ key }}" data-parent="#accordion">
+                                <div class="text-justify">
+                                    {{ faq.answer | raw }}
+                                </div>
+                            </div>
+                        </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footer %} {{ include('footer.twig') }} {% endblock %}

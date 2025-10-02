@@ -1,0 +1,92 @@
+{% extends "layout.twig" %}
+
+{% block header %} {{ include('header.twig') }} {% endblock %}
+
+{% block top_links %}
+    <link rel="stylesheet" href="{{ asset_url ~ 'profile-style.css?v=1.03' }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset_url ~ 'account-pages.css?v=1.57' }}" />
+{% endblock %}
+
+{% block main_content %}
+
+<section class="breadcrumb-section {% if category.cover_image or settings.globals_settings_breadcrumb_breadcrumb_bg_image %} withBg {% endif %}" 
+{% if category.cover_image %} style="background-image:url({{ category.cover_image }})" 
+{% elseif settings.globals_settings_breadcrumb_breadcrumb_bg_image %} 
+style="background-image:url({{ settings.globals_settings_breadcrumb_breadcrumb_bg_image }})" {% endif %}>
+    <nav aria-label="breadcrumb">
+       
+          <div class="container custom-container">
+              <div>
+                {% include 'profile-title.twig' with { 'title' : locals.profile.loyalty_program } %}
+              </div>
+          </div>
+  
+      </nav>
+</section>
+
+
+    <div class="container-parent shippingPage profilePage">
+
+        <div class="container custom-container">
+            <div class="d-flex shippingFlex">
+                {% include 'profile-section.twig' with { 'section' : 'loyalty-program' } %}
+                <div class="flex-grow-1">
+                    {% include 'profile-title.twig' with { 'title' : locals.profile.loyalty_program } %}
+                    <div class="account-content">
+                        <section class="product-selection mt-5 mb-5">
+                            <div>
+                            <div class="user-points">
+                                <img src="{{ asset_url ~ 'loyalty-program2.png' }}" loading="lazy" alt="loyalty-points" class="loyalty-points">
+                                <div class="content">
+                                    <h2 class="title">{{locals.points_balance }}</h2>
+                                    <h3><span>{% if wallet.points_balance %}{{ wallet.points_balance }}{% else %}0{% endif %}</span> {{locals.point}}</h3>
+                                    <h4><span>{% if wallet.pending_points_balance %}{{ wallet.pending_points_balance }}{% else %}0{% endif %}</span> {{ locals.Pending_points }}</h4>
+                                </div>
+                            </div>
+                            {% if wallet.history|length > 0 %}
+                                <div id="desktop-profile-card" class="mt-5 mb-5 d-none d-lg-block">
+                                    <div class="card">
+                                        <div class="card-body card-table-header">
+                                            <div class="row">
+                                                <div class="col">{{ locals.The_method }}</div>
+                                                <div class="col">{{ locals.order_number }}</div>
+                                                <div class="col">{{ locals.point_count }}</div>
+                                                <div class="col">{{ locals.start_date }}</div>
+                                                <div class="col">{{ locals.end_date }}</div>
+                                                <div class="col">{{ locals.points_status }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% for order in wallet.history %}
+                                <div id="desktop-profileCard" class="mt-5 mb-5">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">                                            
+                                                <div class="col">{{ order.collection_method }}</div>
+                                                <div class="col" style="color:var(--primary-color)">#{{ order.order_number }}</div>
+                                                <div class="col" style="color:var(--primary-color)">{{ order.points }}</div>
+                                                <div class="col">{{ datetimeFormat(order.date, 'd-m-Y g:i:s A', session.lang.code) }}</div>
+                                                <div class="col">{{ datetimeFormat(order.expiry_date, 'd-m-Y g:i:s A', session.lang.code) }}</div>
+                                                <div class="col" style="color:var(--primary-color)">{{ order.point_status }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                            <h5 class="empty">{{ locals.no_points }}</h5>
+                            {% endif %}
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block footer %} {{ include('footer.twig') }} {% endblock %}

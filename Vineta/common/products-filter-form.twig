@@ -1,0 +1,78 @@
+<form method="get" action="{{ requestUri() }}">
+
+
+    <div class="form-products-filter">
+            <span class="title">{{locals.products_list_filter_price}}</span>
+        <div class="d-block filter-block-width">
+
+            <div class="row">
+                <div class="col">
+                    <label>{{locals.products_list_filter_price_from}}</label>
+                    <input name="from_price" type="number" value="{{ requestGet('from_price') }}" class="form-control" placeholder="{{ session.currency.code }}">
+                </div>
+                <div class="col">
+                    <label>{{locals.products_list_filter_price_to}}</label>
+                    <input name="to_price" type="number" value="{{ requestGet('to_price') }}" class="form-control" placeholder="{{ session.currency.code }}">
+                </div>
+            </div>
+
+        </div>
+
+        <div>
+            <div ref="slider-range" class="ui-widget-bar mt-3">
+            </div>
+        </div>
+
+        <div class="d-block filter-block-width mt-3">
+                <span>
+                    <label class="selectStyle" id="products-list-filter-form-checkbox-on-sale"
+                           class="btn btn-sale-price">
+                        <span class="checkbox-container checkbox-container-small">
+                            <input class="custom-checkbox-input"
+                                   type="checkbox"
+                                   {% if requestGet('on_sale') == 'on' %} checked {% endif %}
+                                   name="on_sale"
+                            >
+                            <span class="custom-checkmark custom-checkmark-small"></span>
+                        </span>
+                        <span class="custom-checkbox-label text">{{ locals.products_page_show_sale_price }}</span>
+                    </label>
+                </span>
+        </div>
+
+        <div class="form-group mt-3 d-flex justify-content-end btns">
+            <button id="products-list-filter-form-clear"
+                    type="button" class="btn round btn-white hbtn1" onclick="clearFilters()">
+                <span style="padding: 0px 20px">{{ locals.clear }}</span>
+            </button>&nbsp;&nbsp;
+            <button id="products-list-filter-form-save"
+                    type="submit" class="btn round primary hbtn1">
+                <span style="padding: 0px 20px">{{ locals.save }}</span>
+            </button>
+        </div>
+
+    </div>
+</form>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fromPriceInput = document.querySelector('input[name="from_price"]');
+        const toPriceInput = document.querySelector('input[name="to_price"]');
+        // enable only number for input without negative value
+        fromPriceInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+        toPriceInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+        // max number is 50000 
+        fromPriceInput.addEventListener('input', function() {
+            this.value = Math.min(this.value, 50000);
+        });
+        toPriceInput.addEventListener('input', function() {
+            this.value = Math.min(this.value, 50000);
+        });
+    })
+        
+</script>

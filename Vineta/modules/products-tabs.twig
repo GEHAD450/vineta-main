@@ -1,0 +1,1964 @@
+{% if not settings.hide_all_section %}
+<section section-id="{{ sectionId }}"
+     data-lg-scroll-offset="130"
+     data-md-scroll-offset="130"
+     data-sm-scroll-offset="94"
+      style="{% if settings.bg_color %}background-color:{{ settings.bg_color }};{% endif %} {% if settings.bg_img %}background-image:url({{ settings.bg_img }});background-size: cover; background-position: center; {% if settings.bg_attachment %} background-attachment: fixed;{% endif %}{% endif %}"
+     class="home-products-section productsTabs {% if settings.select_style == 'style2' %} style2 {% else %} style1 {% endif %} pb-{% if settings.padding_bottom and settings.padding_bottom != 'default' %}{{ settings.padding_bottom }}{% else %}80{% endif %} pt-{% if settings.padding_top and settings.padding_top != 'default' %}{{ settings.padding_top }}{% else %}80{% endif %}">
+
+    {% if settings.overlay %}
+      <div class="overlay" style="{% if settings.overlay_color %}background-color:{{ settings.overlay_color }};{% endif %} {% if settings.overlay_opacity %}opacity:{{ settings.overlay_opacity }};{% endif %}"></div>
+    {% endif %}
+
+
+    <div class="{% if settings.full_width %} container-fluid {% else %} container custom-container {% endif %}">
+        
+        
+        
+        {% if settings.sub_title or settings.section_title %}
+        <div class="title-area {% if settings.title_center %}center{% endif %} pb-{% if settings.title_padding_bottom and settings.title_padding_bottom != 'default' %}{{ settings.title_padding_bottom }}{% else %}50{% endif %}">
+          {% if settings.sub_title %}
+            <h4 class="sub-title" style="{% if settings.sub_title_color %}color:{{ settings.sub_title_color }};{% endif %}">{{ settings.sub_title }}</h4>
+          {% endif %}
+          {% if settings.section_title %}
+            <h2 class="section-title"  style="{% if settings.title_color %}color:{{ settings.title_color }};{% endif %}">
+              {{ settings.section_title }}
+            </h2>
+          {% endif %}
+        </div>
+        {% endif %}
+
+
+
+        <div class="tab-style1">
+          <ul class="tabs {% if settings.tabs_center %} tabs-center {% endif %} pb-{% if settings.tabs_padding_bottom and settings.tabs_padding_bottom != 'default' %}{{ settings.tabs_padding_bottom }}{% else %}50{% endif %}" id="tabs-{{ sectionId }}">
+            {% for key, link in settings.links %}
+            <li class="nav-item {% if key == 0 %} active{% endif %}"
+            key="{{ key }}" id="tab-{{ key }}">
+                {% if link.title %}
+                {{ link.title }}
+                {% else %}
+                Tab {{ key + 1 }}
+                {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+ 
+
+          {% if settings.show_ads_section %}
+          <div class="row mini-prods {% if settings.reverse_section %} flex-row-reverse {% endif %}">
+            <div class="col-lg-4 p-0">
+                <div class="promotional-banner owl-carousel {% if settings.ads_full_height %}ads-full-height{% endif %} {% if settings.select_style == 'style2' %}margin{% endif %}">
+                    {% for adItem in settings.ad_section %}
+                      <div class="item">
+                        {%  if adItem.ad_link and not adItem.link_text %}
+                        <a href="{{ adItem.ad_link }}" style="display:block;height:100%;" {% if adItem.new_tab %}target="_blank"{% endif %}>
+                        {% endif %}
+                        <div class="promotional-banner-item" style="{% if adItem.ad_bg_color %}background-color:{{ adItem.ad_bg_color }};{% else %}background-color:#f8f8f8;{% endif %} {% if adItem.ad_bg_img %}background-image:url({{ imageUrl(adItem.ad_bg_img, { w: 'auto', q: 100, f:'auto' }) }});background-size: cover; background-position: center;{% endif %}">
+                            {% if adItem.overlay %}
+                              <div class="overlay" style="{% if adItem.overlay_color %}background-color:{{ adItem.overlay_color }};{% endif %} {% if adItem.overlay_opacity %}opacity:{{ adItem.overlay_opacity }};{% endif %}"></div>
+                            {% endif %}
+                            <div class="content {% if adItem.center_content %}center-content{% endif %}">
+                              {% if adItem.label_text %}
+                                <span class="label" style="{% if adItem.label_bg_color %}background-color:{{ adItem.label_bg_color }};{% endif %} {% if adItem.label_text_color %}color:{{ adItem.label_text_color }};{% endif %}">
+                                  {{ adItem.label_text }}
+                                </span>
+                              {% endif %}
+                              {% if adItem.ad_title %}
+                                <h6 class="title" style="{% if adItem.texts_color %}color:{{ adItem.texts_color }};{% endif %}">{{ adItem.ad_title }}</h6>
+                              {% endif %}
+                              {% if adItem.ad_subtitle %}
+                                <span class="subtitle" style="{% if adItem.texts_color %}color:{{ adItem.texts_color }};{% endif %}">
+                                  {{ adItem.ad_subtitle }}
+                                  {% if adItem.ad_price %}
+                                        <span class="price" style="{% if adItem.ad_price_color %}color:{{ adItem.ad_price_color }};{% endif %}">{{ adItem.ad_price }}</span>
+                                  {% endif %}
+                                </span>
+                              {% endif %}
+
+                            {% if adItem.offer_date %}
+                            <ul class="offer-counter" data-offer-date="{{ adItem.offer_date }}">
+                                <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
+                                  <div class="day count-number">00</div><span class="count-name">{{ locals.days }}</span>
+                                </li>
+                                <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
+                                <div class="hour count-number">00</div><span class="count-name">{{ locals.hours }}</span>
+                                </li>
+                                <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
+                                <div class="minute count-number">00</div><span class="count-name">{{ locals.minutes }}</span>
+                                </li>
+                                <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
+                                <div class="seconds count-number">00</div><span class="count-name">{{ locals.seconds }}</span>
+                                </li>
+                            </ul>
+                            {% endif %}
+
+
+                              {% if adItem.ad_link and adItem.link_text %}
+                                <a href="{{ adItem.ad_link }}" {% if adItem.new_tab %}target="_blank"{% endif %} class="hbtn1 show-all" style="{% if adItem.link_color %}background-color:{{ adItem.link_color }};{% endif %}">
+                                    {{ adItem.link_text }}
+                                </a>
+                              {% endif %}
+                            </div>
+                        </div>
+                        {%  if adItem.ad_link and not adItem.link_text %}
+                        </a>
+                        {% endif %}
+                      </div>
+                      {% endfor %}  
+                </div>
+            </div>
+
+            <div class="col-lg-8" style="overflow:hidden">
+          {% endif %}
+
+          <div class="tab-content tabs-{{ sectionId }}">
+            {% for key, link in settings.links %}
+              <div class="tab {% if key == 0 %} active {% endif %} tab-{{ key }} {% if link.select_prod_style == 'style2' %} prod-style2 {% else %} prod-style1 {% endif %}" {% if key != 0 %} style="display:none" {% endif %}>
+
+
+                  <div class="products-slider-wrapper" style="position: relative">
+                          <div class="products-slider row s-slider" {% if link.select_style != 'style2' %} id="products-slider-{{ sectionId }}-{{ key }}" {% endif %}>
+                            {% if link.items_count or link.items_count == 'default' %}
+                              {% if link.items_count == 'default' %}
+                                {% set items_count = 8 %}
+                              {% else %}
+                                {% set items_count = link.items_count %}
+                              {% endif %}
+                              
+                              {% for key, product in link.products.products|slice(0, items_count) %}
+                                  {% if link.hide_out_of_stock %}
+                                    {% if product.is_infinite == true or product.quantity > 0 %}
+                                      <div class="prod-col  {% if settings.show_ads_section and link.select_prod_style == 'style2' %} adWithStyleTwo {% endif %}
+                                      {% if settings.show_ads_section and link.select_prod_style == 'style1' %} styleOneWithAd {% endif %}
+                                      {% if link.select_style == 'style2' and link.select_prod_style == 'style1' %} col-lg-{{ link.columns }} col-md-6 
+                                      {% elseif link.select_style == 'style2' and link.select_prod_style == 'style2' %} col-lg-6 col-md-6 col-sm-6 col-12 {% endif %} ">
+                                          {% include 'product-card.twig' with {'product' : product, 'index': key,
+                                          'parentId':sectionId,"hide_rate":link.hide_rate,"select_prod_style": link.select_prod_style,
+                                          "show_count": link.show_count,
+                                          "show_payments": link.show_payments,
+                                          "card_list_border":link.card_list_border,"hide_description":link.hide_description } %}
+                                      </div>
+                                    {% endif %}
+                                  {% else %}
+                                    <div class="prod-col {% if settings.show_ads_section and link.select_prod_style == 'style2' %} adWithStyleTwo {% endif %}
+                                    {% if settings.show_ads_section and link.select_prod_style == 'style1' %} styleOneWithAd {% endif %}
+                                    {% if link.select_style == 'style2' and link.select_prod_style == 'style1' %} col-lg-{{ link.columns }} col-md-6 
+                                    {% elseif link.select_style == 'style2' and link.select_prod_style == 'style2' %} col-lg-6 col-md-6 col-sm-6 col-12 {% endif %} ">
+                                        {% include 'product-card.twig' with {'product' : product, 'index': key,
+                                        'parentId':sectionId,"hide_rate":link.hide_rate,"select_prod_style": link.select_prod_style,
+                                        "show_payments": link.show_payments,
+                                        "card_list_border":link.card_list_border,"hide_description":link.hide_description } %}
+                                    </div>
+                                  {% endif %}
+                              {% endfor %}
+                              {% else %}
+                                {% for key, product in link.products.products %}
+                                  {% if link.hide_out_of_stock %}
+                                      {% if product.is_infinite == true or product.quantity > 0 %}
+                                        <div class="prod-col {% if link.select_style == 'style2' and link.select_prod_style == 'style2' %} col-lg-{{ link.columns }} col-md-6 {% elseif link.select_style == 'style2' and link.select_prod_style == 'style1' %} col-lg-3 col-md-6 col-sm-6 col-12 {% endif %}">
+                                          {% include 'product-card.twig' with {'product' : product, 'index': key,
+                                          'parentId':sectionId,
+                                          "hide_rate":link.hide_rate,"select_prod_style": link.select_prod_style,
+                                          "show_count": link.show_count,"card_list_border":link.card_list_border,
+                                          "show_payments": link.show_payments,
+                                          "hide_description":link.hide_description } %}
+                                        </div>
+                                      {% endif %}
+
+                                    {% else %}
+                                      <div class="prod-col {% if link.select_style == 'style2' and link.select_prod_style == 'style2' %} col-lg-{{ link.columns }} col-md-6 {% elseif link.select_style == 'style2' and link.select_prod_style == 'style1' %} col-lg-3 col-md-6 col-sm-6 col-12 {% endif %}">
+                                        {% include 'product-card.twig' with {'product' : product, 'index': key,'parentId':sectionId,
+                                        "hide_rate":link.hide_rate,"select_prod_style": link.select_prod_style,
+                                        "show_count": link.show_count,"card_list_border":link.card_list_border,
+                                        "show_payments": link.show_payments,
+                                        "hide_description":link.hide_description } %}
+                                      </div>
+                                    {% endif %}
+                                {% endfor %}
+                              {% endif %}
+                          </div>
+                  </div>
+
+
+
+                {% if link.more_link and link.more_text %}
+                    <center>
+                        <a href="{{ link.more_link }}" class="all-products hbtn1" {% if link.open_new_tab %}target="_blank"{% endif %} {% if link.product_main_color %} style="background-color:{{ link.product_main_color }};color:#fff" {% endif %}>{{ link.more_text }}</a>
+                    </center>
+                {% endif %}
+
+              </div>
+
+              {% if link.product_main_color %}
+                  <style>
+                      section[section-id="{{ sectionId }}"] .tab-{{ key }} .product-item .mask .add-to-wishlist a.fa-heart-o.filled {
+                          background-color: {{ link.product_main_color }};
+                          border-color: {{ link.product_main_color }};
+                          color:#fff;
+                      }
+                      section[section-id="{{ sectionId }}"] .tab-{{ key }} .product-item .mask .labels .product-discount,
+                      section[section-id="{{ sectionId }}"] .tab-{{ key }} .product-item .offer-counter li,
+                      section[section-id="{{ sectionId }}"] .tab-{{ key }} .product-item .options small {
+                          background-color: {{ link.product_main_color }};
+                          color:#fff;
+                      }
+
+                      section[section-id="{{ sectionId }}"] .tab-{{ key }} .product-item .content .title:hover a{
+                          color: {{ link.product_main_color }};
+                      }
+
+                      section[section-id="{{ sectionId }}"] .tab-{{ key }} .product-item:hover {
+                          border-color: {{ link.product_main_color }};
+                      }
+
+                      section[section-id="{{ sectionId }}"] .tab-{{ key }} .product-item .mask .add-to-wishlist a.fa-heart-o:not(.filled):hover:before {
+                          color: {{ link.product_main_color }};
+                      }
+                      
+                      section[section-id="{{ sectionId }}"] .tab-{{ key }} .price .salePrice {
+                          color: {{ link.product_main_color }};
+                      }
+
+                      section[section-id="{{ sectionId }}"] .tab-{{ key }} .product-item .content .btns .addCart:not(.disabled) a span,
+                      section[section-id="{{ sectionId }}"] .tab-{{ key }} .product-item .content .btns .addCart:not(.disabled) a {
+                          color:#fff!important;
+                          background-color:{{ link.product_main_color }}!important
+                      }
+
+                      section[section-id="{{ sectionId }}"] .tab-{{ key }} .product-card-rating .fa-star {
+                        color:{{ link.product_main_color }}
+                      }
+
+                      
+                  </style>
+              {% endif %}
+
+            {% endfor %}
+          </div>
+
+          {% if settings.show_ads_section %}
+            </div>
+          {% endif %}
+
+
+        </div>
+
+    </div>
+</section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function(){
+        var arrowNextClass = (window.appDirection === 'ltr') ? 'fa fa-angle-right': 'fa fa-angle-left';
+        var arrowPrevClass = (window.appDirection === 'ltr') ? 'fa fa-angle-left' : 'fa fa-angle-right';
+
+        {% for key, link in settings.links %}
+            {% if link.select_style != 'style2' %}
+              {% if link.select_prod_style == 'style2' %}
+
+                $('.home-products-section.style1[section-id={{ sectionId }}] #products-slider-{{ sectionId }}-{{ key }}').slick({
+                  slidesToShow: {% if link.full_width %}3{% else %}2{% endif %},
+                  slidesToScroll: {% if link.full_width %}3{% else %}2{% endif %},
+                  infinite: {% if link.infinite %}true{% else %}false{% endif %},
+                  autoplay: {% if link.autoplay %}true{% else %}false{% endif %},
+                  arrows: {% if link.arrows %}true{% else %}false{% endif %},
+                  nextArrow:'<span class="slick-next hbtn1"><i class="'+arrowNextClass+'"></i></span>',
+                  prevArrow:'<span class="slick-prev hbtn1"><i class="'+arrowPrevClass+'"></i></span>',
+                  dots: false,
+                  rtl: !(window.appDirection === 'ltr'),
+                  responsive: [
+                      {
+                          breakpoint: 2100,
+                          settings: {
+                              slidesToShow: 2,
+                              slidesToScroll: 2
+                          }
+                      },
+                      {
+                          breakpoint: 1500,
+                          settings: {
+                              centerPadding: {% if settings.show_ads_section %} '0px' {% else %} '120px' {% endif %},
+                              centerMode: true,
+                              infinite:true,
+                              slidesToShow: 1,
+                              slidesToScroll: 1
+                          }
+                      },
+                      {
+                          breakpoint: 991,
+                          settings: {
+                              centerPadding: '40px',
+                              centerMode: true,
+                              infinite:true,
+                              slidesToShow: 1,
+                              slidesToScroll: 1
+                          }
+                      },
+                      {
+                          breakpoint: 480,
+                          settings: {
+                              centerPadding: '30px',
+                              centerMode: true,
+                              infinite:true,
+                              slidesToShow: 1,
+                              slidesToScroll: 1
+                          }
+                      }
+                  ]
+                });
+              {% else %}
+              $('.home-products-section.style1[section-id={{ sectionId }}] #products-slider-{{ sectionId }}-{{ key }}').slick({
+                  slidesToShow: {% if link.items_web %}{{ link.items_web }}{% else %}5{% endif %},
+                  slidesToScroll: {% if link.items_web %}{{ link.items_web }}{% else %}5{% endif %},
+                  infinite: {% if link.infinite %}true{% else %}false{% endif %},
+                  autoplay: {% if link.autoplay %}true{% else %}false{% endif %},
+                  arrows: {% if link.arrows %}true{% else %}false{% endif %},
+                  nextArrow:'<span class="slick-next hbtn1"><i class="'+arrowNextClass+'"></i></span>',
+                  prevArrow:'<span class="slick-prev hbtn1"><i class="'+arrowPrevClass+'"></i></span>',
+                  dots: false,
+                  rtl: !(window.appDirection === 'ltr'),
+                  responsive: [
+                    {% if settings.show_ads_section %}
+                      {
+                          breakpoint: 1500,
+                          settings: {
+                              slidesToShow:{% if link.items_web >= 3 %} 3 {% else %} {{ link.items_web }} {% endif %},
+                              slidesToScroll: {% if link.items_web >= 3 %} 3 {% else %} {{ link.items_web }} {% endif %}
+                          }
+                      },
+                      {
+                          breakpoint: 1300,
+                          settings: {
+                              slidesToShow:{% if link.items_web >= 2 %} 2 {% else %} {{ link.items_web }} {% endif %},
+                              slidesToScroll: {% if link.items_web >= 2 %} 2 {% else %} {{ link.items_web }} {% endif %}
+                          }
+                      },
+                    {% else %}
+                      {
+                          breakpoint: 1500,
+                          settings: {
+                              slidesToShow:{% if link.items_web >= 4 %} 4 {% else %} {{ link.items_web }} {% endif %},
+                              slidesToScroll: {% if link.items_web >= 4 %} 4 {% else %} {{ link.items_web }} {% endif %}
+                          }
+                      },
+                      {
+                          breakpoint: 1300,
+                          settings: {
+                              slidesToShow:{% if link.items_web >= 3 %} 3 {% else %} {{ link.items_web }} {% endif %},
+                              slidesToScroll: {% if link.items_web >= 3 %} 3 {% else %} {{ link.items_web }} {% endif %}
+                          }
+                      },
+                      {% endif %}
+                      {
+                          breakpoint: 991,
+                          settings: {
+                              centerMode: true,
+                              centerPadding: '40px',
+                              slidesToShow: 2,
+                              slidesToScroll: 2
+                          },
+                          padding:70
+                      },
+                      {
+                          breakpoint: 630,
+                          settings: {
+                              centerMode: true,
+                              centerPadding: '80px',
+                              slidesToShow: 1,
+                              slidesToScroll: 1
+                          }
+                      },
+                      {
+                          breakpoint: 480,
+                          settings: {
+                              centerMode: true,
+                              centerPadding: '20px',
+                              slidesToShow: 1,
+                              slidesToScroll: 1
+                          }
+                      }
+                  ]
+              });
+              {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {% if settings.show_ads_section and settings.ad_section|length > 0 %}
+          var prevArrowHTML = '<i class="' + arrowPrevClass + '"></i>';
+          var nextArrowHTML = '<i class="' + arrowNextClass + '"></i>';
+
+          let CateowlCarousel = $("section[section-id='{{ sectionId }}'] .promotional-banner.owl-carousel");
+          if (CateowlCarousel.length) {
+            CateowlCarousel.each(function () {
+              let elm = $(this);
+              elm.owlCarousel({
+                "loop": {% if (settings.adLoop) %}true{% else %}false{% endif %},
+                "animateOut": "fadeOut",
+                "animateIn": "fadeIn",
+                "autoplay": {% if (settings.adAutoplay) %}true{% else %}false{% endif %},
+                "autoplayTimeout": 7000,
+                "smartSpeed": 1000,
+                "nav": {% if (settings.adArrows) %}true{% else %}false{% endif %},
+                "navText": [prevArrowHTML,nextArrowHTML],
+                "dots": false,
+                "items": 1,
+                "rtl": (window.appDirection === "rtl") ? true : false
+              });
+              elm.find("button").each(function () {
+                $(this).attr("aria-label", "carousel button");
+              });
+            });
+          }
+      {% endif %}
+
+
+        $("section[section-id={{ sectionId }}] .tabs li").click(function () {
+            
+            var myButton = $(this).attr("id"),
+                parent = $(this).parent().attr("id"),
+                key = $(this).attr("key");
+            
+            $(this).addClass("active").siblings().removeClass("active");
+            
+            $("section[section-id={{ sectionId }}] ."+parent+" .tab").hide();
+            
+            $("section[section-id={{ sectionId }}] ."+parent+" ." + myButton).fadeIn();
+
+            $(`.home-products-section[section-id={{ sectionId }}] #products-slider-{{ sectionId }}-${key}`).slick('setPosition');
+
+        });
+
+
+    });
+
+    </script>
+
+{% if settings.hide_ads_section_on_mobile and settings.show_ads_section %}
+<style>
+  @media (max-width: 768px) {
+    .home-products-section[section-id="{{ sectionId }}"] .col-lg-4.p-0
+    {
+      display:none!important;
+    }
+
+  }
+</style>
+{% endif %}
+
+
+{% endif %}
+
+{% schema %}
+{
+  "name": {
+    "ar": "تابات المنتجات",
+    "en": "Products Tabs"
+  },
+  "icon": "fal fa-list",
+  "display": true,
+  "settings": {
+    "hide_all_section": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إخفاء القسم",
+        "en": "Hide Section"
+      },
+      "noLabel": true
+    },
+    "full_width": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "عرض كامل الشاشة",
+        "en": "Full Width"
+      },
+      "noLabel": true
+    },
+    "padding_top" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد العلوي للقسم القيمة الافتراضية هي (80)",
+        "en": "Section Padding Top (Default is 80)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "padding_bottom" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد السفلي للقسم القيمة الافتراضية هي (80)",
+        "en": "Section Padding Bottom (Default is 80)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "sub_title": {
+      "type": "text",
+      "label": {
+        "ar": "العنوان الفرعي",
+        "en": "Sub Title"
+      }
+    },
+    "sub_title_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان الفرعي",
+        "en": "Sub Title Color"
+      }
+    },
+    "section_title": {
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      }
+    },
+    "title_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان",
+        "en": "Title Color"
+      }
+    },
+    "title_center": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "توسيط العنوان والعنوان الفرعي",
+        "en": "Center Title and Sub Title"
+      },
+      "noLabel": true
+    },
+    "title_padding_bottom" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد السفلي للعنوان القيمة الافتراضية هي (50)",
+        "en": "Title Padding Bottom (Default is 50)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "bg_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الخلفية",
+        "en": "Background Color"
+      }
+    },
+    "bg_img": {
+      "type": "image",
+      "label": {
+        "ar": "صورة الخلفية",
+        "en": "Background Image"
+      }
+    },
+    "bg_attachment": {
+      "type": "checkbox",
+      "option": {
+        "ar": "صورة الخلفية متحركة",
+        "en": "Background Image is Fixed"
+      },
+      "info": {
+        "ar": "يمكنك تحديد ما إذا كانت صورة الخلفية ستكون متحركة أو ثابتة",
+        "en": "You can set if the background image will be fixed or not"
+      },
+      "noLabel": true
+    },
+    "overlay": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إظهار الغطاء المتداخل",
+        "en": "Show Overlay"
+      },
+      "noLabel": true
+    },
+    "overlay_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الغطاء المتداخل",
+        "en": "Overlay Color"
+      },
+      "default": "#000000"
+    },
+    "overlay_opacity": {
+      "type": "number",
+      "label": {
+        "ar": "شفافية الغطاء المتداخل",
+        "en": "Overlay Opacity"
+      },
+      "info": {
+        "ar": "يمكنك تحديد شفافية الغطاء بين 0 و 1 مثل 0.5",
+        "en": "You can set the overlay opacity between 0 and 1 like 0.5"
+      },
+      "min": 0,
+      "max": 1
+    },
+    "tabs_center": {
+      "type": "checkbox",
+      "option": {
+        "ar": "توسيط التابات",
+        "en": "Tabs in the center"
+      },
+      "label": {
+        "ar": "",
+        "en": ""
+      },
+      "default": false,
+      "noLabel": true
+    },
+    "tabs_padding_bottom" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد السفلي للعنوان القيمة الافتراضية هي (50)",
+        "en": "Title Padding Bottom (Default is 50)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "80"
+    },
+    "links": {
+      "type": "list",
+      "settings_label": {
+        "ar": "تاب",
+        "en": "Tab"
+      },
+      "noLabel": true,
+      "settings": {
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "عنوان التاب",
+            "en": "Tab Title"
+          }
+        },
+        "products": {
+          "type": "products",
+          "label": {
+            "ar": "اختر قائمة المنتجات ",
+            "en": "Select category products"
+          }
+        },
+        "show_payments": {
+            "type": "checkbox",
+            "label": {
+                "ar": "",
+                "en": ""
+            },
+            "option": {
+                "ar": "إظهار صور طرق الدفع داخل كارت المنتج",
+                "en": "Show payment method images inside the product card"
+            },
+            "info": {
+              "ar": "يتم اضافة الصور من الاعدادات العامة للثيم",
+              "en": "Images are added from the theme's general settings"
+            },
+            "noLabel": true,
+            "default": false
+        },
+        "product_main_color": {
+            "type": "color",
+            "label": {
+                "ar": "اللون الرئيسي للمنتجات وزر المزيد",
+                "en": "Products main color and more button"
+            }
+        },
+        "hide_out_of_stock":{
+          "type": "checkbox",
+          "label": {
+            "ar": "",
+            "en": ""
+          },
+          "option": {
+            "ar": "اخفاء المنتجات منتهية الكمية",
+            "en": "hide out of stock products"
+          },
+          "noLabel": true,
+          "default": true
+        },
+        "select_style" : {
+          "type": "select",
+          "label": {
+            "ar": "اختر اذا كان سيكون القسم علي شكل سلايدر أو قائمة",
+            "en": "Select if the section will be in the form of a slider or list"
+          },
+          "options": [
+            {
+              "value": "style1",
+              "label": {
+                "ar": "سلايدر",
+                "en": "Slider"
+              }
+            },
+            {
+              "value": "style2",
+              "label": {
+                "ar": "قائمة",
+                "en": "List"
+              }
+            }
+          ],
+          "default": "style1"
+        },
+        "select_prod_style": {
+          "type": "select",
+          "label": {
+            "ar": "اختر تصميم المنتجات",
+            "en": "Select Products Style"
+          },
+          "info": {
+            "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+            "en": "You must click on save to activate this option"
+          },
+          "options": [
+            {
+              "value": "style1",
+              "label": {
+                "ar": "تصميم 1",
+                "en": "Style 1"
+              }
+            },
+            {
+              "value": "style2",
+              "label": {
+                "ar": "تصميم 2",
+                "en": "Style 2"
+              }
+            }
+          ],
+          "default": "style1"
+        },
+        "infinite" : {
+          "type": "checkbox",
+          "label": {
+            "ar": "",
+            "en": ""
+          },
+          "info": {
+            "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+            "en": "You must click on save to activate this option"
+          },
+          "option": {
+            "ar": "تكرار العناصر",
+            "en": "Infinite"
+          },
+          "noLabel": true,
+          "default": true
+        },
+        "autoplay" : {
+          "type": "checkbox",
+          "label": {
+            "ar": "",
+            "en": ""
+          },
+          "option": {
+            "ar": "تشغيل تلقائي",
+            "en": "Autoplay"
+          },
+          "info": {
+            "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+            "en": "You must click on save to activate this option"
+          },
+          "noLabel": true,
+          "default": true
+        },
+        "arrows" : {
+          "type": "checkbox",
+          "label": {
+            "ar": "",
+            "en": ""
+          },
+          "info": {
+            "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+            "en": "You must click on save to activate this option"
+          },
+          "option": {
+            "ar": "أسهم التنقل",
+            "en": "Arrows"
+          },
+          "noLabel": true,
+          "default": true
+        },
+        "items_count": {
+          "type": "select",
+          "label": {
+            "ar": "عدد المنتجات (القيمة الافتراضية هي 8)",
+            "en": "Items count (Default is 8)"
+          },
+          "options": [
+            {
+              "value": "default",
+              "label": {
+                "ar": "القيمة الافتراضية",
+                "en": "Default"
+              }
+            },
+            {
+              "value": "1",
+              "label": {
+                "ar": "1",
+                "en": "1"
+              }
+            },
+            {
+              "value": "2",
+              "label": {
+                "ar": "2",
+                "en": "2"
+              }
+            },
+            {
+              "value": "3",
+              "label": {
+                "ar": "3",
+                "en": "3"
+              }
+            },
+            {
+              "value": "4",
+              "label": {
+                "ar": "4",
+                "en": "4"
+              }
+            },
+            {
+              "value": "5",
+              "label": {
+                "ar": "5",
+                "en": "5"
+              }
+            },
+            {
+              "value": "6",
+              "label": {
+                "ar": "6",
+                "en": "6"
+              }
+            },
+            {
+              "value": "7",
+              "label": {
+                "ar": "7",
+                "en": "7"
+              }
+            },
+            {
+              "value": "8",
+              "label": {
+                "ar": "8",
+                "en": "8"
+              }
+            },
+            {
+              "value": "9",
+              "label": {
+                "ar": "9",
+                "en": "9"
+              }
+            },
+            {
+              "value": "10",
+              "label": {
+                "ar": "10",
+                "en": "10"
+              }
+            },
+            {
+              "value": "11",
+              "label": {
+                "ar": "11",
+                "en": "11"
+              }
+            },
+            {
+              "value": "12",
+              "label": {
+                "ar": "12",
+                "en": "12"
+              }
+            },
+            {
+              "value": "13",
+              "label": {
+                "ar": "13",
+                "en": "13"
+              }
+            },
+            {
+              "value": "14",
+              "label": {
+                "ar": "14",
+                "en": "14"
+              }
+            }
+          ],
+          "default": 8
+        },
+        "items_web": {
+          "type": "select",
+          "label": {
+            "ar": "عدد العناصر في الويب (يعمل فقط مع السلايدر وتصميم 1)",
+            "en": "Items count web (with slider and style 1)"
+          },
+          "options": [
+            {
+              "value": "1",
+              "label": {
+                "ar": "1 عنصر",
+                "en": "1 item"
+              }
+            },
+            {
+              "value": "2",
+              "label": {
+                "ar": "2 عناصر",
+                "en": "2 items"
+              }
+            },
+            {
+              "value": "3",
+              "label": {
+                "ar": "3 عناصر",
+                "en": "3 items"
+              }
+            },
+            {
+              "value": "4",
+              "label": {
+                "ar": "4 عناصر",
+                "en": "4 items"
+              }
+            },
+            {
+              "value": "5",
+              "label": {
+                "ar": "5 عناصر",
+                "en": "5 items"
+              }
+            },
+            {
+              "value": "6",
+              "label": {
+                "ar": "6 عناصر",
+                "en": "6 items"
+              }
+            }
+          ],
+          "info": {
+            "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+            "en": "You must click on save to activate this option"
+          },
+          "default": 5
+        },
+        "columns": {
+          "type": "select",
+          "label": {
+            "ar": "عدد العناصر في الصف الواحد (مع القائمة وتصميم 1)",
+            "en": "Items per Row (with list and style 1)"
+          },
+          "options": [
+            {
+              "value": "6",
+              "label": {
+                "ar": "2 عنصر في الصف",
+                "en": "2 items per row"
+              }
+            },
+            {
+              "value": "4",
+              "label": {
+                "ar": "3 عنصر في الصف",
+                "en": "3 items per row"
+              }
+            },
+            {
+              "value": "3",
+              "label": {
+                "ar": "4 عنصر في الصف",
+                "en": "4 items per row"
+              }
+            }
+          ],
+          "default": "2",
+          "info": {
+            "ar": "يعمل فقط مع تصميم القائمة",
+            "en": "Only works with list design"
+          }
+        },
+        "card_list_border": {
+          "type": "color",
+          "label": {
+            "ar": "لون حدود المنتج (يعمل مع تصميم 2)",
+            "en": "Product border color (with style 2)"
+          }
+        },
+        "show_count": {
+          "type": "checkbox",
+          "option": {
+              "ar": "إظهار عدد الأيام المتبقية لانتهاء العروض",
+              "en": "Show count of days left for the end of the offers"
+          },
+          "label": {
+              "ar": "",
+              "en": ""
+          },
+          "noLabel": true,
+          "default": true
+        },
+        "hide_description": {
+          "type": "checkbox",
+          "label": {
+            "ar": "",
+            "en": ""
+          },
+          "option": {
+            "ar": "إخفاء الوصف (يعمل مع تصميم 2)",
+            "en": "Hide Description (with style 2)"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "hide_rate": {
+          "type": "checkbox",
+          "label": {
+            "ar": "",
+            "en": ""
+          },
+          "option": {
+            "ar": "إخفاء التقييمات",
+            "en": "Hide Rate"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "more_text": {
+          "type": "text",
+          "label": {
+            "ar": "نص زر المزيد",
+            "en": "More text"
+          }
+        },
+        "more_link": {
+          "type": "url",
+          "label": {
+            "ar": "رابط زر المزيد",
+            "en": "More link"
+          }
+        },
+        "open_new_tab": {
+          "type": "checkbox",
+          "label": {
+            "ar": "",
+            "en": ""
+          },
+          "option": {
+            "ar": "فتح في علامة تبويب جديدة",
+            "en": "Open in new tab"
+          },
+          "noLabel": true,
+          "default": false
+        }
+      },
+      "max": 6
+    },
+    "show_ads_section": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إظهار الإعلان",
+        "en": "Show Ads"
+      },
+      "noLabel": true
+    },
+    "hide_ads_section_on_mobile": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء الإعلان على الموبايل",
+        "en": "Hide Ads on Mobile"
+      },
+      "noLabel": true,
+      "info": {
+        "ar": "يعمل مع إظهار الإعلان",
+        "en": "Works with showing ads"
+      }
+    },
+    "ads_full_height": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إظهار الإعلان بكامل الطول",
+        "en": "Show Ads Full Height"
+      },
+      "noLabel": true
+    },
+    "reverse_section": {
+      "type": "checkbox",
+      "option": {
+        "ar": "عكس الترتيب",
+        "en": "Reverse Order"
+      },
+      "noLabel": true,
+      "info": {
+        "ar": "يعمل مع إظهار الإعلان",
+        "en": "Works with showing ads"
+      }
+    },
+    "adLoop" : {
+      "type": "checkbox",
+      "label": {
+        "ar": "",
+        "en": ""
+      },
+      "option": {
+        "ar": "تكرار العناصر",
+        "en": "Infinite"
+      },
+      "info": {
+        "ar": "خاص بالإعلان",
+        "en": "For Ads Section"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "adAutoplay" : {
+      "type": "checkbox",
+      "label": {
+        "ar": "",
+        "en": ""
+      },
+      "option": {
+        "ar": "تشغيل تلقائي",
+        "en": "Autoplay"
+      },
+      "info": {
+        "ar": "خاص بالإعلان",
+        "en": "For Ads Section"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "adArrows" : {
+      "type": "checkbox",
+      "label": {
+        "ar": "",
+        "en": ""
+      },
+      "info": {
+        "ar": "خاص بالإعلان",
+        "en": "For Ads Section"
+      },
+      "option": {
+        "ar": "أسهم التنقل",
+        "en": "Arrows"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "ad_section": {
+      "type": "list",
+      "noLabel": true,
+      "settings_label":{
+        "ar": "العناصر",
+        "en": "Items"
+      },
+      "settings": {
+        "center_content": {
+          "type": "checkbox",
+          "option": {
+            "ar": "توسيط المحتوى",
+            "en": "Center Content"
+          },
+          "noLabel": true
+        },
+        "ad_bg_img": {
+          "type": "image",
+          "label": {
+            "ar": "صورة الخلفية",
+            "en": "Background Image"
+          }
+        },
+        "ad_bg_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية العنصر",
+            "en": "Item Background Color"
+          }
+        },
+        "overlay": {
+          "type": "checkbox",
+          "label": {
+            "ar": " ",
+            "en": " "
+          },
+          "option": {
+            "ar": "إظهار الغطاء المتداخل",
+            "en": "Show Overlay"
+          },
+          "noLabel": true
+        },
+        "overlay_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون الغطاء المتداخل",
+            "en": "Overlay Color"
+          },
+          "default": "#000000"
+        },
+        "overlay_opacity": {
+          "type": "number",
+          "label": {
+            "ar": "شفافية الغطاء المتداخل",
+            "en": "Overlay Opacity"
+          },
+          "info": {
+            "ar": "يمكنك تحديد شفافية الغطاء بين 0 و 1 مثل 0.5",
+            "en": "You can set the overlay opacity between 0 and 1 like 0.5"
+          },
+          "min": 0,
+          "max": 1
+        },
+        "label_text": {
+          "type": "text",
+          "label": {
+            "ar": "نص بخلفية",
+            "en": "Text with background"
+          }
+        },
+        "label_text_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون النص بخلفية",
+            "en": "Text color with background"
+          }
+        },
+        "label_bg_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية النص بخلفية",
+            "en": "Background color with text"
+          }
+        },
+        "texts_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون النصوص الفرعية والعنوان",
+            "en": "Text Color"
+          }
+        },
+        "ad_title": {
+          "type": "text",
+          "label": {
+            "ar": "عنوان العنصر",
+            "en": "Item Title"
+          }
+        },
+        "ad_subtitle": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان الفرعي للعنصر",
+            "en": "Item Sub Title"
+          }
+        },
+        "ad_price": {
+          "type": "text",
+          "label": {
+            "ar": "نص العنوان الفرعي بلون مختلف",
+            "en": "Sub Title with different color"
+          }
+        },
+        "ad_price_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون النص المختلف للعنوان الفرعي",
+            "en": "Sub Title color"
+          }
+        },
+        "offer_date": {
+            "type": "text",
+            "label": {
+            "ar": "تاريخ العرض",
+            "en": "Offer Date"
+            },
+            "info": {
+                "ar": "يجب ان يكون بالصيغة التالية: 2025/01/01",
+                "en": "should be in this format: 2025/01/01"
+            }
+        },
+        "offer_date_bg_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية العرض",
+            "en": "Offer Date Background Color"
+          }
+        },
+        "offer_date_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون النص للعرض",
+            "en": "Offer Date Color"
+          }
+        },
+        "ad_link": {
+          "type": "url",
+          "label": {
+            "ar": "رابط العنصر",
+            "en": "Item Link"
+          }
+        },
+        "link_text": {
+          "type": "text",
+          "label": {
+            "ar": "نص الرابط للزر الموجود داخل العنصر",
+            "en": "Link text for the button inside the item"
+          }
+        },
+        "link_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية الزر الموجود داخل العنصر",
+            "en": "Link background color for the button inside the item"
+          }
+        },
+        "new_tab": {
+          "type": "checkbox",
+          "option": {
+            "ar": "فتح الرابط في علامة تبويب جديدة",
+            "en": "Open link in new tab"
+          },
+          "noLabel": true
+        }
+      }
+    }
+  }
+}
+{% endschema %}

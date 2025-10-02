@@ -1,0 +1,98 @@
+{% extends "layout.twig" %}
+
+{% block header %} {{ include('header.twig') }} {% endblock %}
+
+
+{% block main_content %}
+
+<section class="product paddingPage reviewPage">
+   <div class="container custom-container">
+      <section class="products-details">
+
+         <a href="/products/{{ product.slug }}" class="prodPreview">
+            <img src="{{ product.images[0].image.large }}" loading="lazy" class="product-image" alt="{{ product.name }}" />
+            <h1 style="color: initial">{{ product.name }}</h1>
+         </a>
+
+         <section class="review-details">
+            <div class="tableDetails">
+               <div class="addHead clearfix">
+                     {% if product.rating %}
+                     <div class="rightSection clearfix">
+                        <span class="circleRate">{{ product.rating.average }}</span>
+                        <div class="details">
+                           <span class="totalRate">{{ product.rating.total_count }} {{locals.review}}</span>
+                           {% include 'rating-stars.twig' with {'rating' : product.rating.average } %}
+                           <span>{{ product.rating.average }} {{locals.from_five}}</span>
+                        </div>
+                     </div>
+                     
+                     
+                     <div class="centerSection">
+                        <div class="progressDiv clearfix">
+                           <span class="numb">( {{ product.rating['5_ratings'].count }} )</span>
+                           <div class="progress">
+                                 <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                           </div>
+                           <span class="stars">{{ locals.reviews_rating_5 }}</span>
+                        </div>
+                        <div class="progressDiv clearfix">
+                           <span class="numb">( {{ product.rating['4_ratings'].count }} )</span>
+                           <div class="progress">
+                                 <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                           </div>
+                           <span class="stars">{{ locals.reviews_rating_4 }}</span>
+                        </div>
+                        <div class="progressDiv clearfix">
+                           <span class="numb">( {{ product.rating['3_ratings'].count }} )</span>
+                           <div class="progress">
+                                 <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                           </div>
+                           <span class="stars">{{ locals.reviews_rating_3 }}</span>
+                        </div>
+                        <div class="progressDiv clearfix">
+                           <span class="numb">( {{ product.rating['2_ratings'].count }} )</span>
+                           <div class="progress">
+                                 <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                           </div>
+                           <span class="stars">{{ locals.reviews_rating_2 }}</span>
+                        </div>
+                        <div class="progressDiv clearfix">
+                           <span class="numb">( {{ product.rating['1_ratings'].count }} )</span>
+                           <div class="progress">
+                                 <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                           </div>
+                           <span class="stars">{{ locals.reviews_rating_1 }}</span>
+                        </div>
+                     </div>
+
+                     {% endif %}
+                     
+                     <div class="leftSection " {% if  product.reviews.data|length == 0 %} style="width:100%!important" {% endif %}>
+                        <h2 class="titleRate">{{ locals.add_review }}</h2>
+                        <button type="button" class="add-review" data-toggle="modal" data-target="#exampleModalCenter"><span class="icon-add_circle"></span>{{ locals.add_product_review}} </button>
+                     </div>
+                     
+                     
+               </div>
+
+               <div class="comment-section description-paragrah">
+                  {% include 'customer-reviews.twig' with {'reviews' : product.reviews.data } %}
+               </div>
+
+            </div>
+         </section>
+
+         {% include 'pagination.twig' with { 'totalPages' : product.reviews.last_page , 'currentPage' : product.reviews.current_page } %}
+
+
+      </section>
+   </div>
+</section>
+
+   <!-- Modal -->
+    {% include 'customer-reviews-add.twig' with {'product' : product } %}
+
+{% endblock %}
+
+{% block footer %} {{ include('footer.twig') }} {% endblock %}

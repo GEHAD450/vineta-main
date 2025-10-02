@@ -1,0 +1,35 @@
+<section class="breadcrumb-section {% if category.cover_image or settings.globals_settings_breadcrumb_breadcrumb_bg_image %} withBg {% endif %}" 
+{% if category.cover_image and category %} style="background-image:url({{ category.cover_image }})" 
+{% elseif settings.globals_settings_breadcrumb_breadcrumb_bg_image %} 
+style="background-image:url({{ settings.globals_settings_breadcrumb_breadcrumb_bg_image }})" {% endif %}>
+    <nav aria-label="breadcrumb">
+       
+          <div class="container custom-container {% if category.image %} flex-d {% endif %}">
+              <div class="xc-category-one__img breadimg">
+              {% if category.image %}
+                <img src="{{ category.image_full_size }}" loading="lazy" alt="breadcrumb" class="breadcrumb-img">
+              {% else %}
+                <img src="{{ asset_url ~ 'no-image.png' }}" loading="lazy" alt="breadcrumb" class="breadcrumb-img">
+              {% endif %}
+              </div>
+              <div class="content">
+                {% if category.description  %}<p class="des">{{ category.description }}</p>{% endif %}
+                <ul class="subTitle-detail">
+                  {% block breadcrumb_items %}{% endblock %}
+                </ul>
+              </div>
+          </div>
+  
+      </nav>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    var breadcrumb = document.querySelector('.breadcrumb-section .bread-title');
+    var pageTitle = document.querySelector('.subTitle-detail .breadcrumb-item.active');
+    if(pageTitle && breadcrumb){
+      breadcrumb.innerHTML = pageTitle.innerHTML;
+    }
+
+  });
+</script>

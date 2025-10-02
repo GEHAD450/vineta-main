@@ -1,0 +1,1086 @@
+{% if not settings.hide_all_section %}
+<section section-id="{{ sectionId }}" data-lg-scroll-offset="130" data-md-scroll-offset="130" data-sm-scroll-offset="94" 
+
+class="ParentMainSlider {% if settings.set_container %} sliderInBox pb-{% if settings.padding_bottom and settings.padding_bottom != 'default' %}{{ settings.padding_bottom }}{% else %}80{% endif %} pt-{% if settings.padding_top and settings.padding_top != 'default' %}{{ settings.padding_top }}{% else %}80{% endif %} {% endif %}">
+  <div class="{% if settings.set_container %}container custom-container{% endif %}">
+    <div class="vs-hero">
+      <div class="vs-carousel hero-layout2" data-fade="true" data-dots="true">
+            
+        {% for index,slide in settings.slides %}
+
+          <div class="slide-{{ index }} hero-main style3 flex-end background-image" style="{% if slide.content_center %} align-items: center; {% endif %}{% if slide.bg %}background-color:{{ slide.bg }};{% endif %} 
+          {% if slide.image and slide.select_video_or_image == 'image' %}background-image: url({{ slide.image }});{% endif %}">
+
+          {% if not slide.button and slide.link %}
+          <a href="{{ slide.link }}"
+          {% if slide.open_in_new_tab %}target="_blank"{% endif %}
+          style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          z-index: 1;
+          display: block;
+          width: 100%;
+          height: 100%;
+          ">
+          </a>
+          {% endif %}
+
+
+            {% if slide.video and slide.select_video_or_image == 'video' %}
+              <video class="video-player"
+              style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              max-height: unset;
+              width: 100%;
+              height: 100%;
+                object-fit: cover;
+              z-index: -1;"
+              autoplay muted loop>
+                <source src="{{ slide.video }}" type="video/mp4">
+              </video>
+            {% endif %}
+
+            {% if slide.image_mobile and slide.select_video_or_image == 'image' %}
+            <style>
+              @media (max-width: 767px) {
+                .slide-{{ index }} {
+                  background-image: url({{ slide.image_mobile }})!important;
+                }
+              }
+            </style>
+            {% endif %}
+
+              <div class="slide-item">
+                {% if slide.overlay %}
+                  <div class="overlay" style="background-color: {% if slide.overlay_color %} {{ slide.overlay_color }} {% else %} #fff {% endif %};opacity:{% if slide.overlay_opacity %} {{ slide.overlay_opacity }} {% else %} 0.5 {% endif %}"></div>
+                {% endif %}
+                <div class="container custom-container {% if not slide.content_center %}d-flex align-items-center  justify-content-between{% endif %}">
+                    {% set has_content = slide.subtitle or slide.title or slide.button %}
+                    {% if not slide.hide_content_if_empty or (slide.hide_content_if_empty and has_content) %}
+                    <div class="hero-content {% if slide.content_center %}text-center{% endif %}{% if slide.content_bg_enable %} content-bg{% endif %}" 
+                         style="{% if slide.content_bg_enable %}
+                                  background-color: {% if slide.content_bg_color %}{{ slide.content_bg_color }}{% else %}rgba(255, 255, 255, {% if slide.content_bg_opacity %}{{ slide.content_bg_opacity }}{% else %}0.1{% endif %}){% endif %};
+                                  padding: 40px;
+                                  border-radius: 20px;
+                                  backdrop-filter: blur(15px);
+                                  border: 1px solid rgba(255, 255, 255, 0.1);
+                                {% endif %}">
+                      {% if slide.subtitle %}
+                        <span class="hero-subtitle" style="{% if slide.subtitle_color %}color:{{ slide.subtitle_color }};{% endif %}{% if slide.content_center %}margin-left:auto;margin-right:auto{% endif %}">
+                          <span class="text">
+                          {{ slide.subtitle }}
+                          </span>
+                        </span>
+                      {% endif %}
+                      {% if slide.title %}
+                        <h1 class="hero-title" style="{% if slide.title_color %}color:{{ slide.title_color }};{% endif %}{% if slide.content_center %}margin-left:auto;margin-right:auto;{% endif %}">
+                          <span class="text">
+                          {{ slide.title }}
+                          </span>
+                        </h1>
+                      {% endif %}
+                      {% if slide.button and slide.link %}
+                        <div class="d-flex overflow-hidden">
+                          <a 
+                          {% if slide.content_center %}
+                          style="margin-left:auto;margin-right:auto;
+                            {% if slide.button_bg_color %}
+                              background-color:{{ slide.button_bg_color }};
+                            {% endif %}"
+                          {% else %}
+                            {% if slide.button_bg_color %}
+                            style="background-color:{{ slide.button_bg_color }};"
+                            {% endif %}
+                          {% endif %} 
+                          {% if slide.open_in_new_tab %}target="_blank"{% endif %}
+                          href="{{ slide.link }}" class="vs-btn hbtn1">{{ slide.button }}</a>
+                        </div>
+                      {% endif %}
+                    </div>
+                    {% endif %}
+                    {% if slide.slide_image %}
+                      <div class="slide-image">
+                        <img loading="lazy" src="{{ slide.slide_image }}" alt="{{ slide.title }}">
+                      </div>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+        {% endfor %}
+    
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- CSS Variables Customization from Schema Settings -->
+<style>
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] {
+    /* Background Colors */
+    {% if settings.custom_bg_color %}
+    --slider-bg-color: {{ settings.custom_bg_color }};
+    {% endif %}
+    
+    /* Text Colors */
+    {% if settings.subtitle_color %}
+    --subtitle-color: {{ settings.subtitle_color }};
+    {% endif %}
+    
+    {% if settings.title_color %}
+    --title-color: {{ settings.title_color }};
+    {% endif %}
+    
+    {% if settings.description_color %}
+    --description-color: {{ settings.description_color }};
+    {% endif %}
+    
+    /* Button Colors */
+    {% if settings.button_bg_color %}
+    --button-bg-color: {{ settings.button_bg_color }};
+    {% endif %}
+    
+    {% if settings.button_text_color %}
+    --button-text-color: {{ settings.button_text_color }};
+    {% endif %}
+    
+    /* Navigation Colors */
+    {% if settings.dots_arrows_color %}
+    --dots-arrows-color: {{ settings.dots_arrows_color }};
+    --arrow-bg-color: {{ settings.dots_arrows_color }}33; /* 20% opacity */
+    --arrow-border-color: {{ settings.dots_arrows_color }}4D; /* 30% opacity */
+    --arrow-hover-bg: {{ settings.dots_arrows_color }}66; /* 40% opacity */
+    --arrow-hover-border: {{ settings.dots_arrows_color }}80; /* 50% opacity */
+    {% endif %}
+    
+    /* Transition Speed */
+    {% if settings.transition_speed %}
+    --transition-speed: {{ settings.transition_speed }}ms;
+    {% endif %}
+    
+    {% if settings.autoplay_speed %}
+    --animation-duration: {{ settings.autoplay_speed }}s;
+    {% endif %}
+}
+
+/* Individual Slide Colors */
+{% if settings.slide_1_subtitle_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .slide-1 .hero-subtitle {
+    color: {{ settings.slide_1_subtitle_color }} !important;
+}
+{% endif %}
+
+{% if settings.slide_1_title_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .slide-1 .hero-title {
+    color: {{ settings.slide_1_title_color }} !important;
+}
+{% endif %}
+
+{% if settings.slide_1_description_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .slide-1 .hero-description {
+    color: {{ settings.slide_1_description_color }} !important;
+}
+{% endif %}
+
+{% if settings.slide_1_button_bg_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .slide-1 .vs-btn.hbtn1 {
+    background: {{ settings.slide_1_button_bg_color }} !important;
+}
+{% endif %}
+
+{% if settings.slide_1_button_text_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .slide-1 .vs-btn.hbtn1 {
+    color: {{ settings.slide_1_button_text_color }} !important;
+}
+{% endif %}
+
+/* Slide 2 Colors */
+{% if settings.slide_2_subtitle_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .slide-2 .hero-subtitle {
+    color: {{ settings.slide_2_subtitle_color }} !important;
+}
+{% endif %}
+
+{% if settings.slide_2_title_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .slide-2 .hero-title {
+    color: {{ settings.slide_2_title_color }} !important;
+}
+{% endif %}
+
+{% if settings.slide_2_description_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .slide-2 .hero-description {
+    color: {{ settings.slide_2_description_color }} !important;
+}
+{% endif %}
+
+/* Slide 3 Colors */
+{% if settings.slide_3_subtitle_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .slide-3 .hero-subtitle {
+    color: {{ settings.slide_3_subtitle_color }} !important;
+}
+{% endif %}
+
+{% if settings.slide_3_title_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .slide-3 .hero-title {
+    color: {{ settings.slide_3_title_color }} !important;
+}
+{% endif %}
+
+{% if settings.slide_3_description_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .slide-3 .hero-description {
+    color: {{ settings.slide_3_description_color }} !important;
+}
+{% endif %}
+
+/* Content Background Styles */
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .hero-content.content-bg {
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.1),
+        0 25px 80px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .hero-content.content-bg:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.15),
+        0 35px 100px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Slick Arrows Styling */
+{% if settings.dots_arrows_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .vs-carousel .slick-arrow {
+    background-color: {{ settings.dots_arrows_color }}33 !important; /* 20% opacity */
+    border-color: {{ settings.dots_arrows_color }}4D !important; /* 30% opacity */
+    color: {{ settings.dots_arrows_color }} !important;
+}
+
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .vs-carousel .slick-arrow:hover {
+    background-color: {{ settings.dots_arrows_color }}66 !important; /* 40% opacity */
+    border-color: {{ settings.dots_arrows_color }}80 !important; /* 50% opacity */
+}
+
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .vs-carousel .slick-prev,
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .vs-carousel .slick-next {
+    background-color: {{ settings.dots_arrows_color }}33 !important;
+    border: 2px solid {{ settings.dots_arrows_color }}4D !important;
+    color: {{ settings.dots_arrows_color }} !important;
+}
+{% endif %}
+
+/* Slick Dots Styling */
+{% if settings.dots_arrows_color %}
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .vs-carousel .slick-dots button {
+    background-color: {{ settings.dots_arrows_color }}4D !important; /* 30% opacity */
+    border: 2px solid {{ settings.dots_arrows_color }}66 !important; /* 40% opacity */
+}
+
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .vs-carousel .slick-dots .slick-active button {
+    background-color: {{ settings.dots_arrows_color }} !important;
+    border-color: {{ settings.dots_arrows_color }} !important;
+}
+
+.ParentMainSlider[section-id="{{ sectionId ? sectionId : 'main-slider' }}"] .vs-carousel .slick-dots button:hover {
+    background-color: {{ settings.dots_arrows_color }}80 !important; /* 50% opacity */
+    border-color: {{ settings.dots_arrows_color }} !important;
+}
+{% endif %}
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+
+
+
+          var carousel = $("section[section-id={{ sectionId }}] .vs-carousel.hero-layout2");
+
+          // وظيفة للحصول على قيمة من data-* attributes للعنصر
+          function getData(attribute) {
+              return carousel.data(attribute);
+          }
+
+        var arrowNextClass = (window.appDirection === 'ltr') ? 'fa fa-angle-right': 'fa fa-angle-left';
+        var arrowPrevClass = (window.appDirection === 'ltr') ? 'fa fa-angle-left' : 'fa fa-angle-right';
+          // أزرار التنقل (السابق - التالي)
+          var prevArrowHTML = '<button type="button" class="slick-prev vs-btn hbtn1"><i class="' + arrowPrevClass + '"></i></button>';
+          var nextArrowHTML = '<button type="button" class="slick-next vs-btn hbtn1"><i class="' + arrowNextClass + '"></i></button>';
+
+          // إعدادات السلايدر
+          carousel.slick({
+              dots: {% if settings.show_dots %}true{% else %}false{% endif %},
+              fade: !!getData("fade"),
+              arrows: {% if settings.show_arrows %}true{% else %}false{% endif %},
+              speed: getData("speed") ? getData("speed") : 1000,
+              asNavFor: !!getData("asnavfor") && getData("asnavfor"),
+              autoplay: {% if settings.autoplay %}true{% else %}false{% endif %},
+              infinite: {% if settings.loop %}true{% else %}false{% endif %},
+              slidesToShow: getData("slide-show") ? getData("slide-show") : 1,
+              adaptiveHeight: !!getData("adaptive-height"),
+              centerMode: !!getData("center-mode"),
+              autoplaySpeed: getData("autoplay-speed") ? getData("autoplay-speed") : 8000,
+              centerPadding: getData("center-padding") ? getData("center-padding") : "0",
+              focusOnSelect: getData("focuson-select") != 0,
+              pauseOnFocus: !!getData("pauseon-focus"),
+              pauseOnHover: !!getData("pauseon-hover"),
+              variableWidth: !!getData("variable-width"),
+              vertical: !!getData("vertical"),
+              verticalSwiping: !!getData("vertical"),
+              prevArrow: prevArrowHTML,
+              nextArrow: nextArrowHTML,
+              rtl: window.appDirection === 'rtl'
+          });
+
+      });
+
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": {
+    "ar": "سلايدر الصور الرئيسي",
+    "en": "Main Slider"
+  },
+  "icon": "fal fa-presentation",
+  "display": true,
+  "settings": {
+    "hide_all_section": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إخفاء القسم",
+        "en": "Hide Section"
+      },
+      "noLabel": true
+    },
+    "set_container": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "وضع السلايدر داخل صندوق",
+        "en": "Put slider inside a container"
+      },
+      "noLabel": true
+    },
+    "padding_top" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد العلوي للقسم القيمة الافتراضية هي (50)",
+        "en": "Section Padding Top (Default is 50)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "50",
+      "info": {
+        "ar": "يعمل فقط مع وضع السلايدر داخل صندوق",
+        "en": "It only works with the slider inside a container"
+      }
+    },
+    "padding_bottom" : {
+      "type":"select",
+      "label": {
+        "ar": "التباعد السفلي للقسم القيمة الافتراضية هي (50)",
+        "en": "Section Padding Bottom (Default is 50)"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "القيمة الافتراضية",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "00",
+          "label": {
+            "ar": "0",
+            "en": "0"
+          }
+        },
+        {
+          "value": "10",
+          "label": {
+            "ar": "10",
+            "en": "10"
+          }
+        },
+        {
+          "value": "20",
+          "label": {
+            "ar": "20",
+            "en": "20"
+          }
+        },
+        {
+          "value": "30",
+          "label": {
+            "ar": "30",
+            "en": "30"
+          }
+        },
+        {
+          "value": "40",
+          "label": {
+            "ar": "40",
+            "en": "40"
+          }
+        },
+        {
+          "value": "50",
+          "label": {
+            "ar": "50",
+            "en": "50"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "ar": "60",
+            "en": "60"
+          }
+        },
+        {
+          "value": "70",
+          "label": {
+            "ar": "70",
+            "en": "70"
+          }
+        },
+        {
+          "value": "80",
+          "label": {
+            "ar": "80",
+            "en": "80"
+          }
+        },
+        {
+          "value": "90",
+          "label": {
+            "ar": "90",
+            "en": "90"
+          }
+        },
+        {
+          "value": "100",
+          "label": {
+            "ar": "100",
+            "en": "100"
+          }
+        },
+        {
+          "value": "110",
+          "label": {
+            "ar": "110",
+            "en": "110"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "ar": "120",
+            "en": "120"
+          }
+        },
+        {
+          "value": "130",
+          "label": {
+            "ar": "130",
+            "en": "130"
+          }
+        },
+        {
+          "value": "140",
+          "label": {
+            "ar": "140",
+            "en": "140"
+          }
+        },
+        {
+          "value": "150",
+          "label": {
+            "ar": "150",
+            "en": "150"
+          }
+        },
+        {
+          "value": "160",
+          "label": {
+            "ar": "160",
+            "en": "160"
+          }
+        },
+        {
+          "value": "170",
+          "label": {
+            "ar": "170",
+            "en": "170"
+          }
+        },
+        {
+          "value": "180",
+          "label": {
+            "ar": "180",
+            "en": "180"
+          }
+        },
+        {
+          "value": "190",
+          "label": {
+            "ar": "190",
+            "en": "190"
+          }
+        },
+        {
+          "value": "200",
+          "label": {
+            "ar": "200",
+            "en": "200"
+          }
+        }
+      ],
+      "default": "50",
+      "info": {
+        "ar": "يعمل فقط مع وضع السلايدر داخل صندوق",
+        "en": "It only works with the slider inside a container"
+      }
+    },
+    "loop": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "تكرار السلايدر",
+        "en": "Loop Slider"
+      },
+      "info": {
+        "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+        "en": "You must click on save to activate this option"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "autoplay": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "تشغيل تلقائي",
+        "en": "Auto Play"
+      },
+      "info": {
+        "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+        "en": "You must click on save to activate this option"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "show_arrows": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إظهار الأسهم",
+        "en": "Show Arrows"
+      },
+      "info": {
+        "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+        "en": "You must click on save to activate this option"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "show_dots": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إظهار النقاط",
+        "en": "Show Dots"
+      },
+      "info": {
+        "ar": "يجب الضغط علي حفظ لتفعيل هذا الخيار",
+        "en": "You must click on save to activate this option"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "dots_arrows_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون النقاط والأسهم",
+        "en": "Dots and Arrows Color"
+      },
+      "default": "#ffffff"
+    },
+    "slider_effect": {
+      "type": "select",
+      "label": {
+        "ar": "تأثير الانتقال",
+        "en": "Transition Effect"
+      },
+      "options": [
+        {
+          "value": "fade",
+          "label": {
+            "ar": "تلاشي",
+            "en": "Fade"
+          }
+        },
+        {
+          "value": "slide",
+          "label": {
+            "ar": "انزلاق",
+            "en": "Slide"
+          }
+        }
+      ],
+      "default": "fade"
+    },
+    "autoplay_speed": {
+      "type": "number",
+      "label": {
+        "ar": "سرعة التشغيل التلقائي (بالثواني)",
+        "en": "Autoplay Speed (seconds)"
+      },
+      "min": 2,
+      "max": 10,
+      "default": 4
+    },
+    "transition_speed": {
+      "type": "number",
+      "label": {
+        "ar": "سرعة الانتقال (بالميلي ثانية)",
+        "en": "Transition Speed (milliseconds)"
+      },
+      "min": 300,
+      "max": 2000,
+      "default": 800
+    },
+    "pause_on_hover": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إيقاف عند التمرير",
+        "en": "Pause on Hover"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "slides": {
+      "type": "list",
+      "settings_label": {
+        "ar": "الشريحة",
+        "en": "Slide"
+      },
+      "maxItems": 5,
+      "settings": {
+        "bg": {
+          "type": "color",
+          "label": {
+            "ar": "لون الخلفية",
+            "en": "Background Color"
+          },
+          "default": "#f5f5f5"
+        },
+        "select_video_or_image": {
+          "type": "select",
+          "label": {
+            "ar": "اختيار الخلفية فيديو أو صورة",
+            "en": "Select Background Video or Image"
+          },
+          "options": [
+            {
+              "value": "image",
+              "label": {
+                "ar": "صورة",
+                "en": "Image"
+              }
+            },
+            {
+              "value": "video",
+              "label": {
+                "ar": "فيديو",
+                "en": "Video"
+              }
+            }
+          ],
+          "default": "image"
+        },
+        "video": {
+          "type": "video",
+          "label": {
+            "ar": "فيديو الخلفية",
+            "en": "Background Video"
+          },
+          "info": {
+            "ar": "لا يعمل في حالة الصورة",
+            "en": "It doesn't work in the case of the image"
+          }
+        },
+        "image": {
+          "type": "image",
+          "label": {
+            "ar": "صورة الخلفية للكمبيوتر",
+            "en": "Background Image for Desktop"
+          },
+          "info": {
+            "ar": "لا يعمل في حالة الفيديو",
+            "en": "It doesn't work in the case of the video"
+          }
+        },
+        "image_mobile": {
+          "type": "image",
+          "label": {
+            "ar": "صورة الخلفية للهاتف المحمول",
+            "en": "Background Image for Mobile"
+          },
+          "info": {
+            "ar": "لا يعمل في حالة الفيديو",
+            "en": "It doesn't work in the case of the video"
+            }
+        },
+        "slide_image": {
+          "type": "image",
+          "label": {
+            "ar": "صورة الشريحة",
+            "en": "Slide Image"
+          }
+        },
+        "overlay": {
+          "type": "checkbox",
+          "label": {
+            "ar": " ",
+            "en": " "
+          },
+          "option": {
+            "ar": "إظهار الغطاء",
+            "en": "Show Overlay"
+          },
+          "noLabel": true
+        },
+        "overlay_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون الغطاء",
+            "en": "Overlay Color"
+          },
+          "default": "#000000"
+        },
+        "overlay_opacity": {
+          "type": "number",
+          "label": {
+            "ar": "شفافية الغطاء",
+            "en": "Overlay Opacity"
+          },
+          "info": {
+            "ar": "يمكنك تحديد شفافية الغطاء بين 0 و 1 مثل 0.5",
+            "en": "You can set the overlay opacity between 0 and 1 like 0.5"
+          },
+          "min": 0,
+          "max": 1
+        },
+        "content_center": {
+          "type": "checkbox",
+          "option": {
+            "ar": "توسيط المحتوى",
+            "en": "Center Content"
+          },
+          "noLabel": true
+        },
+        "hide_content_if_empty": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إخفاء المحتوى إذا كان فارغاً",
+            "en": "Hide Content If Empty"
+          },
+          "noLabel": true,
+          "default": true,
+          "info": {
+            "ar": "يخفي صندوق المحتوى إذا لم يكن هناك عنوان أو نص فرعي أو زر",
+            "en": "Hides the content box if there's no title, subtitle, or button"
+          }
+        },
+        "content_bg_enable": {
+          "type": "checkbox",
+          "option": {
+            "ar": "تفعيل خلفية المحتوى",
+            "en": "Enable Content Background"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "content_bg_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية المحتوى",
+            "en": "Content Background Color"
+          },
+          "default": "#ffffff",
+          "info": {
+            "ar": "يعمل فقط عند تفعيل خلفية المحتوى",
+            "en": "Only works when content background is enabled"
+          }
+        },
+        "content_bg_opacity": {
+          "type": "number",
+          "label": {
+            "ar": "شفافية خلفية المحتوى",
+            "en": "Content Background Opacity"
+          },
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "default": 0.1,
+          "info": {
+            "ar": "قيمة بين 0 (شفاف تماماً) و 1 (غير شفاف)",
+            "en": "Value between 0 (fully transparent) and 1 (opaque)"
+          }
+        },
+        "subtitle": {
+          "type": "text",
+          "label": {
+            "ar": "النص الفرعي",
+            "en": "Subtitle"
+          }
+        },
+        "subtitle_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون النص الفرعي",
+            "en": "Subtitle Color"
+          },
+          "default": "#ffffff"
+        },
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        },
+        "title_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون العنوان",
+            "en": "Title Color"
+          },
+          "default": "#ffffff"
+        },
+        "button": {
+          "type": "text",
+          "label": {
+            "ar": "نص الزر",
+            "en": "Button Text"
+          }
+        },
+        "link": {
+          "type": "url",
+          "label": {
+            "ar": "الرابط",
+            "en": "Link"
+          }
+        },
+        "open_in_new_tab": {
+          "type": "checkbox",
+          "option": {
+            "ar": "فتح الرابط في علامة تبويب جديدة",
+            "en": "Open in New Tab"
+          },
+          "noLabel": true,
+          "default": true
+        },
+        "button_bg_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية الزر",
+            "en": "Button Background Color"
+          }
+        }
+      }
+    }
+  }
+}
+{% endschema %}
