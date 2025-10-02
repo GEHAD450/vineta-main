@@ -1,13 +1,13 @@
 {# ============================================ #}
 {# PRODUCTS SECTION - UNIFIED DESIGN #}
-{# Last Updated: 2025-10-02 12:27:01 #}
-{# Cache Buster: 20251002122701 #}
-{# Version: 3.0.1 - Fixed Schema Syntax Error #}
+{# Last Updated: 2025-10-02 13:20:58 #}
+{# Cache Buster: 20251002132058 #}
+{# Version: 3.4.1 - Fixed Overlay Setting Display and CSS #}
 {# ============================================ #}
 
 
 {% if not settings.hide_all_section %}
-<section section-id="{{ sectionId }}" data-version="2.7.0" data-last-updated="2025-10-02 09:29:27" data-cache-buster="20251002092927"
+<section section-id="{{ sectionId }}" data-version="3.2.1" data-last-updated="2025-10-02 13:01:13" data-cache-buster="20251002130113"
      data-lg-scroll-offset="130"
      data-md-scroll-offset="130"
      data-sm-scroll-offset="94"
@@ -36,7 +36,7 @@
       <div class="d-flex flex-column">
 
           <div class="products-slider-wrapper" style="position: relative">
-                  <div class="products-slider row s-slider" {% if settings.display_mode == 'slider' %}id="products-slider-{{ sectionId }}"{% endif %}>
+                  <div class="products-slider row s-slider" id="products-slider-{{ sectionId }}">
                     {% if settings.items_count or settings.items_count == 'default' %}
                       {% if settings.items_count == 'default' %}
                         {% set items_count = 8 %}
@@ -106,6 +106,8 @@
  
 {% if settings.product_main_color %}
     <style>
+        
+        {% if settings.product_main_color %}
         section[section-id="{{ sectionId }}"] .product-item .mask .add-to-wishlist a.fa-heart-o.filled {
             background-color: {{ settings.product_main_color }};
             border-color: {{ settings.product_main_color }};
@@ -143,7 +145,7 @@
         section[section-id="{{ sectionId }}"] .product-card-rating .fa-star {
           color:{{ settings.product_main_color }}
         }
-
+        {% endif %}
         
     </style>
 {% endif %}
@@ -155,9 +157,16 @@
           var arrowPrevClass = (window.appDirection === 'ltr') ? 'fa fa-angle-left' : 'fa fa-angle-right';
           
           {% if settings.display_mode == 'slider' %}
-              $('.home-products-section[section-id={{ sectionId }}] #products-slider-{{ sectionId }}').not('.slick-initialized').slick({
-                slidesToShow: {% if settings.full_width %}3{% else %}2{% endif %},
-                slidesToScroll: {% if settings.full_width %}3{% else %}2{% endif %},
+          // تحقق من تحميل مكتبة Slick
+          if (typeof $.fn.slick !== 'undefined') {
+              var sliderElement = $('.home-products-section[section-id={{ sectionId }}] #products-slider-{{ sectionId }}');
+              
+              if (sliderElement.length > 0 && !sliderElement.hasClass('slick-initialized')) {
+                  console.log('تهيئة سلايدر المنتجات للقسم: {{ sectionId }}');
+                  
+                  sliderElement.slick({
+                slidesToShow: {% if settings.items_web %}{{ settings.items_web }}{% else %}{% if settings.full_width %}3{% else %}2{% endif %}{% endif %},
+                slidesToScroll: {% if settings.items_web %}{{ settings.items_web }}{% else %}{% if settings.full_width %}3{% else %}2{% endif %}{% endif %},
                 infinite: {% if settings.infinite %}true{% else %}false{% endif %},
                 autoplay: {% if settings.autoplay %}true{% else %}false{% endif %},
                 arrows: {% if settings.arrows %}true{% else %}false{% endif %},
@@ -169,8 +178,8 @@
                       {
                           breakpoint: 2100,
                           settings: {
-                              slidesToShow: 4,
-                              slidesToScroll: 2
+                              slidesToShow: {% if settings.items_web %}{{ settings.items_web }}{% else %}4{% endif %},
+                              slidesToScroll: {% if settings.items_web %}{{ settings.items_web }}{% else %}2{% endif %}
                           }
                       },
                       {
@@ -179,7 +188,7 @@
                               centerPadding: '120px',
                               centerMode: true,
                               infinite:true,
-                              slidesToShow: 4,
+                              slidesToShow: {% if settings.items_web %}{{ settings.items_web }}{% else %}4{% endif %},
                               slidesToScroll: 1
                           }
                       },
@@ -204,10 +213,56 @@
                           }
                       }
                 ]
-              });
+                  });
+              } else {
+                  console.log('عنصر السلايدر غير موجود أو مهيأ بالفعل');
+              }
+          } else {
+              console.log('مكتبة Slick غير محملة - محاولة تحميلها');
+              
+              // محاولة تحميل مكتبة Slick إذا لم تكن محملة
+              if (typeof $ !== 'undefined') {
+                  var script = document.createElement('script');
+                  script.src = 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js';
+                  script.onload = function() {
+                      console.log('تم تحميل مكتبة Slick بنجاح');
+                      // إعادة تشغيل السلايدر بعد التحميل
+                      var sliderElement = $('.home-products-section[section-id={{ sectionId }}] #products-slider-{{ sectionId }}');
+                      if (sliderElement.length > 0 && !sliderElement.hasClass('slick-initialized')) {
+                          sliderElement.slick({
+                            slidesToShow: {% if settings.items_web %}{{ settings.items_web }}{% else %}{% if settings.full_width %}3{% else %}2{% endif %}{% endif %},
+                            slidesToScroll: 1,
+                            infinite: true,
+                            autoplay: false,
+                            arrows: true,
+                            nextArrow:'<span class="slick-next hbtn1"><i class="'+arrowNextClass+'"></i></span>',
+                            prevArrow:'<span class="slick-prev hbtn1"><i class="'+arrowPrevClass+'"></i></span>',
+                            dots: false,
+                            rtl: !(window.appDirection === 'ltr'),
+                            responsive: [
+                                {
+                                    breakpoint: 991,
+                                    settings: {
+                                        slidesToShow: 2,
+                                        slidesToScroll: 1
+                                    }
+                                },
+                                {
+                                    breakpoint: 576,
+                                    settings: {
+                                        slidesToShow: 1,
+                                        slidesToScroll: 1
+                                    }
+                                }
+                            ]
+                          });
+                      }
+                  };
+                  document.head.appendChild(script);
+              }
+          }
           {% endif %}
 
-          {% endif %}
         });
 
     </script>
@@ -809,14 +864,14 @@
     "overlay": {
       "type": "checkbox",
       "label": {
-        "ar": " ",
-        "en": " "
+        "ar": "إظهار الغطاء المتداخل",
+        "en": "Show overlay"
       },
       "option": {
-        "ar": "إظهار الغطاء المتداخل",
-        "en": "Show Overlay"
+        "ar": "تفعيل الغطاء المتداخل للخلفية",
+        "en": "Enable background overlay"
       },
-      "noLabel": true
+      "default": false
     },
     "overlay_color": {
       "type": "color",
@@ -1069,8 +1124,8 @@
     "items_web": {
       "type": "select",
       "label": {
-        "ar": "عدد العناصر في الويب (يعمل فقط مع السلايدر وتصميم 1)",
-        "en": "Items count web (with slider and style 1)"
+        "ar": "عدد العناصر في الويب (يعمل فقط مع السلايدر )",
+        "en": "Items count web (with slider )"
       },
       "options": [
         {
@@ -1122,41 +1177,7 @@
       },
       "default": 5
     },
-    "columns": {
-      "type": "select",
-      "label": {
-        "ar": "عدد العناصر في الصف الواحد (مع القائمة وتصميم السلايدر)",
-        "en": "Items per Row (with list and slider only)"
-      },
-      "options": [
-        {
-          "value": "6",
-          "label": {
-            "ar": "2 عنصر في الصف",
-            "en": "2 items per row"
-          }
-        },
-        {
-          "value": "4",
-          "label": {
-            "ar": "3 عنصر في الصف",
-            "en": "3 items per row"
-          }
-        },
-        {
-          "value": "3",
-          "label": {
-            "ar": "4 عنصر في الصف",
-            "en": "4 items per row"
-          }
-        }
-      ],
-      "default": "2",
-      "info": {
-        "ar": "يعمل فقط مع تصميم القائمة",
-        "en": "Only works with list design"
-      }
-    },
+  
     "product_main_color": {
         "type": "color",
         "label": {
@@ -1240,3 +1261,5 @@
   }
 }
 {% endschema %}
+
+{% endif %}

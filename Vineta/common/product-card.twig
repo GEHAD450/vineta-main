@@ -1,10 +1,3 @@
-{# ============================================ #}
-{# PRODUCT CARD - ENHANCED IMAGE HOVER #}
-{# Last Updated: 2025-10-02 10:18:46 #}
-{# Cache Buster: 20251002101846_PRESERVE_SPACE #}
-{# Version: 3.0.1 - Fixed Empty Box Issue #}
-{# ============================================ #}
-
 {% if product %}
 
 <div id="{{ product.id }}-{{ parentId }}"
@@ -83,8 +76,8 @@
                             <div class="imagesSlider">
                                     {% for key,image in product.images %}
                                         {% if image['image']['medium'] %}
-                                        <div class="image" data-image-index="{{ key }}">
-                                        <img  id="product-card-img-{{ product.id }}-{{ key }}" {% if product.is_infinite == false and product.quantity <= 0 %} style="opacity:0.7;" {% endif %}
+                                        <div class="image">
+                                        <img  id="product-card-img-{{ product.id }}" {% if product.is_infinite == false and product.quantity <= 0 %} style="opacity:0.7;" {% endif %}
                                                         src="{{ imageUrl(image['image']['medium'],{ w: 'auto', q: 'auto', f:'auto' }) }}"
                                                 alt="{{ product.name }}" loading="lazy" >
                                         </div>
@@ -259,30 +252,30 @@
                         clearInterval(intervalId);
                         var imagesCount = images.length;
                         var currentImageIndex = 0;
-    
+
                         // Initialize the hover effect
                         images.css('opacity', 0);
                         $(images[1]).css('opacity', 1);
                         currentImageIndex = 1;
-        
+
                         // Start image transition loop
                         intervalId = setInterval(function () {
                             $(images[currentImageIndex]).css('opacity', 0);
                             currentImageIndex = (currentImageIndex + 1) % imagesCount;
                             $(images[currentImageIndex]).css('opacity', 1);
-                }, 1000);
-            },
+                        }, 1000);
+                    },
                     function () {
                         clearInterval(intervalId);
-                
+
                         // Reset images on hover out
                         var images = $(this).find('.image');
                         images.each(function (index, image) {
                             $(image).css('opacity', index === 0 ? 1 : 0);
                         });
-            }
-        );
-    } else {
+                    }
+                );
+            } else {
                 // if length of images is 1 then add hover effect
                 var images = $("#{{ product.id }}-{{ parentId }}").find('.image');
                 images.css('opacity', 1);
@@ -291,7 +284,7 @@
         });
 
             
-});
+    });
 </script>
 
 {% endif %}
