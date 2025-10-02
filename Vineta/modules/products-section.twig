@@ -1,8 +1,8 @@
 {# ============================================ #}
 {# PRODUCTS SECTION - UNIFIED DESIGN #}
-{# Last Updated: 2025-10-02 09:29:27 #}
-{# Cache Buster: 20251002092927 #}
-{# Version: 2.7.0 - Product Card Path Fixed #}
+{# Last Updated: 2025-10-02 12:27:01 #}
+{# Cache Buster: 20251002122701 #}
+{# Version: 3.0.1 - Fixed Schema Syntax Error #}
 {# ============================================ #}
 
 
@@ -32,72 +32,6 @@
         </div>
         {% endif %}
 
-    {% if settings.show_ads_section %}
-    <div class="row mini-prods {% if settings.reverse_section %} flex-row-reverse {% endif %}">
-      <div class="col-lg-4 p-0">
-          <div class="promotional-banner owl-carousel {% if settings.ads_full_height %}ads-full-height{% endif %}">
-              {% for adItem in settings.ad_section %}
-                <div class="item">
-                  {%  if adItem.ad_link and not adItem.link_text %}
-                  <a href="{{ adItem.ad_link }}" style="display:block;height:100%;" {% if adItem.new_tab %}target="_blank"{% endif %}>
-                  {% endif %}
-                  <div class="promotional-banner-item" style="{% if adItem.ad_bg_color %}background-color:{{ adItem.ad_bg_color }};{% else %}background-color:#f8f8f8;{% endif %} {% if adItem.ad_bg_img %}background-image:url({{ imageUrl(adItem.ad_bg_img, { w: 'auto', q: 100, f:'auto' }) }});background-size: cover; background-position: center;{% endif %}">
-                      {% if adItem.overlay %}
-                        <div class="overlay" style="{% if adItem.overlay_color %}background-color:{{ adItem.overlay_color }};{% endif %} {% if adItem.overlay_opacity %}opacity:{{ adItem.overlay_opacity }};{% endif %}"></div>
-                      {% endif %}
-                      <div class="content {% if adItem.center_content %}center-content{% endif %}">
-                        {% if adItem.label_text %}
-                          <span class="label" style="{% if adItem.label_bg_color %}background-color:{{ adItem.label_bg_color }};{% endif %} {% if adItem.label_text_color %}color:{{ adItem.label_text_color }};{% endif %}">
-                            {{ adItem.label_text }}
-                          </span>
-                        {% endif %}
-                        {% if adItem.ad_title %}
-                          <h6 class="title" style="{% if adItem.texts_color %}color:{{ adItem.texts_color }};{% endif %}">{{ adItem.ad_title }}</h6>
-                        {% endif %}
-                        {% if adItem.ad_subtitle %}
-                          <span class="subtitle" style="{% if adItem.texts_color %}color:{{ adItem.texts_color }};{% endif %}">
-                            {{ adItem.ad_subtitle }}
-                            {% if adItem.ad_price %}
-                                  <span class="price" style="{% if adItem.ad_price_color %}color:{{ adItem.ad_price_color }};{% endif %}">{{ adItem.ad_price }}</span>
-                            {% endif %}
-                          </span>
-                        {% endif %}
-
-                      {% if adItem.offer_date %}
-                      <ul class="offer-counter" data-offer-date="{{ adItem.offer_date }}">
-                          <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
-                            <div class="day count-number">00</div><span class="count-name">{{ locals.days }}</span>
-                          </li>
-                          <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
-                          <div class="hour count-number">00</div><span class="count-name">{{ locals.hours }}</span>
-                          </li>
-                          <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
-                          <div class="minute count-number">00</div><span class="count-name">{{ locals.minutes }}</span>
-                          </li>
-                          <li style="{% if adItem.offer_date_bg_color %}background-color:{{ adItem.offer_date_bg_color }};{% endif %}{% if adItem.offer_date_color %}color:{{ adItem.offer_date_color }};{% endif %}">
-                          <div class="seconds count-number">00</div><span class="count-name">{{ locals.seconds }}</span>
-                          </li>
-                      </ul>
-                      {% endif %}
-
-
-                        {% if adItem.ad_link and adItem.link_text %}
-                          <a href="{{ adItem.ad_link }}" {% if adItem.new_tab %}target="_blank"{% endif %} class="hbtn1 show-all" style="{% if adItem.link_color %}background-color:{{ adItem.link_color }};{% endif %}">
-                              {{ adItem.link_text }}
-                          </a>
-                        {% endif %}
-                      </div>
-                  </div>
-                  {%  if adItem.ad_link and not adItem.link_text %}
-                  </a>
-                  {% endif %}
-                </div>
-                {% endfor %}  
-          </div>
-      </div>
-
-      <div class="col-md-8" style="overflow:hidden">
-    {% endif %}
 
       <div class="d-flex flex-column">
 
@@ -113,7 +47,7 @@
                       {% for key, product in settings.products.products|slice(0, items_count) %}
                           {% if settings.hide_out_of_stock %}
                             {% if product.is_infinite == true or product.quantity > 0 %}
-                              <div class="prod-col {% if settings.show_ads_section %} with-ads {% endif %}">
+                              <div class="prod-col">
                                   {% include 'product-card.twig' with {'product' : product, 'index': key,
                                   'parentId':sectionId,"hide_rate":settings.hide_rate,
                                   'show_payments': settings.show_payments,
@@ -122,7 +56,7 @@
                               </div>
                             {% endif %}
                           {% else %}
-                            <div class="prod-col {% if settings.show_ads_section %} with-ads {% endif %}">
+                            <div class="prod-col">
                                 {% include 'product-card.twig' with {'product' : product, 'index': key,
                                 'parentId':sectionId,"hide_rate":settings.hide_rate,
                                 "show_count": settings.show_count,
@@ -160,9 +94,6 @@
 
       </div>
 
-    {% if settings.show_ads_section %}
-      </div>
-    {% endif %}
     </div>
 
     {% if settings.more_link and settings.more_text %}
@@ -245,7 +176,7 @@
                       {
                           breakpoint: 1500,
                           settings: {
-                              centerPadding:{% if settings.show_ads_section %} '0px' {% else %} '120px' {% endif %},
+                              centerPadding: '120px',
                               centerMode: true,
                               infinite:true,
                               slidesToShow: 4,
@@ -276,57 +207,19 @@
               });
           {% endif %}
 
-          {% if settings.show_ads_section and settings.ad_section|length > 0 %}
-              var prevArrowHTML = '<i class="' + arrowPrevClass + '"></i>';
-              var nextArrowHTML = '<i class="' + arrowNextClass + '"></i>';
-
-              let CateowlCarousel = $("section[section-id='{{ sectionId }}'] .promotional-banner.owl-carousel");
-              if (CateowlCarousel.length) {
-                CateowlCarousel.each(function () {
-                  let elm = $(this);
-                  elm.owlCarousel({
-                    "loop": {% if (settings.adLoop) %}true{% else %}false{% endif %},
-                    "animateOut": "fadeOut",
-                    "animateIn": "fadeIn",
-                    "autoplay": {% if (settings.adAutoplay) %}true{% else %}false{% endif %},
-                    "autoplayTimeout": 7000,
-                    "smartSpeed": 1000,
-                    "nav": {% if (settings.adArrows) %}true{% else %}false{% endif %},
-                    "navText": [prevArrowHTML,nextArrowHTML],
-                    "dots": false,
-                    "items": 1,
-                    "rtl": (window.appDirection === "rtl") ? true : false
-                  });
-                  elm.find("button").each(function () {
-                    $(this).attr("aria-label", "carousel button");
-                  });
-                });
-              }
           {% endif %}
         });
 
     </script>
 
-{% if settings.hide_ads_section_on_mobile and settings.show_ads_section %}
-<style>
-  @media (max-width: 768px) {
-    .home-products-section[section-id="{{ sectionId }}"] .col-lg-4.p-0
-    {
-      display:none!important;
-    }
-
-  }
-</style>
-{% endif %}
 
 
 
-{% endif %}
 {% schema %}
 {
   "name": {
-    "ar": "قائمة المنتجات مع إعلانات",
-    "en": "Products with Ads"
+    "ar": "قسم المنتجات",
+    "en": "Products Section"
   },
   "icon": "fal fa-box",
   "display": true,
@@ -1343,272 +1236,6 @@
       },
       "noLabel": true,
       "default": false
-    },
-    "show_ads_section": {
-      "type": "checkbox",
-      "option": {
-        "ar": "إظهار الإعلان",
-        "en": "Show Ads"
-      },
-      "noLabel": true
-    },
-    "hide_ads_section_on_mobile": {
-      "type": "checkbox",
-      "option": {
-        "ar": "إخفاء الإعلان على الموبايل",
-        "en": "Hide Ads on Mobile"
-      },
-      "noLabel": true,
-      "info": {
-        "ar": "يعمل مع إظهار الإعلان",
-        "en": "Works with showing ads"
-      }
-    },
-    "ads_full_height": {
-      "type": "checkbox",
-      "option": {
-        "ar": "إظهار الإعلان بكامل الطول",
-        "en": "Show Ads Full Height"
-      },
-      "noLabel": true
-    },
-    "reverse_section": {
-      "type": "checkbox",
-      "option": {
-        "ar": "عكس الترتيب",
-        "en": "Reverse Order"
-      },
-      "noLabel": true,
-      "info": {
-        "ar": "يعمل مع إظهار الإعلان",
-        "en": "Works with showing ads"
-      }
-    },
-    "adLoop" : {
-      "type": "checkbox",
-      "label": {
-        "ar": "",
-        "en": ""
-      },
-      "option": {
-        "ar": "تكرار العناصر",
-        "en": "Infinite"
-      },
-      "info": {
-        "ar": "خاص بالإعلان",
-        "en": "For Ads Section"
-      },
-      "noLabel": true,
-      "default": true
-    },
-    "adAutoplay" : {
-      "type": "checkbox",
-      "label": {
-        "ar": "",
-        "en": ""
-      },
-      "option": {
-        "ar": "تشغيل تلقائي",
-        "en": "Autoplay"
-      },
-      "info": {
-        "ar": "خاص بالإعلان",
-        "en": "For Ads Section"
-      },
-      "noLabel": true,
-      "default": true
-    },
-    "adArrows" : {
-      "type": "checkbox",
-      "label": {
-        "ar": "",
-        "en": ""
-      },
-      "info": {
-        "ar": "خاص بالإعلان",
-        "en": "For Ads Section"
-      },
-      "option": {
-        "ar": "أسهم التنقل",
-        "en": "Arrows"
-      },
-      "noLabel": true,
-      "default": true
-    },
-    "ad_section": {
-      "type": "list",
-      "noLabel": true,
-      "settings_label":{
-        "ar": "العناصر",
-        "en": "Items"
-      },
-      "settings": {
-        "center_content": {
-          "type": "checkbox",
-          "option": {
-            "ar": "توسيط المحتوى",
-            "en": "Center Content"
-          },
-          "noLabel": true
-        },
-        "ad_bg_img": {
-          "type": "image",
-          "label": {
-            "ar": "صورة الخلفية",
-            "en": "Background Image"
-          }
-        },
-        "ad_bg_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون خلفية العنصر",
-            "en": "Item Background Color"
-          }
-        },
-        "overlay": {
-          "type": "checkbox",
-          "label": {
-            "ar": " ",
-            "en": " "
-          },
-          "option": {
-            "ar": "إظهار الغطاء المتداخل",
-            "en": "Show Overlay"
-          },
-          "noLabel": true
-        },
-        "overlay_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون الغطاء المتداخل",
-            "en": "Overlay Color"
-          },
-          "default": "#000000"
-        },
-        "overlay_opacity": {
-          "type": "number",
-          "label": {
-            "ar": "شفافية الغطاء المتداخل",
-            "en": "Overlay Opacity"
-          },
-          "info": {
-            "ar": "يمكنك تحديد شفافية الغطاء بين 0 و 1 مثل 0.5",
-            "en": "You can set the overlay opacity between 0 and 1 like 0.5"
-          },
-          "min": 0,
-          "max": 1
-        },
-        "label_text": {
-          "type": "text",
-          "label": {
-            "ar": "نص بخلفية",
-            "en": "Text with background"
-          }
-        },
-        "label_text_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون النص بخلفية",
-            "en": "Text color with background"
-          }
-        },
-        "label_bg_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون خلفية النص بخلفية",
-            "en": "Background color with text"
-          }
-        },
-        "texts_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون النصوص الفرعية والعنوان",
-            "en": "Text Color"
-          }
-        },
-        "ad_title": {
-          "type": "text",
-          "label": {
-            "ar": "عنوان العنصر",
-            "en": "Item Title"
-          }
-        },
-        "ad_subtitle": {
-          "type": "text",
-          "label": {
-            "ar": "العنوان الفرعي للعنصر",
-            "en": "Item Sub Title"
-          }
-        },
-        "ad_price": {
-          "type": "text",
-          "label": {
-            "ar": "نص العنوان الفرعي بلون مختلف",
-            "en": "Sub Title with different color"
-          }
-        },
-        "ad_price_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون النص المختلف للعنوان الفرعي",
-            "en": "Sub Title color"
-          }
-        },
-        "offer_date": {
-            "type": "text",
-            "label": {
-            "ar": "تاريخ العرض",
-            "en": "Offer Date"
-            },
-            "info": {
-                "ar": "يجب ان يكون بالصيغة التالية: 2025/01/01",
-                "en": "should be in this format: 2025/01/01"
-            }
-        },
-        "offer_date_bg_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون خلفية العرض",
-            "en": "Offer Date Background Color"
-          }
-        },
-        "offer_date_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون النص للعرض",
-            "en": "Offer Date Color"
-          }
-        },
-        "ad_link": {
-          "type": "url",
-          "label": {
-            "ar": "رابط العنصر",
-            "en": "Item Link"
-          }
-        },
-        "link_text": {
-          "type": "text",
-          "label": {
-            "ar": "نص الرابط للزر الموجود داخل العنصر",
-            "en": "Link text for the button inside the item"
-          }
-        },
-        "link_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون خلفية الزر الموجود داخل العنصر",
-            "en": "Link background color for the button inside the item"
-          }
-        },
-        "new_tab": {
-          "type": "checkbox",
-          "option": {
-            "ar": "فتح الرابط في علامة تبويب جديدة",
-            "en": "Open link in new tab"
-          },
-          "noLabel": true
-        }
-      }
     }
   }
 }
