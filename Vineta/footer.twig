@@ -1,291 +1,580 @@
-<footer section-id="{{ sectionId }}" id="footer" class="footer-default xl-pb-70" data-lg-scroll-offset="130" data-md-scroll-offset="130" data-sm-scroll-offset="94">
-    <!-- Footer Top -->
-    <div class="footer-top">
+<!-- Font Awesome Icons - Multiple CDN fallbacks -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script>
+// Fallback Font Awesome loading
+if (!window.FontAwesome) {
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://use.fontawesome.com/releases/v6.4.0/css/all.css';
+    document.head.appendChild(link);
+}
+</script>
+
+{% if not settings.hide_footer %}
+<footer section-id="{{ sectionId }}" id="footer" class="modern-footer {% if settings.footer_style %}footer-style-{{ settings.footer_style }}{% else %}footer-style-1{% endif %}" 
+        style="{% if settings.footer_background_type == 'gradient' %}background: {{ settings.footer_gradient_start }} linear-gradient({{ settings.footer_gradient_direction }}deg, {{ settings.footer_gradient_start }}, {{ settings.footer_gradient_end }});{% elseif settings.footer_background_type == 'image' and settings.footer_bg_image %}background-image: url({{ settings.footer_bg_image }}); background-size: {{ settings.footer_bg_size }}; background-position: {{ settings.footer_bg_position }};{% else %}background-color: {{ settings.footer_bg_color }};{% endif %}">
+    
+    {% if settings.footer_bg_overlay %}
+    <div class="footer-overlay" style="background: {{ settings.footer_overlay_color }}; opacity: {{ settings.footer_overlay_opacity }};"></div>
+    {% endif %}
+
+    <!-- Animated Background Elements -->
+    {% if settings.footer_animated_bg %}
+    <div class="footer-bg-animation">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+    </div>
+    {% endif %}
+
+    <!-- Footer Top Section -->
+    {% if not settings.hide_footer_top %}
+    <div class="footer-top {% if settings.footer_top_style %}footer-top-{{ settings.footer_top_style }}{% endif %}">
         <div class="{% if settings.full_width %} container-fluid {% else %} container custom-container {% endif %}">
             <div class="footer-top-wrap">
-                <!-- Footer Logo -->
-                <div class="footer-logo">
-                    {% if settings.business_location_image %}
-                        <a href="{{ store.url }}">
-                            <img src="{{ settings.business_location_image }}" class="logo" alt="{{ store.name }}" loading="lazy">
-                        </a>
-                    {% else %}
-                        <a href="{{ store.url }}">
-                            <img src="{{ store.logo }}" class="logo" alt="{{ store.name }}" loading="lazy">
-                        </a>
+                <!-- Logo Section -->
+                {% if not settings.hide_footer_logo %}
+                <div class="footer-logo-section">
+                    <div class="footer-logo {% if settings.logo_animation %}logo-animated{% endif %}">
+                        {% if settings.business_location_image %}
+                            <a href="{{ store.url }}">
+                                <img src="{{ settings.business_location_image }}" class="logo" alt="{{ store.name }}" loading="lazy">
+                            </a>
+                        {% else %}
+                            <a href="{{ store.url }}">
+                                <img src="{{ store.logo }}" class="logo" alt="{{ store.name }}" loading="lazy">
+                            </a>
+                        {% endif %}
+                    </div>
+                    
+                    {% if settings.footer_tagline %}
+                    <p class="footer-tagline">{{ settings.footer_tagline }}</p>
                     {% endif %}
                 </div>
+                {% endif %}
                 
                 <!-- Social Media Icons -->
-                {% if not (settings.social_media_hide) %}
-                <ul class="tf-social-icon style-large">
-                    {% if settings.social_media_facebook or store.social_media.items.facebook %}
-                    <li>
-                        <a href="{% if settings.social_media_facebook %}{{ settings.social_media_facebook }}{% else %}https://www.facebook.com/{{ store.social_media.items.facebook }}{% endif %}" class="social-item social-facebook" target="_blank">
-                            <i class="fa fa-facebook"></i>
-                        </a>
-                    </li>
+                {% if not settings.social_media_hide %}
+                <div class="social-media-section">
+                    {% if settings.social_title %}
+                    <h4 class="social-title">{{ settings.social_title }}</h4>
                     {% endif %}
                     
-                    {% if settings.social_media_instagram or store.social_media.items.instagram %}
-                    <li>
-                        <a href="{% if settings.social_media_instagram %}{{ settings.social_media_instagram }}{% else %}https://www.instagram.com/{{ store.social_media.items.instagram }}{% endif %}" class="social-item social-instagram" target="_blank">
-                            <i class="fa fa-instagram"></i>
-                        </a>
-                    </li>
+                    <ul class="tf-social-icon {% if settings.social_style %}social-{{ settings.social_style }}{% else %}social-modern{% endif %}">
+                        {% if settings.social_media_facebook or store.social_media.items.facebook %}
+                        <li>
+                            <a href="{% if settings.social_media_facebook %}{{ settings.social_media_facebook }}{% else %}https://www.facebook.com/{{ store.social_media.items.facebook }}{% endif %}" 
+                               class="social-item social-facebook" target="_blank" data-tooltip="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                                <span class="social-ripple"></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% if settings.social_media_instagram or store.social_media.items.instagram %}
+                        <li>
+                            <a href="{% if settings.social_media_instagram %}{{ settings.social_media_instagram }}{% else %}https://www.instagram.com/{{ store.social_media.items.instagram }}{% endif %}" 
+                               class="social-item social-instagram" target="_blank" data-tooltip="Instagram">
+                                <i class="fab fa-instagram" aria-hidden="true"></i>
+                                <svg class="instagram-fallback" style="display: none;" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                </svg>
+                                <span class="social-ripple"></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% if settings.social_media_twitter or store.social_media.items.twitter %}
+                        <li>
+                            <a href="{% if settings.social_media_twitter %}{{ settings.social_media_twitter }}{% else %}https://x.com/{{ store.social_media.items.twitter }}{% endif %}" 
+                               class="social-item social-twitter" target="_blank" data-tooltip="X (Twitter)">
+                                <i class="fab fa-x-twitter" aria-hidden="true"></i>
+                                <svg class="twitter-fallback" style="display: none;" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                </svg>
+                                <span class="social-ripple"></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% if settings.social_media_snapchat or store.social_media.items.snapchat %}
+                        <li>
+                            <a href="{% if settings.social_media_snapchat %}{{ settings.social_media_snapchat }}{% else %}https://www.snapchat.com/add/{{ store.social_media.items.snapchat }}{% endif %}" 
+                               class="social-item social-snapchat" target="_blank" data-tooltip="Snapchat">
+                                <i class="fab fa-snapchat-ghost"></i>
+                                <span class="social-ripple"></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% if settings.social_media_tiktok or store.social_media.items.tiktok %}
+                        <li>
+                            <a href="{% if settings.social_media_tiktok %}{{ settings.social_media_tiktok }}{% else %}https://www.tiktok.com/@{{ store.social_media.items.tiktok }}{% endif %}" 
+                               class="social-item social-tiktok" target="_blank" data-tooltip="TikTok">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" xml:space="preserve">
+                                    <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"/>
+                                </svg>
+                                <span class="social-ripple"></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% if settings.social_media_website or store.social_media.items.website %}
+                        <li>
+                            <a href="{% if settings.social_media_website %}{{ settings.social_media_website }}{% else %}{{ store.social_media.items.website }}{% endif %}" 
+                               class="social-item social-website" target="_blank" data-tooltip="Website">
+                                <i class="fas fa-globe"></i>
+                                <span class="social-ripple"></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% if settings.social_media_youtube %}
+                        <li>
+                            <a href="{{ settings.social_media_youtube }}" class="social-item social-youtube" target="_blank" data-tooltip="YouTube">
+                                <i class="fab fa-youtube"></i>
+                                <span class="social-ripple"></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% if settings.social_media_linkedin %}
+                        <li>
+                            <a href="{{ settings.social_media_linkedin }}" class="social-item social-linkedin" target="_blank" data-tooltip="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                                <span class="social-ripple"></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% if settings.social_media_whatsapp %}
+                        <li>
+                            <a href="https://wa.me/{{ settings.social_media_whatsapp }}" class="social-item social-whatsapp" target="_blank" data-tooltip="WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                                <span class="social-ripple"></span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                <!-- Newsletter Signup -->
+                {% if not settings.hide_newsletter %}
+                <div class="newsletter-section">
+                    {% if settings.newsletter_title %}
+                    <h4 class="newsletter-title">{{ settings.newsletter_title }}</h4>
                     {% endif %}
                     
-                    {% if settings.social_media_twitter or store.social_media.items.twitter %}
-                    <li>
-                        <a href="{% if settings.social_media_twitter %}{{ settings.social_media_twitter }}{% else %}https://x.com/{{ store.social_media.items.twitter }}{% endif %}" class="social-item social-x" target="_blank">
-                            <i class="fa fa-twitter"></i>
-                        </a>
-                    </li>
+                    {% if settings.newsletter_description %}
+                    <p class="newsletter-description">{{ settings.newsletter_description }}</p>
                     {% endif %}
                     
-                    {% if settings.social_media_snapchat or store.social_media.items.snapchat %}
-                    <li>
-                        <a href="{% if settings.social_media_snapchat %}{{ settings.social_media_snapchat }}{% else %}https://www.snapchat.com/add/{{ store.social_media.items.snapchat }}{% endif %}" class="social-item social-linkedin" target="_blank">
-                            <i class="fa fa-snapchat-ghost"></i>
-                        </a>
-                    </li>
-                    {% endif %}
-                    
-                    {% if settings.social_media_tiktok or store.social_media.items.tiktok %}
-                    <li>
-                        <a href="{% if settings.social_media_tiktok %}{{ settings.social_media_tiktok }}{% else %}https://www.tiktok.com/@{{ store.social_media.items.tiktok }}{% endif %}" class="social-item social-tiktok" target="_blank">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" xml:space="preserve"><path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"/></svg>
-                        </a>
-                    </li>
-                    {% endif %}
-                    
-                    {% if settings.social_media_website or store.social_media.items.website %}
-                    <li>
-                        <a href="{% if settings.social_media_website %}{{ settings.social_media_website }}{% else %}{{ store.social_media.items.website }}{% endif %}" class="social-item social-website" target="_blank">
-                            <i class="fa fa-globe"></i>
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
+                    <form class="newsletter-form modern-form" method="POST">
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-control" 
+                                   placeholder="{% if settings.newsletter_placeholder %}{{ settings.newsletter_placeholder }}{% else %}أدخل بريدك الإلكتروني{% endif %}" 
+                                   required>
+                            <button type="submit" class="btn-submit">
+                                {% if settings.newsletter_button_text %}
+                                    {{ settings.newsletter_button_text }}
+                                {% else %}
+                                    <i class="fas fa-paper-plane"></i>
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
                 {% endif %}
             </div>
         </div>
     </div>
+    {% endif %}
     
-    <!-- Footer Body -->
-    <div class="footer-body">
+    <!-- Footer Main Content -->
+    {% if not settings.hide_footer_main %}
+    <div class="footer-main {% if settings.footer_layout %}layout-{{ settings.footer_layout }}{% else %}layout-grid{% endif %}">
         <div class="{% if settings.full_width %} container-fluid {% else %} container custom-container {% endif %}">
-            <div class="row-footer">
+            <div class="footer-grid">
+                
                 <!-- Business Contact Section -->
-                {% if not (settings.business_location_hide) %}
-                <div class="footer-col-block s1">
-                    <div class="footer-heading footer-heading-mobile text-xl fw-medium">
-                        {% if locals.business_contact %}{{ locals.business_contact }}{% else %}Business Contact{% endif %}
+                {% if not settings.business_location_hide %}
+                <div class="footer-column contact-column {% if settings.contact_column_animation %}animate-on-scroll{% endif %}">
+                    <div class="footer-heading">
+                        <h3>{% if settings.contact_section_title %}{{ settings.contact_section_title }}{% else %}تواصل معنا{% endif %}</h3>
+                        {% if settings.contact_section_icon %}
+                        <div class="section-icon">
+                            <i class="{{ settings.contact_section_icon }}"></i>
+                        </div>
+                        {% endif %}
                     </div>
-                    <div class="tf-collapse-content">
-                        <div class="footer-contact">
-                            <ul class="footer-info">
-                                {% if settings.business_location_address or store.business_location.show_location %}
-                                <li class="item">
-                                    <span class="box-icon">
-                                        <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10.1869 1.73431C9.06854 0.61592 7.58155 0 5.99993 0C4.4183 0 2.93129 0.61592 1.81292 1.73431C0.694534 2.85273 0.0786133 4.33969 0.0786133 5.92129C0.0786133 9.12084 3.10388 11.7821 4.72917 13.2118C4.95504 13.4105 5.15008 13.582 5.30547 13.7272C5.50016 13.9091 5.75006 14 5.9999 14C6.24979 14 6.49964 13.9091 6.69435 13.7272C6.84975 13.582 7.04479 13.4105 7.27065 13.2118C8.89594 11.7821 11.9212 9.12084 11.9212 5.92129C11.9212 4.33969 11.3053 2.85273 10.1869 1.73431ZM6.72897 12.5961C6.49816 12.7991 6.29885 12.9744 6.13451 13.1279C6.05902 13.1984 5.94078 13.1984 5.86526 13.1279C5.70095 12.9744 5.50161 12.7991 5.2708 12.596C3.74283 11.2519 0.898656 8.75001 0.898656 5.92131C0.898656 3.1085 3.18704 0.820124 5.99987 0.820124C8.81268 0.820124 11.1011 3.1085 11.1011 5.92131C11.1011 8.75001 8.25694 11.2519 6.72897 12.5961Z" fill="#0D0D0D"/>
-                                            <path d="M6.00008 3.08887C4.56122 3.08887 3.39062 4.25943 3.39062 5.69829C3.39062 7.13715 4.56122 8.30772 6.00008 8.30772C7.43894 8.30772 8.6095 7.13715 8.6095 5.69829C8.6095 4.25943 7.43894 3.08887 6.00008 3.08887ZM6.00008 7.48759C5.01343 7.48759 4.21072 6.68489 4.21072 5.69826C4.21072 4.71164 5.01343 3.90894 6.00008 3.90894C6.98673 3.90894 7.7894 4.71164 7.7894 5.69826C7.7894 6.68489 6.98673 7.48759 6.00008 7.48759Z" fill="#0D0D0D"/>
-                                        </svg>
-                                    </span>
+                    
+                    <div class="footer-content">
+                        {% if settings.contact_description %}
+                        <p class="contact-description">{{ settings.contact_description }}</p>
+                        {% endif %}
+                        
+                        <ul class="contact-list">
+                            {% if settings.business_location_address or store.business_location.show_location %}
+                            <li class="contact-item address-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-info">
                                     {% if store.business_location.lat %}
-                                        <a target="_blank" href="https://maps.google.com/?q={{ store.business_location.lat }},{{ store.business_location.lng }}">
+                                        <a target="_blank" href="https://maps.google.com/?q={{ store.business_location.lat }},{{ store.business_location.lng }}" class="contact-link">
                                     {% endif %}
-                                    {% if settings.business_location_address %}
-                                        {{ settings.business_location_address }}
-                                    {% else %}
-                                        {{ store.business_location.country.name }}, {{ store.business_location.city.name }}, {{ store.business_location.district }}, {{ store.business_location.street }}
-                                    {% endif %}
+                                    <span class="contact-text">
+                                        {% if settings.business_location_address %}
+                                            {{ settings.business_location_address }}
+                                        {% else %}
+                                            {{ store.business_location.country.name }}, {{ store.business_location.city.name }}, {{ store.business_location.district }}, {{ store.business_location.street }}
+                                        {% endif %}
+                                    </span>
                                     {% if store.business_location.lat %}
                                         </a>
                                     {% endif %}
-                                </li>
-                                {% endif %}
-                                
-                                {% if settings.business_location_phone or store.social_media.items.phone %}
-                                <li class="item">
-                                    <span class="box-icon">
-                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M11.6666 9.4091L10.9841 8.4641C10.7324 8.12417 10.3574 7.89649 9.93972 7.82996C9.522 7.76343 9.09484 7.86335 8.74998 8.10827L8.09081 8.59243C7.13399 7.73698 6.36526 6.69214 5.83331 5.5241L6.49248 5.04577C6.837 4.79478 7.06794 4.41741 7.13464 3.99641C7.20135 3.5754 7.09838 3.14513 6.84831 2.79993L6.18331 1.86077C5.93339 1.51663 5.55703 1.28582 5.13698 1.21909C4.71693 1.15236 4.28757 1.25518 3.94331 1.50493L2.91664 2.23993C2.58681 2.47798 2.33009 2.80349 2.17547 3.17972C2.02086 3.55595 1.9745 3.96792 2.04164 4.3691C2.33803 6.09644 3.02915 7.73206 4.06118 9.14856C5.0932 10.5651 6.43827 11.7242 7.99164 12.5358C8.30603 12.696 8.65376 12.78 9.00664 12.7808C9.46814 12.7804 9.91756 12.6333 10.29 12.3608L11.3108 11.6666C11.4837 11.5428 11.6302 11.3858 11.7419 11.2048C11.8535 11.0238 11.9281 10.8224 11.9612 10.6123C11.9943 10.4023 11.9853 10.1877 11.9347 9.98113C11.8842 9.77457 11.793 9.58012 11.6666 9.4091Z" fill="#0D0D0D"/>
-                                        </svg>
-                                    </span>
-                                    <a href="tel:{% if settings.business_location_phone %}{{ settings.business_location_phone }}{% else %}{{ store.social_media.items.phone }}{% endif %}">
+                                </div>
+                            </li>
+                            {% endif %}
+                            
+                            {% if settings.business_location_phone or store.social_media.items.phone %}
+                            <li class="contact-item phone-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-info">
+                                    <a href="tel:{% if settings.business_location_phone %}{{ settings.business_location_phone }}{% else %}{{ store.social_media.items.phone }}{% endif %}" class="contact-link">
                                         {% if settings.business_location_phone %}{{ settings.business_location_phone }}{% else %}{{ store.social_media.items.phone }}{% endif %}
                                     </a>
-                                </li>
-                                {% endif %}
-                                
-                                {% if settings.business_location_email %}
-                                <li class="item">
-                                    <span class="box-icon">
-                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M11.8125 2.625H2.1875C1.8394 2.625 1.50556 2.76328 1.25942 3.00942C1.01328 3.25556 0.875 3.5894 0.875 3.9375V10.0625C0.875 10.4106 1.01328 10.7444 1.25942 10.9906C1.50556 11.2367 1.8394 11.375 2.1875 11.375H11.8125C12.1606 11.375 12.4944 11.2367 12.7406 10.9906C12.9867 10.7444 13.125 10.4106 13.125 10.0625V3.9375C13.125 3.5894 12.9867 3.25556 12.7406 3.00942C12.4944 2.76328 12.1606 2.625 11.8125 2.625Z" fill="#0D0D0D"/>
-                                        </svg>
-                                    </span>
-                                    <a href="mailto:{{ settings.business_location_email }}">{{ settings.business_location_email }}</a>
-                                </li>
-                                {% endif %}
-                            </ul>
-                            
-                            {% if store.business_location.lat %}
-                            <a href="https://maps.google.com/?q={{ store.business_location.lat }},{{ store.business_location.lng }}" class="tf-btn btn-line-dark fw-normal" target="_blank">
-                                <span class="text-sm text-transform-none">{% if locals.get_direction %}{{ locals.get_direction }}{% else %}Get Direction{% endif %}</span>
-                                <i class="fa fa-external-link fs-8"></i>
-                            </a>
+                                </div>
+                            </li>
                             {% endif %}
-                        </div>
+                            
+                            {% if settings.business_location_email %}
+                            <li class="contact-item email-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-info">
+                                    <a href="mailto:{{ settings.business_location_email }}" class="contact-link">{{ settings.business_location_email }}</a>
+                                </div>
+                            </li>
+                            {% endif %}
+                            
+                            {% if settings.business_hours %}
+                            <li class="contact-item hours-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="contact-info">
+                                    <span class="contact-text">{{ settings.business_hours }}</span>
+                                </div>
+                            </li>
+                            {% endif %}
+                        </ul>
+                        
+                        {% if store.business_location.lat and not settings.hide_map_button %}
+                        <a href="https://maps.google.com/?q={{ store.business_location.lat }},{{ store.business_location.lng }}" 
+                           class="btn-map {% if settings.map_button_style %}btn-{{ settings.map_button_style }}{% else %}btn-primary{% endif %}" target="_blank">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>{% if settings.map_button_text %}{{ settings.map_button_text }}{% else %}عرض على الخريطة{% endif %}</span>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
                 {% endif %}
 
-                <!-- Newsletter Section -->
-                <div class="footer-inner-wrap footer-col-block s2">
-                    <div class="footer-heading footer-heading-mobile text-xl fw-medium">
-                        {% if locals.subscribe_newsletter %}{{ locals.subscribe_newsletter }}{% else %}Subscribe Newsletter{% endif %}
-                    </div>
-                    <div class="tf-collapse-content">
-                        <div class="footer-newsletter">
-                            <p>{% if locals.newsletter_description %}{{ locals.newsletter_description }}{% else %}We invite you to register to read the latest news, offers and events about our company. We promise not spam your inbox.{% endif %}</p>
-                            <form class="form-newsletter" method="POST">
-                                <div class="form__entry entry_block">
-                                    <fieldset class="entry__field">
-                                        <input class="input radius-60" type="email" name="email" autocomplete="off" placeholder="{% if locals.enter_email %}{{ locals.enter_email }}{% else %}Enter your e-mail...{% endif %}" required />
-                                    </fieldset>
-                                </div>
-                                <div class="button-submit">
-                                    <button class="sib-form-block__button subscribe-button radius-60" type="submit">
-                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <g clip-path="url(#clip0_5296_3345)">
-                                                <path d="M17.7938 8.50229L17.7931 8.50162L14.1192 4.84537C13.8439 4.57147 13.3988 4.57249 13.1248 4.84776C12.8508 5.123 12.8519 5.56818 13.1271 5.84212L15.5938 8.29687H0.703125C0.314789 8.29687 0 8.61166 0 9C0 9.38833 0.314789 9.70312 0.703125 9.70312H15.5938L13.1272 12.1579C12.8519 12.4318 12.8509 12.877 13.1248 13.1522C13.3988 13.4275 13.844 13.4285 14.1192 13.1546L17.7932 9.49837L17.7938 9.4977C18.0692 9.22285 18.0683 8.77623 17.7938 8.50229Z" fill="white"></path>
-                                            </g>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                <!-- Quick Links Columns -->
                 
-                <!-- Links Sections -->
-                <div class="footer-inner-wrap s3">
-                    {% if not (settings.links_1_hide) %}
-                    <div class="footer-col-block inner-col">
-                        <div class="footer-heading footer-heading-mobile text-xl fw-medium">
-                            {% if settings.links_1_title %}{{ settings.links_1_title }}{% else %}About Us{% endif %}
+                <!-- Links Column 1 -->
+                {% if not settings.links_1_hide and settings.links_1_links %}
+                <div class="footer-column links-column {% if settings.links_column_animation %}animate-on-scroll{% endif %}">
+                    <div class="footer-heading">
+                        <h3>{% if settings.links_1_title %}{{ settings.links_1_title }}{% else %}روابط مهمة{% endif %}</h3>
+                        {% if settings.links_1_icon %}
+                        <div class="section-icon">
+                            <i class="{{ settings.links_1_icon }}"></i>
                         </div>
-                        <div class="tf-collapse-content">
-                            <ul class="footer-menu-list">
-                                {% for link in settings.links_1_links %}
-                                    {% if link.title %}
-                                    <li>
-                                        <a href="{{ link.url }}">{{ link.title }}</a>
-                                    </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </div>
+                        {% endif %}
                     </div>
-                    {% endif %}
                     
-                    {% if not (settings.links_2_hide) %}
-                    <div class="footer-col-block inner-col">
-                        <div class="footer-heading footer-heading-mobile text-xl fw-medium">
-                            {% if settings.links_2_title %}{{ settings.links_2_title }}{% else %}Resource{% endif %}
-                        </div>
-                        <div class="tf-collapse-content">
-                            <ul class="footer-menu-list">
-                                {% for link in settings.links_2_links %}
-                                    {% if link.title %}
-                                    <li>
-                                        <a href="{{ link.url }}">{{ link.title }}</a>
-                                    </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </div>
+                    <div class="footer-content">
+                        {% if settings.links_1_description %}
+                        <p class="links-description">{{ settings.links_1_description }}</p>
+                        {% endif %}
+                        
+                        <ul class="footer-links">
+                            {% for link in settings.links_1_links %}
+                                {% if link.title %}
+                                <li>
+                                    <a href="{{ link.url }}" {% if link.new_tab %}target="_blank"{% endif %} class="footer-link">
+                                        {% if link.icon %}
+                                        <i class="{{ link.icon }}"></i>
+                                        {% endif %}
+                                        {{ link.title }}
+                                    </a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
                     </div>
-                    {% endif %}
-                    
-                    {% if not (settings.links_3_hide) %}
-                    <div class="footer-col-block inner-col">
-                        <div class="footer-heading footer-heading-mobile text-xl fw-medium">
-                            {% if settings.links_3_title %}{{ settings.links_3_title }}{% else %}Support{% endif %}
-                        </div>
-                        <div class="tf-collapse-content">
-                            <ul class="footer-menu-list">
-                                {% for link in settings.links_3_links %}
-                                    {% if link.title %}
-                                    <li>
-                                        <a href="{{ link.url }}">{{ link.title }}</a>
-                                    </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                    {% endif %}
                 </div>
+                {% endif %}
+                
+                <!-- Links Column 2 -->
+                {% if not settings.links_2_hide and settings.links_2_links %}
+                <div class="footer-column links-column {% if settings.links_column_animation %}animate-on-scroll{% endif %}">
+                    <div class="footer-heading">
+                        <h3>{% if settings.links_2_title %}{{ settings.links_2_title }}{% else %}روابط مهمة{% endif %}</h3>
+                        {% if settings.links_2_icon %}
+                        <div class="section-icon">
+                            <i class="{{ settings.links_2_icon }}"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="footer-content">
+                        {% if settings.links_2_description %}
+                        <p class="links-description">{{ settings.links_2_description }}</p>
+                        {% endif %}
+                        
+                        <ul class="footer-links">
+                            {% for link in settings.links_2_links %}
+                                {% if link.title %}
+                                <li>
+                                    <a href="{{ link.url }}" {% if link.new_tab %}target="_blank"{% endif %} class="footer-link">
+                                        {% if link.icon %}
+                                        <i class="{{ link.icon }}"></i>
+                                        {% endif %}
+                                        {{ link.title }}
+                                    </a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Links Column 3 -->
+                {% if not settings.links_3_hide and settings.links_3_links %}
+                <div class="footer-column links-column {% if settings.links_column_animation %}animate-on-scroll{% endif %}">
+                    <div class="footer-heading">
+                        <h3>{% if settings.links_3_title %}{{ settings.links_3_title }}{% else %}روابط مهمة{% endif %}</h3>
+                        {% if settings.links_3_icon %}
+                        <div class="section-icon">
+                            <i class="{{ settings.links_3_icon }}"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="footer-content">
+                        {% if settings.links_3_description %}
+                        <p class="links-description">{{ settings.links_3_description }}</p>
+                        {% endif %}
+                        
+                        <ul class="footer-links">
+                            {% for link in settings.links_3_links %}
+                                {% if link.title %}
+                                <li>
+                                    <a href="{{ link.url }}" {% if link.new_tab %}target="_blank"{% endif %} class="footer-link">
+                                        {% if link.icon %}
+                                        <i class="{{ link.icon }}"></i>
+                                        {% endif %}
+                                        {{ link.title }}
+                                    </a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Links Column 4 -->
+                {% if not settings.links_4_hide and settings.links_4_links %}
+                <div class="footer-column links-column {% if settings.links_column_animation %}animate-on-scroll{% endif %}">
+                    <div class="footer-heading">
+                        <h3>{% if settings.links_4_title %}{{ settings.links_4_title }}{% else %}روابط مهمة{% endif %}</h3>
+                        {% if settings.links_4_icon %}
+                        <div class="section-icon">
+                            <i class="{{ settings.links_4_icon }}"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="footer-content">
+                        {% if settings.links_4_description %}
+                        <p class="links-description">{{ settings.links_4_description }}</p>
+                        {% endif %}
+                        
+                        <ul class="footer-links">
+                            {% for link in settings.links_4_links %}
+                                {% if link.title %}
+                                <li>
+                                    <a href="{{ link.url }}" {% if link.new_tab %}target="_blank"{% endif %} class="footer-link">
+                                        {% if link.icon %}
+                                        <i class="{{ link.icon }}"></i>
+                                        {% endif %}
+                                        {{ link.title }}
+                                    </a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Custom Content Section -->
+                {% if settings.custom_content %}
+                <div class="footer-column custom-column {% if settings.custom_column_animation %}animate-on-scroll{% endif %}">
+                    <div class="footer-heading">
+                        <h3>{% if settings.custom_section_title %}{{ settings.custom_section_title }}{% else %}معلومات إضافية{% endif %}</h3>
+                        {% if settings.custom_section_icon %}
+                        <div class="section-icon">
+                            <i class="{{ settings.custom_section_icon }}"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="footer-content custom-content">
+                        {{ settings.custom_content | raw }}
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
+    {% endif %}
     
     <!-- Footer Bottom -->
-    <div class="footer-bottom">
+    {% if not settings.hide_footer_bottom %}
+    <div class="footer-bottom {% if settings.footer_bottom_style %}bottom-{{ settings.footer_bottom_style }}{% endif %}">
         <div class="{% if settings.full_width %} container-fluid {% else %} container custom-container {% endif %}">
             <div class="footer-bottom-wrap">
-                <!-- Copyright -->
-                <p class="text-dark">
-                    <a target="_blank" href="{% if settings.global_settings_copyrights_link %}{{ settings.global_settings_copyrights_link }}{% else %}https://mt-themes.com{% endif %}">
-                        {{ store.copyrights | raw }}
-                    </a>
-                </p>
                 
-                <!-- Payment Methods & Apps -->
+                <!-- Copyright Section -->
+                <div class="copyright-section">
+                    {% if settings.copyright_text %}
+                        <p class="copyright-text">{{ settings.copyright_text | raw }}</p>
+                    {% else %}
+                        <p class="copyright-text">
+                            <a target="_blank" href="{% if settings.global_settings_copyrights_link %}{{ settings.global_settings_copyrights_link }}{% else %}#{% endif %}">
+                                {{ store.copyrights | raw }}
+                            </a>
+                        </p>
+                    {% endif %}
+                    
+                    {% if settings.additional_copyright %}
+                    <p class="additional-copyright">{{ settings.additional_copyright }}</p>
+                    {% endif %}
+                </div>
+                
+                <!-- Apps & Payment Section -->
                 <div class="footer-bottom-right">
+                    
                     <!-- Mobile Apps -->
-                    {% if store.apps.ios_app_id or store.apps.android_package_name or settings.global_settings_ios_id or settings.global_settings_android_id %}
-                    <div class="footer-apps d-flex align-items-center">
-                        {% if store.apps.ios_app_id or settings.global_settings_ios_id %}
-                        <a href="https://apps.apple.com/app/id={% if store.apps.ios_app_id %}{{ store.apps.ios_app_id }}{% else %}{{ settings.global_settings_ios_id }}{% endif %}" target="_blank">
-                            <img src="{{ asset_url ~ 'app-store.svg' }}" loading="lazy" alt="App Store" width="115" height="35">
-                        </a>
+                    {% if not settings.hide_mobile_apps and (store.apps.ios_app_id or store.apps.android_package_name or settings.global_settings_ios_id or settings.global_settings_android_id) %}
+                    <div class="mobile-apps-section">
+                        {% if settings.apps_section_title %}
+                        <h4 class="apps-title">{{ settings.apps_section_title }}</h4>
                         {% endif %}
-                        {% if store.apps.android_package_name or settings.global_settings_android_id %}
-                        <a href="https://play.google.com/store/apps/details?id={% if store.apps.android_package_name %}{{ store.apps.android_package_name }}{% else %}{{ settings.global_settings_android_id }}{% endif %}" target="_blank">
-                            <img src="{{ asset_url ~ 'google-play.svg' }}" loading="lazy" alt="Google Play" width="115" height="35">
-                        </a>
-                        {% endif %}
+                        
+                        <div class="mobile-apps">
+                            {% if store.apps.ios_app_id or settings.global_settings_ios_id %}
+                            <a href="https://apps.apple.com/app/id={% if store.apps.ios_app_id %}{{ store.apps.ios_app_id }}{% else %}{{ settings.global_settings_ios_id }}{% endif %}" 
+                               target="_blank" class="app-link ios-app">
+                                <img src="{{ asset_url ~ 'app-store.svg' }}" loading="lazy" alt="App Store" width="115" height="35">
+                            </a>
+                            {% endif %}
+                            
+                            {% if store.apps.android_package_name or settings.global_settings_android_id %}
+                            <a href="https://play.google.com/store/apps/details?id={% if store.apps.android_package_name %}{{ store.apps.android_package_name }}{% else %}{{ settings.global_settings_android_id }}{% endif %}" 
+                               target="_blank" class="app-link android-app">
+                                <img src="{{ asset_url ~ 'google-play.svg' }}" loading="lazy" alt="Google Play" width="115" height="35">
+                            </a>
+                            {% endif %}
+                        </div>
                     </div>
                     {% endif %}
                     
-                    <!-- Payment Methods -->
-                    {% if store.shipping_methods | length > 0 or store.payment_methods | length > 0 %}
-                    <ul class="tf-payment">
-                        {% if not settings.companies_vat_hide_companies %}
-                            {% for shipping_method in store.shipping_methods %}
-                            <li class="item">
-                                <img src="{{ imageUrl(shipping_method.icon,{ h: 80, q: 100 }) }}" loading="lazy" alt="{{ shipping_method.name }}">
-                            </li>
-                            {% endfor %}
+                    <!-- Payment & Shipping Methods -->
+                    {% if not settings.hide_payment_methods and (store.shipping_methods | length > 0 or store.payment_methods | length > 0) %}
+                    <div class="payment-methods-section">
+                        {% if settings.payment_section_title %}
+                        <h4 class="payment-title">{{ settings.payment_section_title }}</h4>
                         {% endif %}
-                        {% if not settings.companies_vat_hide_payment_methods %}
-                            {% for payment_method in store.payment_methods %}
-                            <li class="item">
-                                <img src="{{ imageUrl(payment_method.icon,{ h: 80, q: 100 }) }}" loading="lazy" alt="{{ payment_method.name }}">
-                            </li>
-                            {% endfor %}
+                        
+                        <ul class="payment-methods {% if settings.payment_methods_style %}methods-{{ settings.payment_methods_style }}{% endif %}">
+                            {% if not settings.companies_vat_hide_companies %}
+                                {% for shipping_method in store.shipping_methods %}
+                                <li class="method-item shipping-method">
+                                    <img src="{{ imageUrl(shipping_method.icon,{ h: 80, q: 100 }) }}" 
+                                         loading="lazy" 
+                                         alt="{{ shipping_method.name }}"
+                                         title="{{ shipping_method.name }}">
+                                </li>
+                                {% endfor %}
+                            {% endif %}
+                            
+                            {% if not settings.companies_vat_hide_payment_methods %}
+                                {% for payment_method in store.payment_methods %}
+                                <li class="method-item payment-method">
+                                    <img src="{{ imageUrl(payment_method.icon,{ h: 80, q: 100 }) }}" 
+                                         loading="lazy" 
+                                         alt="{{ payment_method.name }}"
+                                         title="{{ payment_method.name }}">
+                                </li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Trust Badges -->
+                    {% if settings.trust_badges %}
+                    <div class="trust-badges-section">
+                        {% if settings.trust_badges_title %}
+                        <h4 class="trust-title">{{ settings.trust_badges_title }}</h4>
                         {% endif %}
-                    </ul>
+                        
+                        <div class="trust-badges">
+                            {% for badge in settings.trust_badges %}
+                                {% if badge.image %}
+                                <div class="trust-badge">
+                                    {% if badge.link %}
+                                    <a href="{{ badge.link }}" {% if badge.new_tab %}target="_blank"{% endif %}>
+                                    {% endif %}
+                                        <img src="{{ badge.image }}" alt="{{ badge.alt }}" loading="lazy">
+                                    {% if badge.link %}
+                                    </a>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
+    {% endif %}
+    
+    <!-- Back to Top Button -->
+    {% if not settings.hide_back_to_top %}
+    <button class="back-to-top {% if settings.back_to_top_style %}btn-{{ settings.back_to_top_style }}{% endif %}" 
+            onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+            title="العودة للأعلى">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+    {% endif %}
+
+</footer>
+{% endif %}
 
         <!-- VAT Information (Hidden in new design) -->
         {% if false and not (settings.companies_vat_hide) %}
@@ -362,52 +651,236 @@
       {% endif %}
 
   <script>
-
+document.addEventListener("DOMContentLoaded", function(){
+    // WhatsApp Chat Functionality (Legacy)
+    $(".whatsChat .whatsTitle").click(function () {
+        $(this).siblings().toggleClass("active");
+        $(".whatsChat .content .bodyMsgs").removeClass("active");
+        $(".whatsChat .content .bodyMsgs").addClass("active");
+    });
     
- 	    document.addEventListener("DOMContentLoaded", function(){
+    $(".whatsChat .content .head").click(function () {
+        $(".whatsChat .angleDown").removeClass("active");
+        $(".whatsChat .content .bodyMsgs .messageStyle").removeClass("active");
+    });
 
-            $(".whatsChat .whatsTitle").click(function () {
-                
-                $(this).siblings().toggleClass("active");
-                $(".whatsChat .content .bodyMsgs").removeClass("active");
-                $(".whatsChat .content .bodyMsgs").addClass("active");
+    $('body,html').on('click', function(e) {
+        var container = $(".whatsChat .angleDown *,.whatsChat .whatsTitle,.whatsChat .whatsTitle *"),
+        Sub = $(".whatsChat .angleDown,.whatsChat .content .bodyMsgs .messageStyle");
+        if(!$(e.target).is(container)){
+            Sub.removeClass("active");
+        }
+    });
 
-                
-            });
+    // Modern Footer Enhancements
+    
+    // Back to Top Button
+    const backToTopBtn = document.querySelector('.back-to-top');
+    if (backToTopBtn) {
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+    }
+
+    // Smooth Scroll for Footer Links
+    document.querySelectorAll('.footer-link[href^="#"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Newsletter Form Enhancement
+    const newsletterForm = document.querySelector('.newsletter-form');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('.btn-submit');
+            const input = this.querySelector('input[type="email"]');
             
-            $(".whatsChat .content .head").click(function () {
+            if (submitBtn && input) {
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                submitBtn.disabled = true;
                 
-                $(".whatsChat .angleDown").removeClass("active");
-                $(".whatsChat .content .bodyMsgs .messageStyle").removeClass("active");
-                
-            });
-        
-            
-            $('body,html').on('click', function(e) {
-                var container = $(".whatsChat .angleDown *,.whatsChat .whatsTitle,.whatsChat .whatsTitle *"),
-                Sub = $(".whatsChat .angleDown,.whatsChat .content .bodyMsgs .messageStyle");
-                if(!$(e.target).is(container)){
-                    Sub.removeClass("active");
+                // Reset after 3 seconds (adjust based on your form handling)
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i>';
+                    submitBtn.disabled = false;
+                    input.value = '';
+                }, 3000);
+            }
+        });
+    }
+
+    // Animate Footer Columns on Scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = 'running';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.footer-column').forEach(column => {
+        observer.observe(column);
+    });
+
+    // Social Media Tooltips
+    document.querySelectorAll('.social-item[data-tooltip]').forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'social-tooltip';
+            tooltip.textContent = this.getAttribute('data-tooltip');
+            tooltip.style.cssText = `
+                position: absolute;
+                bottom: 60px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-size: 12px;
+                white-space: nowrap;
+                z-index: 1000;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+            this.appendChild(tooltip);
+            setTimeout(() => tooltip.style.opacity = '1', 10);
+        });
+
+        item.addEventListener('mouseleave', function() {
+            const tooltip = this.querySelector('.social-tooltip');
+            if (tooltip) {
+                tooltip.style.opacity = '0';
+                setTimeout(() => tooltip.remove(), 300);
+            }
+        });
+    });
+
+    // Contact Item Click to Copy
+    document.querySelectorAll('.contact-item').forEach(item => {
+        const link = item.querySelector('.contact-link');
+        if (link && (link.href.startsWith('tel:') || link.href.startsWith('mailto:'))) {
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', function() {
+                const text = link.textContent.trim();
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        showCopyNotification(this, 'تم النسخ!');
+                    });
                 }
-
             });
+        }
+    });
 
-            // Footer Mobile Collapse Functionality
-            $('.footer-heading-mobile').on('click', function() {
-                var $this = $(this);
-                var $content = $this.next('.tf-collapse-content');
-                
-                // Toggle active class on heading
-                $this.toggleClass('active');
-                
-                // Toggle active class on content
-                $content.toggleClass('active');
-                
-                // Close other sections (optional - for accordion behavior)
-                // $('.footer-heading-mobile').not($this).removeClass('active');
-                // $('.tf-collapse-content').not($content).removeClass('active');
+    function showCopyNotification(element, message) {
+        const notification = document.createElement('div');
+        notification.textContent = message;
+        notification.style.cssText = `
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--footer-accent);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+        `;
+        element.style.position = 'relative';
+        element.appendChild(notification);
+        
+        setTimeout(() => notification.style.opacity = '1', 10);
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
+    }
+
+    // Footer Mobile Collapse (Legacy Support)
+    $('.footer-heading-mobile').on('click', function() {
+        var $this = $(this);
+        var $content = $this.next('.tf-collapse-content');
+        
+        $this.toggleClass('active');
+        $content.toggleClass('active');
+    });
+
+    // Lazy Load Footer Images
+    const footerImages = document.querySelectorAll('.modern-footer img[loading="lazy"]');
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src || img.src;
+                    img.classList.remove('lazy');
+                    observer.unobserve(img);
+                }
             });
         });
+
+        footerImages.forEach(img => imageObserver.observe(img));
+    }
+
+    // Footer Performance Optimization
+    const footerElement = document.querySelector('.modern-footer');
+    if (footerElement) {
+        // Reduce animations on low-end devices
+        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+            footerElement.classList.add('reduced-motion');
+        }
+
+        // Pause animations when footer is not visible
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const animations = entry.target.querySelectorAll('.floating-shape');
+                if (entry.isIntersecting) {
+                    animations.forEach(el => el.style.animationPlayState = 'running');
+                } else {
+                    animations.forEach(el => el.style.animationPlayState = 'paused');
+                }
+            });
+        });
+
+        footerObserver.observe(footerElement);
+    }
+
+    // Check if Font Awesome icons are loaded and show SVG fallbacks if needed
+    setTimeout(() => {
+        const twitterIcon = document.querySelector('.social-twitter .fa-x-twitter');
+        const twitterSvg = document.querySelector('.social-twitter .twitter-fallback');
+        
+        if (twitterIcon && twitterSvg) {
+            const iconStyle = window.getComputedStyle(twitterIcon, '::before');
+            const hasContent = iconStyle.content && iconStyle.content !== 'none' && iconStyle.content !== '""';
+            
+            if (!hasContent) {
+                twitterIcon.style.display = 'none';
+                twitterSvg.style.display = 'inline-block';
+            }
+        }
+    }, 1000);
+});
 </script>
 
 
@@ -417,24 +890,919 @@
 
 <style>
 :root {
-    --footer-primary-color: {% if settings.global_settings_background_color %}{{ settings.global_settings_background_color }}{% else %}var(--website-bg){% endif %};
-    --footer-white-color: {% if settings.global_settings_text_color %}{{ settings.global_settings_text_color }}{% else %} var(--primary-color) {% endif %};
-    --footer-links-color: {% if settings.global_settings_link_color %}{{ settings.global_settings_link_color }}{% else %}#000{% endif %};
-    --footer-links-hover-color: {% if settings.global_settings_link_hover_color %}{{ settings.global_settings_link_hover_color }}{% else %}var(--primary-color){% endif %};
-    --footer-links-hover-color-bg: {% if settings.global_settings_link_hover_bg %}{{ settings.global_settings_link_hover_bg }}{% else %}#e6e6e6{% endif %};
-    --footer-logistics-icons-bg: {% if settings.global_settings_logistics_pay_icons_bg %}{{ settings.global_settings_logistics_pay_icons_bg }}{% else %}#f5f5f5{% endif %};
-    --footer-address-color: {% if settings.global_settings_color_address %}{{ settings.global_settings_color_address }}{% else %}#000{% endif %};
-    --footer-bg-copyrights: {% if settings.global_settings_bg_copyrights %}{{ settings.global_settings_bg_copyrights }}{% else %}var(--website-bg){% endif %};
-    --footer-color-copyrights: {% if settings.global_settings_color_copyrights %}{{ settings.global_settings_color_copyrights }}{% else %}#000{% endif %};
-    --color-vat: {% if settings.global_settings_color_vat %}{{ settings.global_settings_color_vat }}{% else %}#000{% endif %};
+    /* Modern Footer Variables */
+    --footer-bg-primary: {% if settings.footer_bg_color %}{{ settings.footer_bg_color }}{% else %}#1a1a2e{% endif %};
+    --footer-bg-secondary: {% if settings.footer_bg_secondary %}{{ settings.footer_bg_secondary }}{% else %}#16213e{% endif %};
+    --footer-text-primary: {% if settings.footer_text_color %}{{ settings.footer_text_color }}{% else %}#ffffff{% endif %};
+    --footer-text-secondary: {% if settings.footer_text_secondary %}{{ settings.footer_text_secondary }}{% else %}#b8c5d1{% endif %};
+    --footer-accent: {% if settings.footer_accent_color %}{{ settings.footer_accent_color }}{% else %}var(--primary-color){% endif %};
+    --footer-border: {% if settings.footer_border_color %}{{ settings.footer_border_color }}{% else %}rgba(255, 255, 255, 0.1){% endif %};
     
-    --social-bg: {% if settings.global_settings_color_social_bg %}{{ settings.global_settings_color_social_bg }}{% else %} #fff {% endif %};
-    --social-color: {% if settings.global_settings_color_social_color %}{{ settings.global_settings_color_social_color }}{% else %} var(--primary-color) {% endif %};
+    /* Legacy Support */
+    --footer-primary-color: var(--footer-bg-primary);
+    --footer-white-color: var(--footer-text-primary);
+    --footer-links-color: var(--footer-text-secondary);
+    --footer-links-hover-color: var(--footer-accent);
+    --footer-links-hover-color-bg: rgba(255, 255, 255, 0.1);
+    --footer-logistics-icons-bg: rgba(255, 255, 255, 0.05);
+    --footer-address-color: var(--footer-text-secondary);
+    --footer-bg-copyrights: var(--footer-bg-secondary);
+    --footer-color-copyrights: var(--footer-text-secondary);
+    --color-vat: var(--footer-text-secondary);
+    
+    --social-bg: var(--footer-accent);
+    --social-color: #ffffff;
+    
+    --whatapp-bg: #fff;
+    --whatapp-msg-bg: #fff;
+    --whatapp-bg-whatsapp: #efeae2;
+}
 
+/* Modern Footer Styles */
+.modern-footer {
+    position: relative;
+    background: var(--footer-bg-primary);
+    color: var(--footer-text-primary);
+    overflow: hidden;
+    {% if settings.footer_padding_top %}padding-top: {{ settings.footer_padding_top }}px;{% endif %}
+    {% if settings.footer_padding_bottom %}padding-bottom: {{ settings.footer_padding_bottom }}px;{% endif %}
+}
 
-    --whatapp-bg: {% if settings.whatsapp_section_background_container_wp %}{{ settings.whatsapp_section_background_container_wp }}{% else %}#fff{% endif %};
-    --whatapp-msg-bg: {% if settings.whatsapp_section_background_msg %}{{ settings.whatsapp_section_background_msg }}{% else %}#fff{% endif %};
-    --whatapp-bg-whatsapp: {% if settings.whatsapp_section_background_wp %}{{ settings.whatsapp_section_background_wp }}{% else %}#efeae2{% endif %};
+.footer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.modern-footer > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Animated Background */
+.footer-bg-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.floating-shape {
+    position: absolute;
+    background: linear-gradient(45deg, var(--footer-accent), transparent);
+    border-radius: 50%;
+    opacity: 0.1;
+    animation: float 20s infinite linear;
+}
+
+.floating-shape.shape-1 {
+    width: 100px;
+    height: 100px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.floating-shape.shape-2 {
+    width: 150px;
+    height: 150px;
+    top: 60%;
+    right: 15%;
+    animation-delay: 5s;
+}
+
+.floating-shape.shape-3 {
+    width: 80px;
+    height: 80px;
+    bottom: 30%;
+    left: 60%;
+    animation-delay: 10s;
+}
+
+.floating-shape.shape-4 {
+    width: 120px;
+    height: 120px;
+    top: 10%;
+    right: 40%;
+    animation-delay: 15s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-20px) rotate(90deg); }
+    50% { transform: translateY(0px) rotate(180deg); }
+    75% { transform: translateY(-10px) rotate(270deg); }
+}
+
+/* Footer Top Section */
+.footer-top {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--footer-border);
+    background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.02));
+}
+
+.footer-top-wrap {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+/* Logo Section */
+.footer-logo-section {
+    text-align: center;
+}
+
+.footer-logo img {
+    max-height: 60px;
+    transition: transform 0.3s ease;
+}
+
+.logo-animated:hover img {
+    transform: scale(1.1);
+}
+
+.footer-tagline {
+    margin-top: 15px;
+    color: var(--footer-text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Social Media Section */
+.social-media-section {
+    text-align: center;
+}
+
+.social-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--footer-text-primary);
+}
+
+.tf-social-icon {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.social-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: var(--footer-text-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.social-item:hover {
+    background: var(--footer-accent);
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.social-item i {
+    font-size: 20px;
+    z-index: 2;
+}
+
+.social-ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+.social-item:hover .social-ripple {
+    width: 100%;
+    height: 100%;
+}
+
+/* أستايل خاص لوسائل التواصل */
+.social-facebook:hover {
+    background: #1877f2 !important;
+}
+
+.social-instagram:hover {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important;
+}
+
+.social-twitter:hover {
+    background: #000000 !important;
+}
+
+.social-snapchat:hover {
+    background: #fffc00 !important;
+    color: #000000 !important;
+}
+
+.social-tiktok:hover {
+    background: #000000 !important;
+}
+
+.social-youtube:hover {
+    background: #ff0000 !important;
+}
+
+.social-linkedin:hover {
+    background: #0077b5 !important;
+}
+
+.social-whatsapp:hover {
+    background: #25d366 !important;
+}
+
+.social-website:hover {
+    background: var(--footer-accent) !important;
+}
+
+/* Newsletter Section */
+.newsletter-section {
+    text-align: center;
+}
+
+.newsletter-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--footer-text-primary);
+}
+
+.newsletter-description {
+    color: var(--footer-text-secondary);
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.newsletter-form .form-group {
+    position: relative;
+    display: flex;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.newsletter-form .form-control {
+    flex: 1;
+    padding: 12px 50px 12px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--footer-text-primary);
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.newsletter-form .form-control:focus {
+    outline: none;
+    border-color: var(--footer-accent);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.newsletter-form .form-control::placeholder {
+    color: var(--footer-text-secondary);
+}
+
+.newsletter-form .btn-submit {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: var(--footer-accent);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.newsletter-form .btn-submit:hover {
+    background: var(--footer-accent);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Footer Main Content */
+.footer-main {
+    padding: 80px 0;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 50px;
+}
+
+.footer-column {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.footer-column:nth-child(1) { animation-delay: 0.1s; }
+.footer-column:nth-child(2) { animation-delay: 0.2s; }
+.footer-column:nth-child(3) { animation-delay: 0.3s; }
+.footer-column:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer-heading {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.footer-heading h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--footer-text-primary);
+    margin: 0;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.footer-heading h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--footer-accent), transparent);
+    border-radius: 2px;
+}
+
+.section-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--footer-accent);
+}
+
+/* Contact List */
+.contact-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(5px);
+}
+
+.contact-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--footer-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.contact-info {
+    flex: 1;
+}
+
+.contact-link {
+    color: var(--footer-text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+    color: var(--footer-accent);
+}
+
+.contact-text {
+    color: var(--footer-text-secondary);
+    line-height: 1.6;
+}
+
+/* Map Button */
+.btn-map {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 25px;
+    background: linear-gradient(135deg, var(--footer-accent), var(--footer-accent));
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn-map:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+}
+
+/* Footer Links */
+.footer-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-link {
+    color: var(--footer-text-secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    position: relative;
+}
+
+.footer-link::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--footer-accent);
+    transition: width 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--footer-accent);
+    padding-left: 15px;
+}
+
+.footer-link:hover::before {
+    width: 10px;
+}
+
+/* Custom Content */
+.custom-content {
+    color: var(--footer-text-secondary);
+    line-height: 1.8;
+}
+
+.custom-content h4 {
+    color: var(--footer-text-primary);
+    margin-bottom: 15px;
+}
+
+.custom-content p {
+    margin-bottom: 15px;
+}
+
+.custom-content a {
+    color: var(--footer-accent);
+    text-decoration: none;
+}
+
+.custom-content a:hover {
+    text-decoration: underline;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    padding: 30px 0;
+    background: var(--footer-bg-secondary);
+    border-top: 1px solid var(--footer-border);
+}
+
+.footer-bottom-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.copyright-section {
+    flex: 1;
+}
+
+.copyright-text {
+    margin: 0;
+    color: var(--footer-text-secondary);
+    font-size: 14px;
+}
+
+.copyright-text a {
+    color: var(--footer-accent);
+    text-decoration: none;
+}
+
+.copyright-text a:hover {
+    text-decoration: underline;
+}
+
+.additional-copyright {
+    margin: 5px 0 0 0;
+    color: var(--footer-text-secondary);
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+/* Apps & Payment Section */
+.footer-bottom-right {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.mobile-apps {
+    display: flex;
+    gap: 15px;
+}
+
+.app-link {
+    transition: transform 0.3s ease;
+}
+
+.app-link:hover {
+    transform: translateY(-3px);
+}
+
+.payment-methods {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.method-item {
+    width: 50px;
+    height: 35px;
+    background: var(--footer-logistics-icons-bg);
+    border-radius: 8px;
+    padding: 5px;
+    transition: all 0.3s ease;
+}
+
+.method-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.method-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Trust Badges */
+.trust-badges {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.trust-badge {
+    transition: transform 0.3s ease;
+}
+
+.trust-badge:hover {
+    transform: scale(1.1);
+}
+
+.trust-badge img {
+    max-height: 40px;
+    width: auto;
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--footer-accent);
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: var(--footer-accent);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .footer-top-wrap {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .footer-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-top {
+        padding: 40px 0;
+    }
+    
+    .footer-main {
+        padding: 60px 0;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .footer-bottom-wrap {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .footer-bottom-right {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .tf-social-icon {
+        gap: 10px;
+    }
+    
+    .social-item {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-top {
+        padding: 30px 0;
+    }
+    
+    .footer-main {
+        padding: 40px 0;
+    }
+    
+    .footer-heading h3 {
+        font-size: 18px;
+    }
+    
+    .newsletter-form .form-control {
+        font-size: 13px;
+        padding: 10px 45px 10px 15px;
+    }
+    
+    .newsletter-form .btn-submit {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .contact-item {
+        padding: 12px;
+    }
+    
+    .contact-icon {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .modern-footer {
+        --footer-bg-primary: #0f0f23;
+        --footer-bg-secondary: #1a1a2e;
+        --footer-text-primary: #ffffff;
+        --footer-text-secondary: #b8c5d1;
+        --footer-border: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .modern-footer {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    
+    .back-to-top,
+    .footer-bg-animation {
+        display: none !important;
+    }
+}
+
+/* Fallback Icons - في حالة عدم تحميل Font Awesome */
+.social-item i::before {
+    font-family: "Font Awesome 6 Brands", "Font Awesome 6 Free", "Font Awesome 5 Brands", "Font Awesome 5 Free", sans-serif !important;
+    font-weight: 900;
+}
+
+/* تحسين عرض الأيقونات */
+.social-item i,
+.contact-icon i,
+.section-icon i,
+.btn-map i,
+.back-to-top i {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* إصلاح أيقونات وسائل التواصل */
+.social-facebook i::before { content: "\f39e"; }
+.social-instagram i::before { content: "\f16d"; }
+.social-twitter i::before { content: "\e61b"; } /* X Twitter الجديد */
+.social-snapchat i::before { content: "\f2ab"; }
+.social-tiktok i::before { content: "\e07b"; }
+.social-youtube i::before { content: "\f167"; }
+.social-linkedin i::before { content: "\f0e1"; }
+.social-whatsapp i::before { content: "\f232"; }
+.social-website i::before { content: "\f0ac"; }
+
+/* إضافة أيقونة X احتياطية */
+.social-twitter .fa-x-twitter::before { 
+    content: "\e61b"; 
+    font-family: "Font Awesome 6 Brands" !important;
+}
+
+/* في حالة عدم وجود أيقونة X، استخدم أيقونة تويتر القديمة */
+.social-twitter i:not(.fa-x-twitter)::before { 
+    content: "\f099"; 
+}
+
+/* إصلاح أيقونات التواصل */
+.contact-icon .fa-map-marker-alt::before { content: "\f3c5"; }
+.contact-icon .fa-phone::before { content: "\f095"; }
+.contact-icon .fa-envelope::before { content: "\f0e0"; }
+.contact-icon .fa-clock::before { content: "\f017"; }
+
+/* إصلاح أيقونات أخرى */
+.fa-map-marked-alt::before { content: "\f5a0"; }
+.fa-chevron-up::before { content: "\f077"; }
+.fa-paper-plane::before { content: "\f1d8"; }
+.fa-spinner::before { content: "\f110"; }
+
+/* تحريك أيقونة التحميل */
+.fa-spinner {
+    animation: fa-spin 2s infinite linear;
+}
+
+@keyframes fa-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* تحسين أداء الأيقونات */
+.social-item i,
+.contact-icon i {
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+/* إصلاح مشاكل عرض الأيقونات */
+.modern-footer .fab,
+.modern-footer .fas,
+.modern-footer .far {
+    font-family: "Font Awesome 6 Brands", "Font Awesome 6 Free", "Font Awesome 5 Brands", "Font Awesome 5 Free" !important;
+    font-weight: 900 !important;
+    font-style: normal !important;
+}
+
+/* تحسين أيقونة TikTok */
+.social-tiktok svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+/* تحسين أيقونة Twitter/X الاحتياطية */
+.social-twitter .twitter-fallback {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: all 0.3s ease;
+}
+
+.social-twitter:hover .twitter-fallback {
+    transform: scale(1.1);
+}
+
+/* تحسين أيقونة Instagram الاحتياطية */
+.social-instagram .instagram-fallback {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: all 0.3s ease;
+}
+
+.social-instagram:hover .instagram-fallback {
+    transform: scale(1.1);
+    fill: url(#instagram-gradient);
+}
+
+/* تدرج لوني للإنستجرام */
+.social-instagram svg defs {
+    display: none;
+}
+
+.social-instagram:hover svg {
+    fill: #e4405f;
+}
+
+/* إصلاح مشاكل الأيقونات على الأجهزة المختلفة */
+@supports not (font-variation-settings: normal) {
+    .social-item i::before,
+    .contact-icon i::before {
+        font-family: "Font Awesome 5 Brands", "Font Awesome 5 Free" !important;
+    }
 }
 </style>
 
@@ -447,6 +1815,19 @@
   "icon": "fa fa-square",
   "display": true,
   "settings": {
+    "hide_footer": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إخفاء الفوتر بالكامل",
+        "en": "Hide Footer Completely"
+      },
+      "noLabel": true,
+      "default": false
+    },
     "full_width": {
       "type": "checkbox",
       "label": {
@@ -459,6 +1840,918 @@
       },
       "noLabel": true,
       "default": false
+    },
+    "footer_style": {
+      "type": "select",
+      "label": {
+        "ar": "نمط الفوتر",
+        "en": "Footer Style"
+      },
+      "options": [
+        {
+          "value": "1",
+          "label": {
+            "ar": "النمط الأول - كلاسيكي",
+            "en": "Style 1 - Classic"
+          }
+        },
+        {
+          "value": "2",
+          "label": {
+            "ar": "النمط الثاني - عصري",
+            "en": "Style 2 - Modern"
+          }
+        },
+        {
+          "value": "3",
+          "label": {
+            "ar": "النمط الثالث - مينيمال",
+            "en": "Style 3 - Minimal"
+          }
+        }
+      ],
+      "default": "1"
+    },
+    "footer_layout": {
+      "type": "select",
+      "label": {
+        "ar": "تخطيط الفوتر",
+        "en": "Footer Layout"
+      },
+      "options": [
+        {
+          "value": "grid",
+          "label": {
+            "ar": "شبكة",
+            "en": "Grid"
+          }
+        },
+        {
+          "value": "columns",
+          "label": {
+            "ar": "أعمدة",
+            "en": "Columns"
+          }
+        },
+        {
+          "value": "centered",
+          "label": {
+            "ar": "وسط",
+            "en": "Centered"
+          }
+        }
+      ],
+      "default": "grid"
+    },
+    "footer_background": {
+      "type": "fieldset",
+      "label": {
+        "ar": "خلفية الفوتر",
+        "en": "Footer Background"
+      },
+      "expandable": true,
+      "settings": {
+        "background_type": {
+          "type": "select",
+          "label": {
+            "ar": "نوع الخلفية",
+            "en": "Background Type"
+          },
+          "options": [
+            {
+              "value": "color",
+              "label": {
+                "ar": "لون",
+                "en": "Color"
+              }
+            },
+            {
+              "value": "gradient",
+              "label": {
+                "ar": "تدرج",
+                "en": "Gradient"
+              }
+            },
+            {
+              "value": "image",
+              "label": {
+                "ar": "صورة",
+                "en": "Image"
+              }
+            }
+          ],
+          "default": "color"
+        },
+        "bg_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون الخلفية",
+            "en": "Background Color"
+          },
+          "default": "#1a1a2e"
+        },
+        "bg_secondary": {
+          "type": "color",
+          "label": {
+            "ar": "اللون الثانوي",
+            "en": "Secondary Color"
+          },
+          "default": "#16213e"
+        },
+        "gradient_start": {
+          "type": "color",
+          "label": {
+            "ar": "بداية التدرج",
+            "en": "Gradient Start"
+          },
+          "default": "#1a1a2e"
+        },
+        "gradient_end": {
+          "type": "color",
+          "label": {
+            "ar": "نهاية التدرج",
+            "en": "Gradient End"
+          },
+          "default": "#16213e"
+        },
+        "gradient_direction": {
+          "type": "number",
+          "label": {
+            "ar": "اتجاه التدرج (درجة)",
+            "en": "Gradient Direction (degrees)"
+          },
+          "default": 135,
+          "min": 0,
+          "max": 360
+        },
+        "bg_image": {
+          "type": "image",
+          "label": {
+            "ar": "صورة الخلفية",
+            "en": "Background Image"
+          }
+        },
+        "bg_size": {
+          "type": "select",
+          "label": {
+            "ar": "حجم الخلفية",
+            "en": "Background Size"
+          },
+          "options": [
+            {
+              "value": "cover",
+              "label": {
+                "ar": "تغطية",
+                "en": "Cover"
+              }
+            },
+            {
+              "value": "contain",
+              "label": {
+                "ar": "احتواء",
+                "en": "Contain"
+              }
+            },
+            {
+              "value": "auto",
+              "label": {
+                "ar": "تلقائي",
+                "en": "Auto"
+              }
+            }
+          ],
+          "default": "cover"
+        },
+        "bg_position": {
+          "type": "select",
+          "label": {
+            "ar": "موضع الخلفية",
+            "en": "Background Position"
+          },
+          "options": [
+            {
+              "value": "center",
+              "label": {
+                "ar": "وسط",
+                "en": "Center"
+              }
+            },
+            {
+              "value": "top",
+              "label": {
+                "ar": "أعلى",
+                "en": "Top"
+              }
+            },
+            {
+              "value": "bottom",
+              "label": {
+                "ar": "أسفل",
+                "en": "Bottom"
+              }
+            }
+          ],
+          "default": "center"
+        },
+        "bg_overlay": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إضافة طبقة علوية",
+            "en": "Add Overlay"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "overlay_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون الطبقة العلوية",
+            "en": "Overlay Color"
+          },
+          "default": "#000000"
+        },
+        "overlay_opacity": {
+          "type": "number",
+          "label": {
+            "ar": "شفافية الطبقة العلوية",
+            "en": "Overlay Opacity"
+          },
+          "default": 0.5,
+          "min": 0,
+          "max": 1,
+          "step": 0.1
+        },
+        "animated_bg": {
+          "type": "checkbox",
+          "option": {
+            "ar": "خلفية متحركة",
+            "en": "Animated Background"
+          },
+          "noLabel": true,
+          "default": true
+        }
+      }
+    },
+    "footer_colors": {
+      "type": "fieldset",
+      "label": {
+        "ar": "ألوان الفوتر",
+        "en": "Footer Colors"
+      },
+      "expandable": true,
+      "settings": {
+        "text_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون النص الأساسي",
+            "en": "Primary Text Color"
+          },
+          "default": "#ffffff"
+        },
+        "text_secondary": {
+          "type": "color",
+          "label": {
+            "ar": "لون النص الثانوي",
+            "en": "Secondary Text Color"
+          },
+          "default": "#b8c5d1"
+        },
+        "accent_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون التمييز",
+            "en": "Accent Color"
+          },
+          "default": "#007bff"
+        },
+        "border_color": {
+          "type": "color",
+          "label": {
+            "ar": "لون الحدود",
+            "en": "Border Color"
+          },
+          "default": "rgba(255, 255, 255, 0.1)"
+        }
+      }
+    },
+    "footer_spacing": {
+      "type": "fieldset",
+      "label": {
+        "ar": "المسافات",
+        "en": "Spacing"
+      },
+      "expandable": true,
+      "settings": {
+        "padding_top": {
+          "type": "number",
+          "label": {
+            "ar": "المسافة العلوية",
+            "en": "Top Padding"
+          },
+          "default": 80,
+          "min": 0,
+          "max": 200
+        },
+        "padding_bottom": {
+          "type": "number",
+          "label": {
+            "ar": "المسافة السفلية",
+            "en": "Bottom Padding"
+          },
+          "default": 80,
+          "min": 0,
+          "max": 200
+        }
+      }
+    },
+    "footer_top_section": {
+      "type": "fieldset",
+      "label": {
+        "ar": "القسم العلوي",
+        "en": "Top Section"
+      },
+      "expandable": true,
+      "settings": {
+        "hide_footer_top": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إخفاء القسم العلوي",
+            "en": "Hide Top Section"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "top_style": {
+          "type": "select",
+          "label": {
+            "ar": "نمط القسم العلوي",
+            "en": "Top Section Style"
+          },
+          "options": [
+            {
+              "value": "1",
+              "label": {
+                "ar": "النمط الأول",
+                "en": "Style 1"
+              }
+            },
+            {
+              "value": "2",
+              "label": {
+                "ar": "النمط الثاني",
+                "en": "Style 2"
+              }
+            }
+          ],
+          "default": "1"
+        },
+        "hide_footer_logo": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إخفاء اللوجو",
+            "en": "Hide Logo"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "logo_animation": {
+          "type": "checkbox",
+          "option": {
+            "ar": "تحريك اللوجو",
+            "en": "Animate Logo"
+          },
+          "noLabel": true,
+          "default": true
+        },
+        "tagline": {
+          "type": "textarea",
+          "label": {
+            "ar": "الشعار",
+            "en": "Tagline"
+          }
+        }
+      }
+    },
+    "social_media_advanced": {
+      "type": "fieldset",
+      "label": {
+        "ar": "وسائل التواصل المتقدمة",
+        "en": "Advanced Social Media"
+      },
+      "expandable": true,
+      "settings": {
+        "social_title": {
+          "type": "text",
+          "label": {
+            "ar": "عنوان وسائل التواصل",
+            "en": "Social Media Title"
+          }
+        },
+        "social_style": {
+          "type": "select",
+          "label": {
+            "ar": "نمط وسائل التواصل",
+            "en": "Social Media Style"
+          },
+          "options": [
+            {
+              "value": "modern",
+              "label": {
+                "ar": "عصري",
+                "en": "Modern"
+              }
+            },
+            {
+              "value": "classic",
+              "label": {
+                "ar": "كلاسيكي",
+                "en": "Classic"
+              }
+            },
+            {
+              "value": "minimal",
+              "label": {
+                "ar": "مينيمال",
+                "en": "Minimal"
+              }
+            }
+          ],
+          "default": "modern"
+        },
+        "youtube": {
+          "type": "url",
+          "label": {
+            "ar": "رابط يوتيوب",
+            "en": "YouTube Link"
+          }
+        },
+        "linkedin": {
+          "type": "url",
+          "label": {
+            "ar": "رابط لينكد إن",
+            "en": "LinkedIn Link"
+          }
+        },
+        "whatsapp": {
+          "type": "text",
+          "label": {
+            "ar": "رقم واتساب (مع رمز الدولة)",
+            "en": "WhatsApp Number (with country code)"
+          }
+        }
+      }
+    },
+    "newsletter_advanced": {
+      "type": "fieldset",
+      "label": {
+        "ar": "النشرة الإخبارية المتقدمة",
+        "en": "Advanced Newsletter"
+      },
+      "expandable": true,
+      "settings": {
+        "hide_newsletter": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إخفاء النشرة الإخبارية",
+            "en": "Hide Newsletter"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "newsletter_title": {
+          "type": "text",
+          "label": {
+            "ar": "عنوان النشرة",
+            "en": "Newsletter Title"
+          },
+          "default": "اشترك في نشرتنا الإخبارية"
+        },
+        "newsletter_description": {
+          "type": "textarea",
+          "label": {
+            "ar": "وصف النشرة",
+            "en": "Newsletter Description"
+          }
+        },
+        "newsletter_placeholder": {
+          "type": "text",
+          "label": {
+            "ar": "نص الحقل",
+            "en": "Placeholder Text"
+          },
+          "default": "أدخل بريدك الإلكتروني"
+        },
+        "newsletter_button_text": {
+          "type": "text",
+          "label": {
+            "ar": "نص الزر",
+            "en": "Button Text"
+          }
+        }
+      }
+    },
+    "footer_main_section": {
+      "type": "fieldset",
+      "label": {
+        "ar": "القسم الرئيسي",
+        "en": "Main Section"
+      },
+      "expandable": true,
+      "settings": {
+        "hide_footer_main": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إخفاء القسم الرئيسي",
+            "en": "Hide Main Section"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "contact_section_title": {
+          "type": "text",
+          "label": {
+            "ar": "عنوان قسم التواصل",
+            "en": "Contact Section Title"
+          },
+          "default": "تواصل معنا"
+        },
+        "contact_section_icon": {
+          "type": "text",
+          "label": {
+            "ar": "أيقونة قسم التواصل",
+            "en": "Contact Section Icon"
+          },
+          "info": {
+            "ar": "استخدم أيقونات Font Awesome مثل fas fa-phone",
+            "en": "Use Font Awesome icons like fas fa-phone"
+          }
+        },
+        "contact_description": {
+          "type": "textarea",
+          "label": {
+            "ar": "وصف قسم التواصل",
+            "en": "Contact Section Description"
+          }
+        },
+        "contact_column_animation": {
+          "type": "checkbox",
+          "option": {
+            "ar": "تحريك عمود التواصل",
+            "en": "Animate Contact Column"
+          },
+          "noLabel": true,
+          "default": true
+        },
+        "business_hours": {
+          "type": "text",
+          "label": {
+            "ar": "ساعات العمل",
+            "en": "Business Hours"
+          }
+        },
+        "hide_map_button": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إخفاء زر الخريطة",
+            "en": "Hide Map Button"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "map_button_text": {
+          "type": "text",
+          "label": {
+            "ar": "نص زر الخريطة",
+            "en": "Map Button Text"
+          },
+          "default": "عرض على الخريطة"
+        },
+        "map_button_style": {
+          "type": "select",
+          "label": {
+            "ar": "نمط زر الخريطة",
+            "en": "Map Button Style"
+          },
+          "options": [
+            {
+              "value": "primary",
+              "label": {
+                "ar": "أساسي",
+                "en": "Primary"
+              }
+            },
+            {
+              "value": "secondary",
+              "label": {
+                "ar": "ثانوي",
+                "en": "Secondary"
+              }
+            },
+            {
+              "value": "outline",
+              "label": {
+                "ar": "مفرغ",
+                "en": "Outline"
+              }
+            }
+          ],
+          "default": "primary"
+        }
+      }
+    },
+    "custom_content_section": {
+      "type": "fieldset",
+      "label": {
+        "ar": "محتوى مخصص",
+        "en": "Custom Content"
+      },
+      "expandable": true,
+      "settings": {
+        "custom_content": {
+          "type": "html",
+          "label": {
+            "ar": "المحتوى المخصص",
+            "en": "Custom Content"
+          },
+          "info": {
+            "ar": "يمكنك إضافة HTML مخصص هنا",
+            "en": "You can add custom HTML here"
+          }
+        },
+        "custom_section_title": {
+          "type": "text",
+          "label": {
+            "ar": "عنوان القسم المخصص",
+            "en": "Custom Section Title"
+          }
+        },
+        "custom_section_icon": {
+          "type": "text",
+          "label": {
+            "ar": "أيقونة القسم المخصص",
+            "en": "Custom Section Icon"
+          }
+        },
+        "custom_column_animation": {
+          "type": "checkbox",
+          "option": {
+            "ar": "تحريك العمود المخصص",
+            "en": "Animate Custom Column"
+          },
+          "noLabel": true,
+          "default": true
+        }
+      }
+    },
+    "footer_bottom_section": {
+      "type": "fieldset",
+      "label": {
+        "ar": "القسم السفلي",
+        "en": "Bottom Section"
+      },
+      "expandable": true,
+      "settings": {
+        "hide_footer_bottom": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إخفاء القسم السفلي",
+            "en": "Hide Bottom Section"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "footer_bottom_style": {
+          "type": "select",
+          "label": {
+            "ar": "نمط القسم السفلي",
+            "en": "Bottom Section Style"
+          },
+          "options": [
+            {
+              "value": "1",
+              "label": {
+                "ar": "النمط الأول",
+                "en": "Style 1"
+              }
+            },
+            {
+              "value": "2",
+              "label": {
+                "ar": "النمط الثاني",
+                "en": "Style 2"
+              }
+            }
+          ],
+          "default": "1"
+        },
+        "copyright_text": {
+          "type": "html",
+          "label": {
+            "ar": "نص حقوق النشر",
+            "en": "Copyright Text"
+          }
+        },
+        "additional_copyright": {
+          "type": "text",
+          "label": {
+            "ar": "نص إضافي لحقوق النشر",
+            "en": "Additional Copyright Text"
+          }
+        },
+        "hide_mobile_apps": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إخفاء تطبيقات الجوال",
+            "en": "Hide Mobile Apps"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "apps_section_title": {
+          "type": "text",
+          "label": {
+            "ar": "عنوان قسم التطبيقات",
+            "en": "Apps Section Title"
+          }
+        },
+        "hide_payment_methods": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إخفاء طرق الدفع",
+            "en": "Hide Payment Methods"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "payment_section_title": {
+          "type": "text",
+          "label": {
+            "ar": "عنوان قسم طرق الدفع",
+            "en": "Payment Section Title"
+          }
+        },
+        "payment_methods_style": {
+          "type": "select",
+          "label": {
+            "ar": "نمط طرق الدفع",
+            "en": "Payment Methods Style"
+          },
+          "options": [
+            {
+              "value": "default",
+              "label": {
+                "ar": "افتراضي",
+                "en": "Default"
+              }
+            },
+            {
+              "value": "rounded",
+              "label": {
+                "ar": "مدور",
+                "en": "Rounded"
+              }
+            },
+            {
+              "value": "square",
+              "label": {
+                "ar": "مربع",
+                "en": "Square"
+              }
+            }
+          ],
+          "default": "default"
+        }
+      }
+    },
+    "trust_badges_section": {
+      "type": "fieldset",
+      "label": {
+        "ar": "شارات الثقة",
+        "en": "Trust Badges"
+      },
+      "expandable": true,
+      "settings": {
+        "trust_badges_title": {
+          "type": "text",
+          "label": {
+            "ar": "عنوان شارات الثقة",
+            "en": "Trust Badges Title"
+          }
+        },
+        "trust_badges": {
+          "type": "list",
+          "label": {
+            "ar": "شارات الثقة",
+            "en": "Trust Badges"
+          },
+          "settings_label": {
+            "ar": "شارة",
+            "en": "Badge"
+          },
+          "maxItems": 6,
+          "settings": {
+            "image": {
+              "type": "image",
+              "label": {
+                "ar": "صورة الشارة",
+                "en": "Badge Image"
+              }
+            },
+            "alt": {
+              "type": "text",
+              "label": {
+                "ar": "النص البديل",
+                "en": "Alt Text"
+              }
+            },
+            "link": {
+              "type": "url",
+              "label": {
+                "ar": "الرابط",
+                "en": "Link"
+              }
+            },
+            "new_tab": {
+              "type": "checkbox",
+              "option": {
+                "ar": "فتح في تبويب جديد",
+                "en": "Open in new tab"
+              },
+              "noLabel": true,
+              "default": true
+            }
+          }
+        }
+      }
+    },
+    "back_to_top_section": {
+      "type": "fieldset",
+      "label": {
+        "ar": "زر العودة للأعلى",
+        "en": "Back to Top Button"
+      },
+      "expandable": true,
+      "settings": {
+        "hide_back_to_top": {
+          "type": "checkbox",
+          "option": {
+            "ar": "إخفاء زر العودة للأعلى",
+            "en": "Hide Back to Top Button"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "back_to_top_style": {
+          "type": "select",
+          "label": {
+            "ar": "نمط زر العودة للأعلى",
+            "en": "Back to Top Button Style"
+          },
+          "options": [
+            {
+              "value": "default",
+              "label": {
+                "ar": "افتراضي",
+                "en": "Default"
+              }
+            },
+            {
+              "value": "rounded",
+              "label": {
+                "ar": "مدور",
+                "en": "Rounded"
+              }
+            },
+            {
+              "value": "square",
+              "label": {
+                "ar": "مربع",
+                "en": "Square"
+              }
+            }
+          ],
+          "default": "default"
+        }
+      }
+    },
+    "links_column_settings": {
+      "type": "fieldset",
+      "label": {
+        "ar": "إعدادات أعمدة الروابط",
+        "en": "Links Columns Settings"
+      },
+      "expandable": true,
+      "settings": {
+        "links_column_animation": {
+          "type": "checkbox",
+          "option": {
+            "ar": "تحريك أعمدة الروابط",
+            "en": "Animate Links Columns"
+          },
+          "noLabel": true,
+          "default": true
+        }
+      }
     },
     "global_settings": {
       "type": "fieldset",
@@ -709,8 +3002,8 @@
     "links_1": {
       "type": "fieldset",
       "label": {
-        "ar": "روابط مهمة",
-        "en": "Links"
+        "ar": "عمود الروابط الأول",
+        "en": "Links Column 1"
       },
       "icon": "font_awesome",
       "expandable": true,
@@ -735,27 +3028,62 @@
             "en": "Title"
           }
         },
+        "icon": {
+          "type": "text",
+          "label": {
+            "ar": "الأيقونة",
+            "en": "Icon"
+          },
+          "info": {
+            "ar": "استخدم أيقونات Font Awesome مثل fas fa-info",
+            "en": "Use Font Awesome icons like fas fa-info"
+          }
+        },
+        "description": {
+          "type": "textarea",
+          "label": {
+            "ar": "الوصف",
+            "en": "Description"
+          }
+        },
         "links": {
           "type": "list",
           "settings_label": {
-            "ar": "الروابط",
-            "en": "Links"
+            "ar": "رابط",
+            "en": "Link"
           },
           "noLabel": true,
+          "maxItems": 10,
           "settings": {
             "title": {
               "type": "text",
               "label": {
                 "ar": "العنوان",
-                "en": "text"
+                "en": "Title"
               }
             },
             "url": {
               "type": "url",
               "label": {
                 "ar": "الرابط",
-                "en": "Link"
+                "en": "URL"
               }
+            },
+            "icon": {
+              "type": "text",
+              "label": {
+                "ar": "الأيقونة",
+                "en": "Icon"
+              }
+            },
+            "new_tab": {
+              "type": "checkbox",
+              "option": {
+                "ar": "فتح في تبويب جديد",
+                "en": "Open in new tab"
+              },
+              "noLabel": true,
+              "default": false
             }
           }
         }
@@ -764,8 +3092,8 @@
     "links_2": {
       "type": "fieldset",
       "label": {
-        "ar": "روابط مهمة",
-        "en": "Links"
+        "ar": "عمود الروابط الثاني",
+        "en": "Links Column 2"
       },
       "icon": "font_awesome",
       "expandable": true,
@@ -790,27 +3118,58 @@
             "en": "Title"
           }
         },
+        "icon": {
+          "type": "text",
+          "label": {
+            "ar": "الأيقونة",
+            "en": "Icon"
+          }
+        },
+        "description": {
+          "type": "textarea",
+          "label": {
+            "ar": "الوصف",
+            "en": "Description"
+          }
+        },
         "links": {
           "type": "list",
           "settings_label": {
-            "ar": "الروابط",
-            "en": "Links"
+            "ar": "رابط",
+            "en": "Link"
           },
           "noLabel": true,
+          "maxItems": 10,
           "settings": {
             "title": {
               "type": "text",
               "label": {
                 "ar": "العنوان",
-                "en": "text"
+                "en": "Title"
               }
             },
             "url": {
               "type": "url",
               "label": {
                 "ar": "الرابط",
-                "en": "Link"
+                "en": "URL"
               }
+            },
+            "icon": {
+              "type": "text",
+              "label": {
+                "ar": "الأيقونة",
+                "en": "Icon"
+              }
+            },
+            "new_tab": {
+              "type": "checkbox",
+              "option": {
+                "ar": "فتح في تبويب جديد",
+                "en": "Open in new tab"
+              },
+              "noLabel": true,
+              "default": false
             }
           }
         }
@@ -819,8 +3178,8 @@
     "links_3": {
       "type": "fieldset",
       "label": {
-        "ar": "روابط مهمة",
-        "en": "Links"
+        "ar": "عمود الروابط الثالث",
+        "en": "Links Column 3"
       },
       "icon": "font_awesome",
       "expandable": true,
@@ -845,27 +3204,144 @@
             "en": "Title"
           }
         },
+        "icon": {
+          "type": "text",
+          "label": {
+            "ar": "الأيقونة",
+            "en": "Icon"
+          }
+        },
+        "description": {
+          "type": "textarea",
+          "label": {
+            "ar": "الوصف",
+            "en": "Description"
+          }
+        },
         "links": {
           "type": "list",
           "settings_label": {
-            "ar": "الروابط",
-            "en": "Links"
+            "ar": "رابط",
+            "en": "Link"
           },
           "noLabel": true,
+          "maxItems": 10,
           "settings": {
             "title": {
               "type": "text",
               "label": {
                 "ar": "العنوان",
-                "en": "text"
+                "en": "Title"
               }
             },
             "url": {
               "type": "url",
               "label": {
                 "ar": "الرابط",
-                "en": "Link"
+                "en": "URL"
               }
+            },
+            "icon": {
+              "type": "text",
+              "label": {
+                "ar": "الأيقونة",
+                "en": "Icon"
+              }
+            },
+            "new_tab": {
+              "type": "checkbox",
+              "option": {
+                "ar": "فتح في تبويب جديد",
+                "en": "Open in new tab"
+              },
+              "noLabel": true,
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "links_4": {
+      "type": "fieldset",
+      "label": {
+        "ar": "عمود الروابط الرابع",
+        "en": "Links Column 4"
+      },
+      "icon": "font_awesome",
+      "expandable": true,
+      "settings": {
+        "hide": {
+          "type": "checkbox",
+          "label": {
+            "ar": " ",
+            "en": " "
+          },
+          "option": {
+            "ar": "إخفاء",
+            "en": "Hide"
+          },
+          "noLabel": true,
+          "default": false
+        },
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        },
+        "icon": {
+          "type": "text",
+          "label": {
+            "ar": "الأيقونة",
+            "en": "Icon"
+          }
+        },
+        "description": {
+          "type": "textarea",
+          "label": {
+            "ar": "الوصف",
+            "en": "Description"
+          }
+        },
+        "links": {
+          "type": "list",
+          "settings_label": {
+            "ar": "رابط",
+            "en": "Link"
+          },
+          "noLabel": true,
+          "maxItems": 10,
+          "settings": {
+            "title": {
+              "type": "text",
+              "label": {
+                "ar": "العنوان",
+                "en": "Title"
+              }
+            },
+            "url": {
+              "type": "url",
+              "label": {
+                "ar": "الرابط",
+                "en": "URL"
+              }
+            },
+            "icon": {
+              "type": "text",
+              "label": {
+                "ar": "الأيقونة",
+                "en": "Icon"
+              }
+            },
+            "new_tab": {
+              "type": "checkbox",
+              "option": {
+                "ar": "فتح في تبويب جديد",
+                "en": "Open in new tab"
+              },
+              "noLabel": true,
+              "default": false
             }
           }
         }
