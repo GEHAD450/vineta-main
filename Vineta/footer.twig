@@ -11,12 +11,9 @@ if (!window.FontAwesome) {
 </script>
 
 {% if not settings.hide_footer %}
-<footer section-id="{{ sectionId }}" id="footer" class="modern-footer {% if settings.footer_style %}footer-style-{{ settings.footer_style }}{% else %}footer-style-1{% endif %}" 
+<footer section-id="{{ sectionId }}" id="footer" class="modern-footer" 
         style="{% if settings.footer_background_type == 'gradient' %}background: {{ settings.footer_gradient_start }} linear-gradient({{ settings.footer_gradient_direction }}deg, {{ settings.footer_gradient_start }}, {{ settings.footer_gradient_end }});{% elseif settings.footer_background_type == 'image' and settings.footer_bg_image %}background-image: url({{ settings.footer_bg_image }}); background-size: {{ settings.footer_bg_size }}; background-position: {{ settings.footer_bg_position }};{% else %}background-color: {{ settings.footer_bg_color }};{% endif %}">
     
-    {% if settings.footer_bg_overlay %}
-    <div class="footer-overlay" style="background: {{ settings.footer_overlay_color }}; opacity: {{ settings.footer_overlay_opacity }};"></div>
-    {% endif %}
 
     <!-- Animated Background Elements -->
     {% if settings.footer_animated_bg %}
@@ -36,7 +33,7 @@ if (!window.FontAwesome) {
                 <!-- Logo Section -->
                 {% if not settings.hide_footer_logo %}
                 <div class="footer-logo-section">
-                    <div class="footer-logo {% if settings.logo_animation %}logo-animated{% endif %}">
+                    <div class="footer-logo">
                         {% if settings.business_location_image %}
                             <a href="{{ store.url }}">
                                 <img src="{{ settings.business_location_image }}" class="logo" alt="{{ store.name }}" loading="lazy">
@@ -61,7 +58,7 @@ if (!window.FontAwesome) {
                     <h4 class="social-title">{{ settings.social_title }}</h4>
                     {% endif %}
                     
-                    <ul class="tf-social-icon {% if settings.social_style %}social-{{ settings.social_style }}{% else %}social-modern{% endif %}">
+                    <ul class="tf-social-icon social-modern">
                         {% if settings.social_media_facebook or store.social_media.items.facebook %}
                         <li>
                             <a href="{% if settings.social_media_facebook %}{{ settings.social_media_facebook }}{% else %}https://www.facebook.com/{{ store.social_media.items.facebook }}{% endif %}" 
@@ -194,13 +191,13 @@ if (!window.FontAwesome) {
     
     <!-- Footer Main Content -->
     {% if not settings.hide_footer_main %}
-    <div class="footer-main {% if settings.footer_layout %}layout-{{ settings.footer_layout }}{% else %}layout-grid{% endif %}">
+    <div class="footer-main layout-grid">
         <div class="{% if settings.full_width %} container-fluid {% else %} container custom-container {% endif %}">
             <div class="footer-grid">
                 
                 <!-- Business Contact Section -->
                 {% if not settings.business_location_hide %}
-                <div class="footer-column contact-column {% if settings.contact_column_animation %}animate-on-scroll{% endif %}">
+                <div class="footer-column contact-column">
                     <div class="footer-heading">
                         <h3>{% if settings.contact_section_title %}{{ settings.contact_section_title }}{% else %}تواصل معنا{% endif %}</h3>
                         {% if settings.contact_section_icon %}
@@ -275,13 +272,6 @@ if (!window.FontAwesome) {
                             {% endif %}
                         </ul>
                         
-                        {% if store.business_location.lat and not settings.hide_map_button %}
-                        <a href="https://maps.google.com/?q={{ store.business_location.lat }},{{ store.business_location.lng }}" 
-                           class="btn-map {% if settings.map_button_style %}btn-{{ settings.map_button_style }}{% else %}btn-primary{% endif %}" target="_blank">
-                            <i class="fas fa-map-marked-alt"></i>
-                            <span>{% if settings.map_button_text %}{{ settings.map_button_text }}{% else %}عرض على الخريطة{% endif %}</span>
-                        </a>
-                        {% endif %}
                     </div>
                 </div>
                 {% endif %}
@@ -290,7 +280,7 @@ if (!window.FontAwesome) {
                 
                 <!-- Links Column 1 -->
                 {% if not settings.links_1_hide and settings.links_1_links %}
-                <div class="footer-column links-column {% if settings.links_column_animation %}animate-on-scroll{% endif %}">
+                <div class="footer-column links-column">
                     <div class="footer-heading">
                         <h3>{% if settings.links_1_title %}{{ settings.links_1_title }}{% else %}روابط مهمة{% endif %}</h3>
                         {% if settings.links_1_icon %}
@@ -325,7 +315,7 @@ if (!window.FontAwesome) {
                 
                 <!-- Links Column 2 -->
                 {% if not settings.links_2_hide and settings.links_2_links %}
-                <div class="footer-column links-column {% if settings.links_column_animation %}animate-on-scroll{% endif %}">
+                <div class="footer-column links-column">
                     <div class="footer-heading">
                         <h3>{% if settings.links_2_title %}{{ settings.links_2_title }}{% else %}روابط مهمة{% endif %}</h3>
                         {% if settings.links_2_icon %}
@@ -360,7 +350,7 @@ if (!window.FontAwesome) {
                 
                 <!-- Links Column 3 -->
                 {% if not settings.links_3_hide and settings.links_3_links %}
-                <div class="footer-column links-column {% if settings.links_column_animation %}animate-on-scroll{% endif %}">
+                <div class="footer-column links-column">
                     <div class="footer-heading">
                         <h3>{% if settings.links_3_title %}{{ settings.links_3_title }}{% else %}روابط مهمة{% endif %}</h3>
                         {% if settings.links_3_icon %}
@@ -395,7 +385,7 @@ if (!window.FontAwesome) {
                 
                 <!-- Links Column 4 -->
                 {% if not settings.links_4_hide and settings.links_4_links %}
-                <div class="footer-column links-column {% if settings.links_column_animation %}animate-on-scroll{% endif %}">
+                <div class="footer-column links-column">
                     <div class="footer-heading">
                         <h3>{% if settings.links_4_title %}{{ settings.links_4_title }}{% else %}روابط مهمة{% endif %}</h3>
                         {% if settings.links_4_icon %}
@@ -430,7 +420,7 @@ if (!window.FontAwesome) {
 
                 <!-- Custom Content Section -->
                 {% if settings.custom_content %}
-                <div class="footer-column custom-column {% if settings.custom_column_animation %}animate-on-scroll{% endif %}">
+                <div class="footer-column custom-column">
                     <div class="footer-heading">
                         <h3>{% if settings.custom_section_title %}{{ settings.custom_section_title }}{% else %}معلومات إضافية{% endif %}</h3>
                         {% if settings.custom_section_icon %}
@@ -441,7 +431,7 @@ if (!window.FontAwesome) {
                     </div>
                     
                     <div class="footer-content custom-content">
-                        {{ settings.custom_content | raw }}
+                        {{ settings.custom_content }}
                     </div>
                 </div>
                 {% endif %}
@@ -459,13 +449,7 @@ if (!window.FontAwesome) {
                 <!-- Copyright Section -->
                 <div class="copyright-section">
                     {% if settings.copyright_text %}
-                        <p class="copyright-text">{{ settings.copyright_text | raw }}</p>
-                    {% else %}
-                        <p class="copyright-text">
-                            <a target="_blank" href="{% if settings.global_settings_copyrights_link %}{{ settings.global_settings_copyrights_link }}{% else %}#{% endif %}">
-                                {{ store.copyrights | raw }}
-                            </a>
-                        </p>
+                        <p class="copyright-text">{{ settings.copyright_text }}</p>
                     {% endif %}
                     
                     {% if settings.additional_copyright %}
@@ -918,6 +902,17 @@ document.addEventListener("DOMContentLoaded", function(){
     --whatapp-bg-whatsapp: #efeae2;
 }
 
+/* Body Layout for Sticky Footer */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main, .main-content {
+    flex: 1;
+}
+
 /* Modern Footer Styles */
 .modern-footer {
     position: relative;
@@ -928,18 +923,9 @@ document.addEventListener("DOMContentLoaded", function(){
     {% if settings.footer_padding_bottom %}padding-bottom: {{ settings.footer_padding_bottom }}px;{% endif %}
 }
 
-.footer-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-}
 
 .modern-footer > * {
-    position: relative;
-    z-index: 2;
+    z-index: 20;
 }
 
 /* Animated Background */
@@ -957,8 +943,9 @@ document.addEventListener("DOMContentLoaded", function(){
     position: absolute;
     background: linear-gradient(45deg, var(--footer-accent), transparent);
     border-radius: 50%;
-    opacity: 0.1;
-    animation: float 20s infinite linear;
+    opacity: 0.3;
+    animation: float 8s infinite ease-in-out;
+    will-change: transform;
 }
 
 .floating-shape.shape-1 {
@@ -974,7 +961,7 @@ document.addEventListener("DOMContentLoaded", function(){
     height: 150px;
     top: 60%;
     right: 15%;
-    animation-delay: 5s;
+    animation-delay: 2s;
 }
 
 .floating-shape.shape-3 {
@@ -982,7 +969,7 @@ document.addEventListener("DOMContentLoaded", function(){
     height: 80px;
     bottom: 30%;
     left: 60%;
-    animation-delay: 10s;
+    animation-delay: 4s;
 }
 
 .floating-shape.shape-4 {
@@ -990,14 +977,25 @@ document.addEventListener("DOMContentLoaded", function(){
     height: 120px;
     top: 10%;
     right: 40%;
-    animation-delay: 15s;
+    animation-delay: 6s;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    25% { transform: translateY(-20px) rotate(90deg); }
-    50% { transform: translateY(0px) rotate(180deg); }
-    75% { transform: translateY(-10px) rotate(270deg); }
+    0% { 
+        transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+    }
+    25% { 
+        transform: translateY(-30px) translateX(10px) rotate(90deg) scale(1.1);
+    }
+    50% { 
+        transform: translateY(-10px) translateX(-15px) rotate(180deg) scale(0.9);
+    }
+    75% { 
+        transform: translateY(-25px) translateX(5px) rotate(270deg) scale(1.05);
+    }
+    100% { 
+        transform: translateY(0px) translateX(0px) rotate(360deg) scale(1);
+    }
 }
 
 /* Footer Top Section */
@@ -1008,8 +1006,7 @@ document.addEventListener("DOMContentLoaded", function(){
 }
 
 .footer-top-wrap {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
     gap: 40px;
     align-items: center;
 }
@@ -1255,7 +1252,7 @@ document.addEventListener("DOMContentLoaded", function(){
     content: '';
     position: absolute;
     bottom: 0;
-    left: 0;
+    right: 0;
     width: 50px;
     height: 3px;
     background: linear-gradient(90deg, var(--footer-accent), transparent);
@@ -1264,16 +1261,12 @@ document.addEventListener("DOMContentLoaded", function(){
 
 .section-icon {
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
+     top: 6px;
+    right: -27px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--footer-accent);
+    color: var(--white-color);
 }
 
 /* Contact List */
@@ -1285,13 +1278,15 @@ document.addEventListener("DOMContentLoaded", function(){
 
 .contact-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 15px;
     margin-bottom: 20px;
     padding: 15px;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 10px;
     transition: all 0.3s ease;
+    font-size:15px;
+    font-weight:500
 }
 
 .contact-item:hover {
@@ -1330,27 +1325,6 @@ document.addEventListener("DOMContentLoaded", function(){
     line-height: 1.6;
 }
 
-/* Map Button */
-.btn-map {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 25px;
-    background: linear-gradient(135deg, var(--footer-accent), var(--footer-accent));
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 25px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    margin-top: 20px;
-}
-
-.btn-map:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
-}
-
 /* Footer Links */
 .footer-links {
     list-style: none;
@@ -1371,12 +1345,14 @@ document.addEventListener("DOMContentLoaded", function(){
     gap: 8px;
     padding: 8px 0;
     position: relative;
+    font-size:15px;
+    font-weight:600
 }
 
 .footer-link::before {
     content: '';
     position: absolute;
-    left: -15px;
+    right: -15px;
     top: 50%;
     transform: translateY(-50%);
     width: 0;
@@ -1386,7 +1362,7 @@ document.addEventListener("DOMContentLoaded", function(){
 }
 
 .footer-link:hover {
-    color: var(--footer-accent);
+    color: #67a156;
     padding-left: 15px;
 }
 
@@ -1420,9 +1396,10 @@ document.addEventListener("DOMContentLoaded", function(){
 
 /* Footer Bottom */
 .footer-bottom {
-    padding: 30px 0;
-    background: var(--footer-bg-secondary);
-    border-top: 1px solid var(--footer-border);
+    padding: 20px 0;
+    background: {% if settings.footer_bottom_bg_color %}{{ settings.footer_bottom_bg_color }}{% else %}#1a1a2e{% endif %};
+    border-top: 1px solid {% if settings.footer_bottom_border_color %}{{ settings.footer_bottom_border_color }}{% else %}#2a2a3e{% endif %};
+    margin-top: auto;
 }
 
 .footer-bottom-wrap {
@@ -1430,6 +1407,7 @@ document.addEventListener("DOMContentLoaded", function(){
     justify-content: space-between;
     align-items: center;
     gap: 30px;
+    color: {% if settings.footer_bottom_text_color %}{{ settings.footer_bottom_text_color }}{% else %}#ffffff{% endif %};
 }
 
 .copyright-section {
@@ -1438,8 +1416,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
 .copyright-text {
     margin: 0;
-    color: var(--footer-text-secondary);
+    color: inherit;
     font-size: 14px;
+    line-height: 1.5;
 }
 
 .copyright-text a {
@@ -1511,6 +1490,7 @@ document.addEventListener("DOMContentLoaded", function(){
 .trust-badges {
     display: flex;
     gap: 15px;
+    justify-content:center;
     align-items: center;
 }
 
@@ -1537,7 +1517,7 @@ document.addEventListener("DOMContentLoaded", function(){
     background: var(--footer-accent);
     color: #ffffff;
     border: none;
-    border-radius: 50%;
+    border-radius: 8px;
     cursor: pointer;
     z-index: 1000;
     transition: all 0.3s ease;
@@ -1548,6 +1528,15 @@ document.addEventListener("DOMContentLoaded", function(){
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
+}
+
+/* أنماط زر العودة للأعلى */
+.back-to-top.btn-default {
+    border-radius: 8px;
+}
+
+.back-to-top.btn-rounded {
+    border-radius: 50%;
 }
 
 .back-to-top.show {
@@ -1685,7 +1674,6 @@ document.addEventListener("DOMContentLoaded", function(){
 .social-item i,
 .contact-icon i,
 .section-icon i,
-.btn-map i,
 .back-to-top i {
     display: inline-block;
     font-style: normal;
@@ -1725,7 +1713,6 @@ document.addEventListener("DOMContentLoaded", function(){
 .contact-icon .fa-clock::before { content: "\f017"; }
 
 /* إصلاح أيقونات أخرى */
-.fa-map-marked-alt::before { content: "\f5a0"; }
 .fa-chevron-up::before { content: "\f077"; }
 .fa-paper-plane::before { content: "\f1d8"; }
 .fa-spinner::before { content: "\f110"; }
@@ -1841,1186 +1828,679 @@ document.addEventListener("DOMContentLoaded", function(){
       "noLabel": true,
       "default": false
     },
-    "footer_style": {
+    "footer_background_type": {
       "type": "select",
       "label": {
-        "ar": "نمط الفوتر",
-        "en": "Footer Style"
+        "ar": "نوع خلفية الفوتر",
+        "en": "Footer Background Type"
+      },
+      "options": [
+        {
+          "value": "color",
+          "label": {
+            "ar": "لون",
+            "en": "Color"
+          }
+        },
+        {
+          "value": "gradient",
+          "label": {
+            "ar": "تدرج",
+            "en": "Gradient"
+          }
+        },
+        {
+          "value": "image",
+          "label": {
+            "ar": "صورة",
+            "en": "Image"
+          }
+        }
+      ],
+      "default": "color"
+    },
+    "footer_bg_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون خلفية الفوتر",
+        "en": "Footer Background Color"
+      },
+      "default": "#1a1a2e"
+    },
+    "footer_gradient_start": {
+      "type": "color",
+      "label": {
+        "ar": "بداية التدرج",
+        "en": "Gradient Start"
+      },
+      "default": "#1a1a2e"
+    },
+    "footer_gradient_end": {
+      "type": "color",
+      "label": {
+        "ar": "نهاية التدرج",
+        "en": "Gradient End"
+      },
+      "default": "#16213e"
+    },
+    "footer_gradient_direction": {
+      "type": "number",
+      "label": {
+        "ar": "اتجاه التدرج (درجة)",
+        "en": "Gradient Direction (degrees)"
+      },
+      "default": 135,
+      "min": 0,
+      "max": 360
+    },
+    "footer_bg_image": {
+      "type": "image",
+      "label": {
+        "ar": "صورة خلفية الفوتر",
+        "en": "Footer Background Image"
+      }
+    },
+    "footer_bg_size": {
+      "type": "select",
+      "label": {
+        "ar": "حجم الخلفية",
+        "en": "Background Size"
+      },
+      "options": [
+        {
+          "value": "cover",
+          "label": {
+            "ar": "تغطية",
+            "en": "Cover"
+          }
+        },
+        {
+          "value": "contain",
+          "label": {
+            "ar": "احتواء",
+            "en": "Contain"
+          }
+        }
+      ],
+      "default": "cover"
+    },
+    "footer_bg_position": {
+      "type": "select",
+      "label": {
+        "ar": "موضع الخلفية",
+        "en": "Background Position"
+      },
+      "options": [
+        {
+          "value": "center",
+          "label": {
+            "ar": "وسط",
+            "en": "Center"
+          }
+        },
+        {
+          "value": "top",
+          "label": {
+            "ar": "أعلى",
+            "en": "Top"
+          }
+        },
+        {
+          "value": "bottom",
+          "label": {
+            "ar": "أسفل",
+            "en": "Bottom"
+          }
+        }
+      ],
+      "default": "center"
+    },
+    "footer_animated_bg": {
+      "type": "checkbox",
+      "option": {
+        "ar": "خلفية متحركة",
+        "en": "Animated Background"
+      },
+      "noLabel": true,
+      "default": true
+    },
+    "hide_footer_top": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء القسم العلوي",
+        "en": "Hide Top Section"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "footer_top_style": {
+      "type": "select",
+      "label": {
+        "ar": "نمط القسم العلوي",
+        "en": "Top Section Style"
       },
       "options": [
         {
           "value": "1",
           "label": {
-            "ar": "النمط الأول - كلاسيكي",
-            "en": "Style 1 - Classic"
+            "ar": "النمط الأول",
+            "en": "Style 1"
           }
         },
         {
           "value": "2",
           "label": {
-            "ar": "النمط الثاني - عصري",
-            "en": "Style 2 - Modern"
-          }
-        },
-        {
-          "value": "3",
-          "label": {
-            "ar": "النمط الثالث - مينيمال",
-            "en": "Style 3 - Minimal"
+            "ar": "النمط الثاني",
+            "en": "Style 2"
           }
         }
       ],
       "default": "1"
     },
-    "footer_layout": {
+    "hide_footer_logo": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء اللوجو",
+        "en": "Hide Logo"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "footer_tagline": {
+      "type": "textarea",
+      "label": {
+        "ar": "الشعار",
+        "en": "Tagline"
+      }
+    },
+    "social_media_hide": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء وسائل التواصل",
+        "en": "Hide Social Media"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "social_title": {
+      "type": "text",
+      "label": {
+        "ar": "عنوان وسائل التواصل",
+        "en": "Social Media Title"
+      }
+    },
+    "social_media_facebook": {
+      "type": "url",
+      "label": {
+        "ar": "رابط فيسبوك",
+        "en": "Facebook Link"
+      }
+    },
+    "social_media_instagram": {
+      "type": "url",
+      "label": {
+        "ar": "رابط انستغرام",
+        "en": "Instagram Link"
+      }
+    },
+    "social_media_twitter": {
+      "type": "url",
+      "label": {
+        "ar": "رابط تويتر",
+        "en": "Twitter Link"
+      }
+    },
+    "social_media_snapchat": {
+      "type": "url",
+      "label": {
+        "ar": "رابط سناب شات",
+        "en": "Snapchat Link"
+      }
+    },
+    "social_media_tiktok": {
+      "type": "url",
+      "label": {
+        "ar": "رابط تيك توك",
+        "en": "TikTok Link"
+      }
+    },
+    "social_media_website": {
+      "type": "url",
+      "label": {
+        "ar": "رابط الموقع",
+        "en": "Website Link"
+      }
+    },
+    "social_media_youtube": {
+      "type": "url",
+      "label": {
+        "ar": "رابط يوتيوب",
+        "en": "YouTube Link"
+      }
+    },
+    "social_media_linkedin": {
+      "type": "url",
+      "label": {
+        "ar": "رابط لينكد إن",
+        "en": "LinkedIn Link"
+      }
+    },
+    "social_media_whatsapp": {
+      "type": "text",
+      "label": {
+        "ar": "رقم واتساب (مع رمز الدولة)",
+        "en": "WhatsApp Number (with country code)"
+      }
+    },
+    "hide_newsletter": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء النشرة الإخبارية",
+        "en": "Hide Newsletter"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "newsletter_title": {
+      "type": "text",
+      "label": {
+        "ar": "عنوان النشرة",
+        "en": "Newsletter Title"
+      },
+      "default": "اشترك في نشرتنا الإخبارية"
+    },
+    "newsletter_description": {
+      "type": "textarea",
+      "label": {
+        "ar": "وصف النشرة",
+        "en": "Newsletter Description"
+      }
+    },
+    "newsletter_placeholder": {
+      "type": "text",
+      "label": {
+        "ar": "نص الحقل",
+        "en": "Placeholder Text"
+      },
+      "default": "أدخل بريدك الإلكتروني"
+    },
+    "newsletter_button_text": {
+      "type": "text",
+      "label": {
+        "ar": "نص الزر",
+        "en": "Button Text"
+      }
+    },
+    "hide_footer_main": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء القسم الرئيسي",
+        "en": "Hide Main Section"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "business_location_hide": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء معلومات التواصل",
+        "en": "Hide Contact Information"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "business_location_image": {
+      "type": "image",
+      "label": {
+        "ar": "لوجو الفوتر",
+        "en": "Footer Logo"
+      }
+    },
+    "business_location_address": {
+      "type": "textarea",
+      "label": {
+        "ar": "عنوان المتجر",
+        "en": "Store Address"
+      }
+    },
+    "business_location_phone": {
+      "type": "text",
+      "label": {
+        "ar": "رقم الهاتف",
+        "en": "Phone Number"
+      }
+    },
+    "business_location_email": {
+      "type": "text",
+      "label": {
+        "ar": "البريد الإلكتروني",
+        "en": "Email Address"
+      }
+    },
+    "business_hours": {
+      "type": "text",
+      "label": {
+        "ar": "ساعات العمل",
+        "en": "Business Hours"
+      }
+    },
+    "contact_section_title": {
+      "type": "text",
+      "label": {
+        "ar": "عنوان قسم التواصل",
+        "en": "Contact Section Title"
+      },
+      "default": "تواصل معنا"
+    },
+    "contact_section_icon": {
+      "type": "text",
+      "label": {
+        "ar": "أيقونة قسم التواصل",
+        "en": "Contact Section Icon"
+      }
+    },
+    "contact_description": {
+      "type": "textarea",
+      "label": {
+        "ar": "وصف قسم التواصل",
+        "en": "Contact Section Description"
+      }
+    },
+    "custom_content": {
+      "type": "textarea",
+      "label": {
+        "ar": "المحتوى المخصص",
+        "en": "Custom Content"
+      }
+    },
+    "custom_section_title": {
+      "type": "text",
+      "label": {
+        "ar": "عنوان القسم المخصص",
+        "en": "Custom Section Title"
+      }
+    },
+    "custom_section_icon": {
+      "type": "text",
+      "label": {
+        "ar": "أيقونة القسم المخصص",
+        "en": "Custom Section Icon"
+      }
+    },
+    "hide_footer_bottom": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء القسم السفلي",
+        "en": "Hide Bottom Section"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "footer_bottom_style": {
       "type": "select",
       "label": {
-        "ar": "تخطيط الفوتر",
-        "en": "Footer Layout"
+        "ar": "نمط القسم السفلي",
+        "en": "Bottom Section Style"
       },
       "options": [
         {
-          "value": "grid",
+          "value": "1",
           "label": {
-            "ar": "شبكة",
-            "en": "Grid"
+            "ar": "النمط الأول",
+            "en": "Style 1"
           }
         },
         {
-          "value": "columns",
+          "value": "2",
           "label": {
-            "ar": "أعمدة",
-            "en": "Columns"
-          }
-        },
-        {
-          "value": "centered",
-          "label": {
-            "ar": "وسط",
-            "en": "Centered"
+            "ar": "النمط الثاني",
+            "en": "Style 2"
           }
         }
       ],
-      "default": "grid"
+      "default": "1"
     },
-    "footer_background": {
-      "type": "fieldset",
+    "footer_bottom_bg_color": {
+      "type": "color",
       "label": {
-        "ar": "خلفية الفوتر",
-        "en": "Footer Background"
+        "ar": "لون خلفية القسم السفلي",
+        "en": "Bottom Section Background Color"
       },
-      "expandable": true,
-      "settings": {
-        "background_type": {
-          "type": "select",
-          "label": {
-            "ar": "نوع الخلفية",
-            "en": "Background Type"
-          },
-          "options": [
-            {
-              "value": "color",
-              "label": {
-                "ar": "لون",
-                "en": "Color"
-              }
-            },
-            {
-              "value": "gradient",
-              "label": {
-                "ar": "تدرج",
-                "en": "Gradient"
-              }
-            },
-            {
-              "value": "image",
-              "label": {
-                "ar": "صورة",
-                "en": "Image"
-              }
-            }
-          ],
-          "default": "color"
-        },
-        "bg_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون الخلفية",
-            "en": "Background Color"
-          },
-          "default": "#1a1a2e"
-        },
-        "bg_secondary": {
-          "type": "color",
-          "label": {
-            "ar": "اللون الثانوي",
-            "en": "Secondary Color"
-          },
-          "default": "#16213e"
-        },
-        "gradient_start": {
-          "type": "color",
-          "label": {
-            "ar": "بداية التدرج",
-            "en": "Gradient Start"
-          },
-          "default": "#1a1a2e"
-        },
-        "gradient_end": {
-          "type": "color",
-          "label": {
-            "ar": "نهاية التدرج",
-            "en": "Gradient End"
-          },
-          "default": "#16213e"
-        },
-        "gradient_direction": {
-          "type": "number",
-          "label": {
-            "ar": "اتجاه التدرج (درجة)",
-            "en": "Gradient Direction (degrees)"
-          },
-          "default": 135,
-          "min": 0,
-          "max": 360
-        },
-        "bg_image": {
-          "type": "image",
-          "label": {
-            "ar": "صورة الخلفية",
-            "en": "Background Image"
-          }
-        },
-        "bg_size": {
-          "type": "select",
-          "label": {
-            "ar": "حجم الخلفية",
-            "en": "Background Size"
-          },
-          "options": [
-            {
-              "value": "cover",
-              "label": {
-                "ar": "تغطية",
-                "en": "Cover"
-              }
-            },
-            {
-              "value": "contain",
-              "label": {
-                "ar": "احتواء",
-                "en": "Contain"
-              }
-            },
-            {
-              "value": "auto",
-              "label": {
-                "ar": "تلقائي",
-                "en": "Auto"
-              }
-            }
-          ],
-          "default": "cover"
-        },
-        "bg_position": {
-          "type": "select",
-          "label": {
-            "ar": "موضع الخلفية",
-            "en": "Background Position"
-          },
-          "options": [
-            {
-              "value": "center",
-              "label": {
-                "ar": "وسط",
-                "en": "Center"
-              }
-            },
-            {
-              "value": "top",
-              "label": {
-                "ar": "أعلى",
-                "en": "Top"
-              }
-            },
-            {
-              "value": "bottom",
-              "label": {
-                "ar": "أسفل",
-                "en": "Bottom"
-              }
-            }
-          ],
-          "default": "center"
-        },
-        "bg_overlay": {
-          "type": "checkbox",
-          "option": {
-            "ar": "إضافة طبقة علوية",
-            "en": "Add Overlay"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "overlay_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون الطبقة العلوية",
-            "en": "Overlay Color"
-          },
-          "default": "#000000"
-        },
-        "overlay_opacity": {
-          "type": "number",
-          "label": {
-            "ar": "شفافية الطبقة العلوية",
-            "en": "Overlay Opacity"
-          },
-          "default": 0.5,
-          "min": 0,
-          "max": 1,
-          "step": 0.1
-        },
-        "animated_bg": {
-          "type": "checkbox",
-          "option": {
-            "ar": "خلفية متحركة",
-            "en": "Animated Background"
-          },
-          "noLabel": true,
-          "default": true
-        }
+      "default": "#1a1a2e"
+    },
+    "footer_bottom_text_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون نص القسم السفلي",
+        "en": "Bottom Section Text Color"
+      },
+      "default": "#ffffff"
+    },
+    "footer_bottom_border_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون حدود القسم السفلي",
+        "en": "Bottom Section Border Color"
+      },
+      "default": "#2a2a3e"
+    },
+    "copyright_text": {
+      "type": "text",
+      "label": {
+        "ar": "نص حقوق النشر",
+        "en": "Copyright Text"
       }
     },
-    "footer_colors": {
-      "type": "fieldset",
+    "additional_copyright": {
+      "type": "text",
       "label": {
-        "ar": "ألوان الفوتر",
-        "en": "Footer Colors"
-      },
-      "expandable": true,
-      "settings": {
-        "text_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون النص الأساسي",
-            "en": "Primary Text Color"
-          },
-          "default": "#ffffff"
-        },
-        "text_secondary": {
-          "type": "color",
-          "label": {
-            "ar": "لون النص الثانوي",
-            "en": "Secondary Text Color"
-          },
-          "default": "#b8c5d1"
-        },
-        "accent_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون التمييز",
-            "en": "Accent Color"
-          },
-          "default": "#007bff"
-        },
-        "border_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون الحدود",
-            "en": "Border Color"
-          },
-          "default": "rgba(255, 255, 255, 0.1)"
-        }
+        "ar": "نص إضافي لحقوق النشر",
+        "en": "Additional Copyright Text"
       }
     },
-    "footer_spacing": {
-      "type": "fieldset",
-      "label": {
-        "ar": "المسافات",
-        "en": "Spacing"
+    "hide_mobile_apps": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء تطبيقات الجوال",
+        "en": "Hide Mobile Apps"
       },
-      "expandable": true,
-      "settings": {
-        "padding_top": {
-          "type": "number",
-          "label": {
-            "ar": "المسافة العلوية",
-            "en": "Top Padding"
-          },
-          "default": 80,
-          "min": 0,
-          "max": 200
-        },
-        "padding_bottom": {
-          "type": "number",
-          "label": {
-            "ar": "المسافة السفلية",
-            "en": "Bottom Padding"
-          },
-          "default": 80,
-          "min": 0,
-          "max": 200
-        }
+      "noLabel": true,
+      "default": false
+    },
+    "apps_section_title": {
+      "type": "text",
+      "label": {
+        "ar": "عنوان قسم التطبيقات",
+        "en": "Apps Section Title"
       }
     },
-    "footer_top_section": {
-      "type": "fieldset",
-      "label": {
-        "ar": "القسم العلوي",
-        "en": "Top Section"
+    "hide_payment_methods": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء طرق الدفع",
+        "en": "Hide Payment Methods"
       },
-      "expandable": true,
-      "settings": {
-        "hide_footer_top": {
-          "type": "checkbox",
-          "option": {
-            "ar": "إخفاء القسم العلوي",
-            "en": "Hide Top Section"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "top_style": {
-          "type": "select",
-          "label": {
-            "ar": "نمط القسم العلوي",
-            "en": "Top Section Style"
-          },
-          "options": [
-            {
-              "value": "1",
-              "label": {
-                "ar": "النمط الأول",
-                "en": "Style 1"
-              }
-            },
-            {
-              "value": "2",
-              "label": {
-                "ar": "النمط الثاني",
-                "en": "Style 2"
-              }
-            }
-          ],
-          "default": "1"
-        },
-        "hide_footer_logo": {
-          "type": "checkbox",
-          "option": {
-            "ar": "إخفاء اللوجو",
-            "en": "Hide Logo"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "logo_animation": {
-          "type": "checkbox",
-          "option": {
-            "ar": "تحريك اللوجو",
-            "en": "Animate Logo"
-          },
-          "noLabel": true,
-          "default": true
-        },
-        "tagline": {
-          "type": "textarea",
-          "label": {
-            "ar": "الشعار",
-            "en": "Tagline"
-          }
-        }
+      "noLabel": true,
+      "default": false
+    },
+    "payment_section_title": {
+      "type": "text",
+      "label": {
+        "ar": "عنوان قسم طرق الدفع",
+        "en": "Payment Section Title"
       }
     },
-    "social_media_advanced": {
-      "type": "fieldset",
+    "payment_methods_style": {
+      "type": "select",
       "label": {
-        "ar": "وسائل التواصل المتقدمة",
-        "en": "Advanced Social Media"
+        "ar": "نمط طرق الدفع",
+        "en": "Payment Methods Style"
       },
-      "expandable": true,
-      "settings": {
-        "social_title": {
-          "type": "text",
+      "options": [
+        {
+          "value": "default",
           "label": {
-            "ar": "عنوان وسائل التواصل",
-            "en": "Social Media Title"
+            "ar": "افتراضي",
+            "en": "Default"
           }
         },
-        "social_style": {
-          "type": "select",
+        {
+          "value": "rounded",
           "label": {
-            "ar": "نمط وسائل التواصل",
-            "en": "Social Media Style"
-          },
-          "options": [
-            {
-              "value": "modern",
-              "label": {
-                "ar": "عصري",
-                "en": "Modern"
-              }
-            },
-            {
-              "value": "classic",
-              "label": {
-                "ar": "كلاسيكي",
-                "en": "Classic"
-              }
-            },
-            {
-              "value": "minimal",
-              "label": {
-                "ar": "مينيمال",
-                "en": "Minimal"
-              }
-            }
-          ],
-          "default": "modern"
-        },
-        "youtube": {
-          "type": "url",
-          "label": {
-            "ar": "رابط يوتيوب",
-            "en": "YouTube Link"
-          }
-        },
-        "linkedin": {
-          "type": "url",
-          "label": {
-            "ar": "رابط لينكد إن",
-            "en": "LinkedIn Link"
-          }
-        },
-        "whatsapp": {
-          "type": "text",
-          "label": {
-            "ar": "رقم واتساب (مع رمز الدولة)",
-            "en": "WhatsApp Number (with country code)"
+            "ar": "مدور",
+            "en": "Rounded"
           }
         }
-      }
+      ],
+      "default": "default"
     },
-    "newsletter_advanced": {
-      "type": "fieldset",
+    "trust_badges_title": {
+      "type": "text",
       "label": {
-        "ar": "النشرة الإخبارية المتقدمة",
-        "en": "Advanced Newsletter"
-      },
-      "expandable": true,
-      "settings": {
-        "hide_newsletter": {
-          "type": "checkbox",
-          "option": {
-            "ar": "إخفاء النشرة الإخبارية",
-            "en": "Hide Newsletter"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "newsletter_title": {
-          "type": "text",
-          "label": {
-            "ar": "عنوان النشرة",
-            "en": "Newsletter Title"
-          },
-          "default": "اشترك في نشرتنا الإخبارية"
-        },
-        "newsletter_description": {
-          "type": "textarea",
-          "label": {
-            "ar": "وصف النشرة",
-            "en": "Newsletter Description"
-          }
-        },
-        "newsletter_placeholder": {
-          "type": "text",
-          "label": {
-            "ar": "نص الحقل",
-            "en": "Placeholder Text"
-          },
-          "default": "أدخل بريدك الإلكتروني"
-        },
-        "newsletter_button_text": {
-          "type": "text",
-          "label": {
-            "ar": "نص الزر",
-            "en": "Button Text"
-          }
-        }
+        "ar": "عنوان شارات الثقة",
+        "en": "Trust Badges Title"
       }
     },
-    "footer_main_section": {
-      "type": "fieldset",
-      "label": {
-        "ar": "القسم الرئيسي",
-        "en": "Main Section"
-      },
-      "expandable": true,
-      "settings": {
-        "hide_footer_main": {
-          "type": "checkbox",
-          "option": {
-            "ar": "إخفاء القسم الرئيسي",
-            "en": "Hide Main Section"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "contact_section_title": {
-          "type": "text",
-          "label": {
-            "ar": "عنوان قسم التواصل",
-            "en": "Contact Section Title"
-          },
-          "default": "تواصل معنا"
-        },
-        "contact_section_icon": {
-          "type": "text",
-          "label": {
-            "ar": "أيقونة قسم التواصل",
-            "en": "Contact Section Icon"
-          },
-          "info": {
-            "ar": "استخدم أيقونات Font Awesome مثل fas fa-phone",
-            "en": "Use Font Awesome icons like fas fa-phone"
-          }
-        },
-        "contact_description": {
-          "type": "textarea",
-          "label": {
-            "ar": "وصف قسم التواصل",
-            "en": "Contact Section Description"
-          }
-        },
-        "contact_column_animation": {
-          "type": "checkbox",
-          "option": {
-            "ar": "تحريك عمود التواصل",
-            "en": "Animate Contact Column"
-          },
-          "noLabel": true,
-          "default": true
-        },
-        "business_hours": {
-          "type": "text",
-          "label": {
-            "ar": "ساعات العمل",
-            "en": "Business Hours"
-          }
-        },
-        "hide_map_button": {
-          "type": "checkbox",
-          "option": {
-            "ar": "إخفاء زر الخريطة",
-            "en": "Hide Map Button"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "map_button_text": {
-          "type": "text",
-          "label": {
-            "ar": "نص زر الخريطة",
-            "en": "Map Button Text"
-          },
-          "default": "عرض على الخريطة"
-        },
-        "map_button_style": {
-          "type": "select",
-          "label": {
-            "ar": "نمط زر الخريطة",
-            "en": "Map Button Style"
-          },
-          "options": [
-            {
-              "value": "primary",
-              "label": {
-                "ar": "أساسي",
-                "en": "Primary"
-              }
-            },
-            {
-              "value": "secondary",
-              "label": {
-                "ar": "ثانوي",
-                "en": "Secondary"
-              }
-            },
-            {
-              "value": "outline",
-              "label": {
-                "ar": "مفرغ",
-                "en": "Outline"
-              }
-            }
-          ],
-          "default": "primary"
-        }
-      }
-    },
-    "custom_content_section": {
-      "type": "fieldset",
-      "label": {
-        "ar": "محتوى مخصص",
-        "en": "Custom Content"
-      },
-      "expandable": true,
-      "settings": {
-        "custom_content": {
-          "type": "html",
-          "label": {
-            "ar": "المحتوى المخصص",
-            "en": "Custom Content"
-          },
-          "info": {
-            "ar": "يمكنك إضافة HTML مخصص هنا",
-            "en": "You can add custom HTML here"
-          }
-        },
-        "custom_section_title": {
-          "type": "text",
-          "label": {
-            "ar": "عنوان القسم المخصص",
-            "en": "Custom Section Title"
-          }
-        },
-        "custom_section_icon": {
-          "type": "text",
-          "label": {
-            "ar": "أيقونة القسم المخصص",
-            "en": "Custom Section Icon"
-          }
-        },
-        "custom_column_animation": {
-          "type": "checkbox",
-          "option": {
-            "ar": "تحريك العمود المخصص",
-            "en": "Animate Custom Column"
-          },
-          "noLabel": true,
-          "default": true
-        }
-      }
-    },
-    "footer_bottom_section": {
-      "type": "fieldset",
-      "label": {
-        "ar": "القسم السفلي",
-        "en": "Bottom Section"
-      },
-      "expandable": true,
-      "settings": {
-        "hide_footer_bottom": {
-          "type": "checkbox",
-          "option": {
-            "ar": "إخفاء القسم السفلي",
-            "en": "Hide Bottom Section"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "footer_bottom_style": {
-          "type": "select",
-          "label": {
-            "ar": "نمط القسم السفلي",
-            "en": "Bottom Section Style"
-          },
-          "options": [
-            {
-              "value": "1",
-              "label": {
-                "ar": "النمط الأول",
-                "en": "Style 1"
-              }
-            },
-            {
-              "value": "2",
-              "label": {
-                "ar": "النمط الثاني",
-                "en": "Style 2"
-              }
-            }
-          ],
-          "default": "1"
-        },
-        "copyright_text": {
-          "type": "html",
-          "label": {
-            "ar": "نص حقوق النشر",
-            "en": "Copyright Text"
-          }
-        },
-        "additional_copyright": {
-          "type": "text",
-          "label": {
-            "ar": "نص إضافي لحقوق النشر",
-            "en": "Additional Copyright Text"
-          }
-        },
-        "hide_mobile_apps": {
-          "type": "checkbox",
-          "option": {
-            "ar": "إخفاء تطبيقات الجوال",
-            "en": "Hide Mobile Apps"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "apps_section_title": {
-          "type": "text",
-          "label": {
-            "ar": "عنوان قسم التطبيقات",
-            "en": "Apps Section Title"
-          }
-        },
-        "hide_payment_methods": {
-          "type": "checkbox",
-          "option": {
-            "ar": "إخفاء طرق الدفع",
-            "en": "Hide Payment Methods"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "payment_section_title": {
-          "type": "text",
-          "label": {
-            "ar": "عنوان قسم طرق الدفع",
-            "en": "Payment Section Title"
-          }
-        },
-        "payment_methods_style": {
-          "type": "select",
-          "label": {
-            "ar": "نمط طرق الدفع",
-            "en": "Payment Methods Style"
-          },
-          "options": [
-            {
-              "value": "default",
-              "label": {
-                "ar": "افتراضي",
-                "en": "Default"
-              }
-            },
-            {
-              "value": "rounded",
-              "label": {
-                "ar": "مدور",
-                "en": "Rounded"
-              }
-            },
-            {
-              "value": "square",
-              "label": {
-                "ar": "مربع",
-                "en": "Square"
-              }
-            }
-          ],
-          "default": "default"
-        }
-      }
-    },
-    "trust_badges_section": {
-      "type": "fieldset",
+    "trust_badges": {
+      "type": "list",
       "label": {
         "ar": "شارات الثقة",
         "en": "Trust Badges"
       },
-      "expandable": true,
+      "settings_label": {
+        "ar": "شارة",
+        "en": "Badge"
+      },
+      "maxItems": 6,
       "settings": {
-        "trust_badges_title": {
+        "image": {
+          "type": "image",
+          "label": {
+            "ar": "صورة الشارة",
+            "en": "Badge Image"
+          }
+        },
+        "alt": {
           "type": "text",
           "label": {
-            "ar": "عنوان شارات الثقة",
-            "en": "Trust Badges Title"
+            "ar": "النص البديل",
+            "en": "Alt Text"
           }
         },
-        "trust_badges": {
-          "type": "list",
+        "link": {
+          "type": "url",
           "label": {
-            "ar": "شارات الثقة",
-            "en": "Trust Badges"
-          },
-          "settings_label": {
-            "ar": "شارة",
-            "en": "Badge"
-          },
-          "maxItems": 6,
-          "settings": {
-            "image": {
-              "type": "image",
-              "label": {
-                "ar": "صورة الشارة",
-                "en": "Badge Image"
-              }
-            },
-            "alt": {
-              "type": "text",
-              "label": {
-                "ar": "النص البديل",
-                "en": "Alt Text"
-              }
-            },
-            "link": {
-              "type": "url",
-              "label": {
-                "ar": "الرابط",
-                "en": "Link"
-              }
-            },
-            "new_tab": {
-              "type": "checkbox",
-              "option": {
-                "ar": "فتح في تبويب جديد",
-                "en": "Open in new tab"
-              },
-              "noLabel": true,
-              "default": true
-            }
+            "ar": "الرابط",
+            "en": "Link"
           }
-        }
-      }
-    },
-    "back_to_top_section": {
-      "type": "fieldset",
-      "label": {
-        "ar": "زر العودة للأعلى",
-        "en": "Back to Top Button"
-      },
-      "expandable": true,
-      "settings": {
-        "hide_back_to_top": {
-          "type": "checkbox",
-          "option": {
-            "ar": "إخفاء زر العودة للأعلى",
-            "en": "Hide Back to Top Button"
-          },
-          "noLabel": true,
-          "default": false
         },
-        "back_to_top_style": {
-          "type": "select",
-          "label": {
-            "ar": "نمط زر العودة للأعلى",
-            "en": "Back to Top Button Style"
-          },
-          "options": [
-            {
-              "value": "default",
-              "label": {
-                "ar": "افتراضي",
-                "en": "Default"
-              }
-            },
-            {
-              "value": "rounded",
-              "label": {
-                "ar": "مدور",
-                "en": "Rounded"
-              }
-            },
-            {
-              "value": "square",
-              "label": {
-                "ar": "مربع",
-                "en": "Square"
-              }
-            }
-          ],
-          "default": "default"
-        }
-      }
-    },
-    "links_column_settings": {
-      "type": "fieldset",
-      "label": {
-        "ar": "إعدادات أعمدة الروابط",
-        "en": "Links Columns Settings"
-      },
-      "expandable": true,
-      "settings": {
-        "links_column_animation": {
+        "new_tab": {
           "type": "checkbox",
           "option": {
-            "ar": "تحريك أعمدة الروابط",
-            "en": "Animate Links Columns"
+            "ar": "فتح في تبويب جديد",
+            "en": "Open in new tab"
           },
           "noLabel": true,
           "default": true
         }
       }
     },
-    "global_settings": {
-      "type": "fieldset",
-      "label": {
-        "ar": "الإعدادات العامة",
-        "en": "Global settings"
+    "hide_back_to_top": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء زر العودة للأعلى",
+        "en": "Hide Back to Top Button"
       },
-      "icon": "font_awesome",
-      "expandable": true,
-      "settings": {
-        "background_color": {
-            "type": "color",
-            "label": {
-                "ar": "لون الخلفية",
-                "en": "Background color"
-            },
-            "default": "#070707"
-        },
-        "text_color": {
-            "type": "color",
-            "label": {
-                "ar": "لون العناوين",
-                "en": "Titles color"
-            },
-            "default": "#fff"
-        },
-        "link_color": {
-            "type": "color",
-            "label": {
-                "ar": "لون الروابط والنصوص الداخلية",
-                "en": "Links and inner text color"
-            },
-            "default": "#fff"
-        },
-        "link_hover_color": {
-            "type": "color",
-            "label": {
-                "ar": "لون الروابط عند مرور الماوس",
-                "en": "Link hover color"
-            },
-            "default": "#fff"
-        },
-        "link_hover_bg": {
-          "type": "color",
+      "noLabel": true,
+      "default": false
+    },
+    "back_to_top_style": {
+      "type": "select",
+      "label": {
+        "ar": "نمط زر العودة للأعلى",
+        "en": "Back to Top Button Style"
+      },
+      "options": [
+        {
+          "value": "default",
           "label": {
-            "ar": "لون خلفية الروابط عند مرور الماوس",
-            "en": "Link hover background color"
+            "ar": "مربع (زوايا مدورة قليلاً)",
+            "en": "Square (Slightly Rounded)"
           }
         },
-        "color_address": {
-            "type": "color",
-            "label": {
-                "ar": "لون نص عنوان المتجر ورقم الهاتف",
-                "en": "Store Address color and phone number"
-            },
-            "default": "#929FA5"
-        },
-        "color_social_bg": {
-          "type": "color",
+        {
+          "value": "rounded",
           "label": {
-            "ar": "لون خلفية أيقونات التواصل",
-            "en": "Social icons background color"
-          }
-        },
-        "color_social_color": {
-          "type": "color",
-          "label": {
-            "ar": "لون أيقونات التواصل",
-            "en": "Social icons color"
-          }
-        },
-        "bg_copyrights": {
-          "type": "color",
-          "label": {
-            "ar": "لون خلفية حقوق النشر",
-            "en": "copyrights background color"
-          },
-          "default": "#25282a"
-        },
-        "color_copyrights": {
-          "type": "color",
-          "label": {
-            "ar": "لون النصوص في حقوق النشر",
-            "en": "Text color in copyrights"
-          },
-          "default": "#929fa5"
-        },
-        "color_vat": {
-          "type": "color",
-          "label": {
-            "ar": "لون النصوص في الرقم الضريبي والسجل التجاري",
-            "en": "Text color in vat and commercial registration"
-          },
-          "default": "#fff"
-        },
-        "logistics_pay_icons_bg": {
-          "type": "color",
-          "label": {
-            "ar": "لون خلفية أيقونات الدفع والشحن",
-            "en": "Logistics and payment icons background color"
-          }
-        },
-        "ios_id": {
-          "type": "text",
-          "label": {
-            "ar": "id التطبيق على الايفون",
-            "en": "id of the app on ios"
-          }
-        },
-        "android_id": {
-          "type": "text",
-          "label": {
-            "ar": "id التطبيق على الاندرويد",
-            "en": "Android app id"
-          }
-        },
-        "copyrights_link": {
-          "type": "text",
-          "label": {
-            "ar": "رابط حقوق النشر",
-            "en": "Copyrights link"
+            "ar": "دائري (مدور بالكامل)",
+            "en": "Circle (Fully Rounded)"
           }
         }
+      ],
+      "default": "default"
+    },
+    "global_settings_ios_id": {
+      "type": "text",
+      "label": {
+        "ar": "معرف التطبيق على الايفون",
+        "en": "iOS App ID"
       }
     },
-    "business_location": {
-      "type": "fieldset",
+    "global_settings_android_id": {
+      "type": "text",
       "label": {
-        "ar": "عنوان المتجر وبيانات التواصل",
-        "en": "Business location and contact information"
-      },
-      "icon": "font_awesome",
-      "expandable": true,
-      "settings": {
-        "hide": {
-          "type": "checkbox",
-          "label": {
-            "ar": " ",
-            "en": " "
-          },
-          "option": {
-            "ar": "إخفاء",
-            "en": "Hide"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "image": {
-          "type": "image",
-          "label": {
-            "ar": "لوجو الفوتر",
-            "en": "Footer Logo"
-          },
-          "info": {
-            "ar": "ارفع اللوجو",
-            "en": "Upload the logo"
-          }
-        },
-        "address": {
-          "type": "textarea",
-          "label": {
-            "ar": "عنوان المتجر",
-            "en": "Business location"
-          }
-        },
-        "phone": {
-          "type": "text",
-          "label": {
-            "ar": "رقم الهاتف",
-            "en": "Phone number"
-          }
-        },
-        "email": {
-          "type": "text",
-          "label": {
-            "ar": "البريد الإلكتروني",
-            "en": "Email"
-          }
-        }
+        "ar": "معرف التطبيق على الاندرويد",
+        "en": "Android App ID"
       }
-    }, 
-    "social_media": {
-      "type": "fieldset",
+    },
+    "global_settings_copyrights_link": {
+      "type": "url",
       "label": {
-        "ar": "وسائل التواصل",
-        "en": "Business location"
-      },
-      "icon": "font_awesome",
-      "expandable": true,
-      "settings": {
-        "hide": {
-          "type": "checkbox",
-          "label": {
-            "ar": " ",
-            "en": " "
-          },
-          "option": {
-            "ar": "إخفاء",
-            "en": "Hide"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "facebook": {
-          "type": "text",
-          "label": {
-            "ar": "رابط فيسبوك",
-            "en": "Facebook link"
-          }
-        },
-        "instagram": {
-          "type": "text",
-          "label": {
-            "ar": "رابط انستغرام",
-            "en": "Instagram link"
-          }
-        },
-        "twitter": {
-          "type": "text",
-          "label": {
-            "ar": "رابط تويتر",
-            "en": "Twitter link"
-          }
-        },
-        "snapchat": {
-          "type": "text",
-          "label": {
-            "ar": "رابط سناب شات",
-            "en": "Snapchat link"
-          }
-        },
-        "tiktok": {
-          "type": "text",
-          "label": {
-            "ar": "رابط تيك توك",
-            "en": "Tiktok link"
-          }
-        },
-        "website": {
-          "type": "text",
-          "label": {
-            "ar": "رابط الموقع",
-            "en": "Website link"
-          }
-        }
+        "ar": "رابط حقوق النشر",
+        "en": "Copyrights Link"
       }
-    },     
-    "links_1": {
-      "type": "fieldset",
-      "label": {
-        "ar": "عمود الروابط الأول",
-        "en": "Links Column 1"
+    },
+    "links_1_hide": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء عمود الروابط الأول",
+        "en": "Hide Links Column 1"
       },
-      "icon": "font_awesome",
-      "expandable": true,
+      "noLabel": true,
+      "default": false
+    },
+    "links_1_title": {
+      "type": "text",
+      "label": {
+        "ar": "عنوان عمود الروابط الأول",
+        "en": "Links Column 1 Title"
+      }
+    },
+    "links_1_icon": {
+      "type": "text",
+      "label": {
+        "ar": "أيقونة عمود الروابط الأول",
+        "en": "Links Column 1 Icon"
+      }
+    },
+    "links_1_description": {
+      "type": "textarea",
+      "label": {
+        "ar": "وصف عمود الروابط الأول",
+        "en": "Links Column 1 Description"
+      }
+    },
+    "links_1_links": {
+      "type": "list",
+      "label": {
+        "ar": "روابط العمود الأول",
+        "en": "Links Column 1 Links"
+      },
+      "settings_label": {
+        "ar": "رابط",
+        "en": "Link"
+      },
+      "maxItems": 10,
       "settings": {
-        "hide": {
-          "type": "checkbox",
-          "label": {
-            "ar": " ",
-            "en": " "
-          },
-          "option": {
-            "ar": "إخفاء",
-            "en": "Hide"
-          },
-          "noLabel": true,
-          "default": false
-        },
         "title": {
           "type": "text",
           "label": {
@@ -3028,441 +2508,270 @@ document.addEventListener("DOMContentLoaded", function(){
             "en": "Title"
           }
         },
-        "icon": {
-          "type": "text",
-          "label": {
-            "ar": "الأيقونة",
-            "en": "Icon"
-          },
-          "info": {
-            "ar": "استخدم أيقونات Font Awesome مثل fas fa-info",
-            "en": "Use Font Awesome icons like fas fa-info"
-          }
-        },
-        "description": {
-          "type": "textarea",
-          "label": {
-            "ar": "الوصف",
-            "en": "Description"
-          }
-        },
-        "links": {
-          "type": "list",
-          "settings_label": {
-            "ar": "رابط",
-            "en": "Link"
-          },
-          "noLabel": true,
-          "maxItems": 10,
-          "settings": {
-            "title": {
-              "type": "text",
-              "label": {
-                "ar": "العنوان",
-                "en": "Title"
-              }
-            },
-            "url": {
-              "type": "url",
-              "label": {
-                "ar": "الرابط",
-                "en": "URL"
-              }
-            },
-            "icon": {
-              "type": "text",
-              "label": {
-                "ar": "الأيقونة",
-                "en": "Icon"
-              }
-            },
-            "new_tab": {
-              "type": "checkbox",
-              "option": {
-                "ar": "فتح في تبويب جديد",
-                "en": "Open in new tab"
-              },
-              "noLabel": true,
-              "default": false
-            }
-          }
-        }
-      }
-    },
-    "links_2": {
-      "type": "fieldset",
-      "label": {
-        "ar": "عمود الروابط الثاني",
-        "en": "Links Column 2"
-      },
-      "icon": "font_awesome",
-      "expandable": true,
-      "settings": {
-        "hide": {
-          "type": "checkbox",
-          "label": {
-            "ar": " ",
-            "en": " "
-          },
-          "option": {
-            "ar": "إخفاء",
-            "en": "Hide"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "title": {
-          "type": "text",
-          "label": {
-            "ar": "العنوان",
-            "en": "Title"
-          }
-        },
-        "icon": {
-          "type": "text",
-          "label": {
-            "ar": "الأيقونة",
-            "en": "Icon"
-          }
-        },
-        "description": {
-          "type": "textarea",
-          "label": {
-            "ar": "الوصف",
-            "en": "Description"
-          }
-        },
-        "links": {
-          "type": "list",
-          "settings_label": {
-            "ar": "رابط",
-            "en": "Link"
-          },
-          "noLabel": true,
-          "maxItems": 10,
-          "settings": {
-            "title": {
-              "type": "text",
-              "label": {
-                "ar": "العنوان",
-                "en": "Title"
-              }
-            },
-            "url": {
-              "type": "url",
-              "label": {
-                "ar": "الرابط",
-                "en": "URL"
-              }
-            },
-            "icon": {
-              "type": "text",
-              "label": {
-                "ar": "الأيقونة",
-                "en": "Icon"
-              }
-            },
-            "new_tab": {
-              "type": "checkbox",
-              "option": {
-                "ar": "فتح في تبويب جديد",
-                "en": "Open in new tab"
-              },
-              "noLabel": true,
-              "default": false
-            }
-          }
-        }
-      }
-    },
-    "links_3": {
-      "type": "fieldset",
-      "label": {
-        "ar": "عمود الروابط الثالث",
-        "en": "Links Column 3"
-      },
-      "icon": "font_awesome",
-      "expandable": true,
-      "settings": {
-        "hide": {
-          "type": "checkbox",
-          "label": {
-            "ar": " ",
-            "en": " "
-          },
-          "option": {
-            "ar": "إخفاء",
-            "en": "Hide"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "title": {
-          "type": "text",
-          "label": {
-            "ar": "العنوان",
-            "en": "Title"
-          }
-        },
-        "icon": {
-          "type": "text",
-          "label": {
-            "ar": "الأيقونة",
-            "en": "Icon"
-          }
-        },
-        "description": {
-          "type": "textarea",
-          "label": {
-            "ar": "الوصف",
-            "en": "Description"
-          }
-        },
-        "links": {
-          "type": "list",
-          "settings_label": {
-            "ar": "رابط",
-            "en": "Link"
-          },
-          "noLabel": true,
-          "maxItems": 10,
-          "settings": {
-            "title": {
-              "type": "text",
-              "label": {
-                "ar": "العنوان",
-                "en": "Title"
-              }
-            },
-            "url": {
-              "type": "url",
-              "label": {
-                "ar": "الرابط",
-                "en": "URL"
-              }
-            },
-            "icon": {
-              "type": "text",
-              "label": {
-                "ar": "الأيقونة",
-                "en": "Icon"
-              }
-            },
-            "new_tab": {
-              "type": "checkbox",
-              "option": {
-                "ar": "فتح في تبويب جديد",
-                "en": "Open in new tab"
-              },
-              "noLabel": true,
-              "default": false
-            }
-          }
-        }
-      }
-    },
-    "links_4": {
-      "type": "fieldset",
-      "label": {
-        "ar": "عمود الروابط الرابع",
-        "en": "Links Column 4"
-      },
-      "icon": "font_awesome",
-      "expandable": true,
-      "settings": {
-        "hide": {
-          "type": "checkbox",
-          "label": {
-            "ar": " ",
-            "en": " "
-          },
-          "option": {
-            "ar": "إخفاء",
-            "en": "Hide"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "title": {
-          "type": "text",
-          "label": {
-            "ar": "العنوان",
-            "en": "Title"
-          }
-        },
-        "icon": {
-          "type": "text",
-          "label": {
-            "ar": "الأيقونة",
-            "en": "Icon"
-          }
-        },
-        "description": {
-          "type": "textarea",
-          "label": {
-            "ar": "الوصف",
-            "en": "Description"
-          }
-        },
-        "links": {
-          "type": "list",
-          "settings_label": {
-            "ar": "رابط",
-            "en": "Link"
-          },
-          "noLabel": true,
-          "maxItems": 10,
-          "settings": {
-            "title": {
-              "type": "text",
-              "label": {
-                "ar": "العنوان",
-                "en": "Title"
-              }
-            },
-            "url": {
-              "type": "url",
-              "label": {
-                "ar": "الرابط",
-                "en": "URL"
-              }
-            },
-            "icon": {
-              "type": "text",
-              "label": {
-                "ar": "الأيقونة",
-                "en": "Icon"
-              }
-            },
-            "new_tab": {
-              "type": "checkbox",
-              "option": {
-                "ar": "فتح في تبويب جديد",
-                "en": "Open in new tab"
-              },
-              "noLabel": true,
-              "default": false
-            }
-          }
-        }
-      }
-    },
-    "companies_vat": {
-      "type": "fieldset",
-      "label": {
-        "ar": "شركات الشحن والدفع والرقم الضريبي",
-        "en": "Companies and VAT number"
-      },
-      "icon": "font_awesome",
-      "expandable": true,
-      "settings": {
-        "hide": {
-          "type": "checkbox",
-          "label": {
-            "ar": " ",
-            "en": " "
-          },
-          "option": {
-            "ar": "إخفاء كامل القسم",
-            "en": "Hide the whole section"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "hide_companies": {
-          "type": "checkbox",
-          "label": {
-            "ar": " ",
-            "en": " "
-          },
-          "option": {
-            "ar": "إخفاء شعارات شركات الشحن",
-            "en": "Hide shipping companies logos"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "hide_payment_methods": {
-          "type": "checkbox",
-          "label": {
-            "ar": " ",
-            "en": " "
-          },
-          "option": {
-            "ar": "إخفاء شعارات الدفع",
-            "en": "Hide payment methods logos"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "hide_business_platform": {
-          "type": "checkbox",
-          "label": {
-            "ar": " ",
-            "en": " "
-          },
-          "option": {
-            "ar": "إخفاء منصة الأعمال",
-            "en": "Hide business platform"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "business_platform_number": {
-          "type": "text",
-          "label": {
-            "ar": "رقم منصة الأعمال",
-            "en": "Business platform number"
-          }
-        },
-        "hide_vat": {
-          "type": "checkbox",
-          "label": {
-            "ar": " ",
-            "en": " "
-          },
-          "option": {
-            "ar": "إخفاء الرقم الضريبي",
-            "en": "Hide VAT number"
-          },
-          "noLabel": true,
-          "default": false
-        },
-        "vat_number": {
-          "type": "text",
-          "label": {
-            "ar": "الرقم الضريبي",
-            "en": "VAT number"
-          }
-        },
-        "vat_link": {
+        "url": {
           "type": "url",
           "label": {
-            "ar": "رابط الشهادة الضريبية",
-            "en": "VAT certificate link"
+            "ar": "الرابط",
+            "en": "URL"
           }
         },
-        "hide_registration_number": {
-          "type": "checkbox",
+        "icon": {
+          "type": "text",
           "label": {
-            "ar": " ",
-            "en": " "
-          },
+            "ar": "الأيقونة",
+            "en": "Icon"
+          }
+        },
+        "new_tab": {
+          "type": "checkbox",
           "option": {
-            "ar": "إخفاء رقم السجل التجاري",
-            "en": "Hide registration number"
+            "ar": "فتح في تبويب جديد",
+            "en": "Open in new tab"
           },
           "noLabel": true,
           "default": false
-        },
-        "registration_number": {
-          "type": "text",
-          "label": {
-            "ar": "رقم السجل التجاري",
-            "en": "Commercial registration number"
-          }
         }
       }
+    },
+    "links_2_hide": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء عمود الروابط الثاني",
+        "en": "Hide Links Column 2"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "links_2_title": {
+      "type": "text",
+      "label": {
+        "ar": "عنوان عمود الروابط الثاني",
+        "en": "Links Column 2 Title"
+      }
+    },
+    "links_2_icon": {
+      "type": "text",
+      "label": {
+        "ar": "أيقونة عمود الروابط الثاني",
+        "en": "Links Column 2 Icon"
+      }
+    },
+    "links_2_description": {
+      "type": "textarea",
+      "label": {
+        "ar": "وصف عمود الروابط الثاني",
+        "en": "Links Column 2 Description"
+      }
+    },
+    "links_2_links": {
+      "type": "list",
+      "label": {
+        "ar": "روابط العمود الثاني",
+        "en": "Links Column 2 Links"
+      },
+      "settings_label": {
+        "ar": "رابط",
+        "en": "Link"
+      },
+      "maxItems": 10,
+      "settings": {
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        },
+        "url": {
+          "type": "url",
+          "label": {
+            "ar": "الرابط",
+            "en": "URL"
+          }
+        },
+        "icon": {
+          "type": "text",
+          "label": {
+            "ar": "الأيقونة",
+            "en": "Icon"
+          }
+        },
+        "new_tab": {
+          "type": "checkbox",
+          "option": {
+            "ar": "فتح في تبويب جديد",
+            "en": "Open in new tab"
+          },
+          "noLabel": true,
+          "default": false
+        }
+      }
+    },
+    "links_3_hide": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء عمود الروابط الثالث",
+        "en": "Hide Links Column 3"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "links_3_title": {
+      "type": "text",
+      "label": {
+        "ar": "عنوان عمود الروابط الثالث",
+        "en": "Links Column 3 Title"
+      }
+    },
+    "links_3_icon": {
+      "type": "text",
+      "label": {
+        "ar": "أيقونة عمود الروابط الثالث",
+        "en": "Links Column 3 Icon"
+      }
+    },
+    "links_3_description": {
+      "type": "textarea",
+      "label": {
+        "ar": "وصف عمود الروابط الثالث",
+        "en": "Links Column 3 Description"
+      }
+    },
+    "links_3_links": {
+      "type": "list",
+      "label": {
+        "ar": "روابط العمود الثالث",
+        "en": "Links Column 3 Links"
+      },
+      "settings_label": {
+        "ar": "رابط",
+        "en": "Link"
+      },
+      "maxItems": 10,
+      "settings": {
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        },
+        "url": {
+          "type": "url",
+          "label": {
+            "ar": "الرابط",
+            "en": "URL"
+          }
+        },
+        "icon": {
+          "type": "text",
+          "label": {
+            "ar": "الأيقونة",
+            "en": "Icon"
+          }
+        },
+        "new_tab": {
+          "type": "checkbox",
+          "option": {
+            "ar": "فتح في تبويب جديد",
+            "en": "Open in new tab"
+          },
+          "noLabel": true,
+          "default": false
+        }
+      }
+    },
+    "links_4_hide": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء عمود الروابط الرابع",
+        "en": "Hide Links Column 4"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "links_4_title": {
+      "type": "text",
+      "label": {
+        "ar": "عنوان عمود الروابط الرابع",
+        "en": "Links Column 4 Title"
+      }
+    },
+    "links_4_icon": {
+      "type": "text",
+      "label": {
+        "ar": "أيقونة عمود الروابط الرابع",
+        "en": "Links Column 4 Icon"
+      }
+    },
+    "links_4_description": {
+      "type": "textarea",
+      "label": {
+        "ar": "وصف عمود الروابط الرابع",
+        "en": "Links Column 4 Description"
+      }
+    },
+    "links_4_links": {
+      "type": "list",
+      "label": {
+        "ar": "روابط العمود الرابع",
+        "en": "Links Column 4 Links"
+      },
+      "settings_label": {
+        "ar": "رابط",
+        "en": "Link"
+      },
+      "maxItems": 10,
+      "settings": {
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        },
+        "url": {
+          "type": "url",
+          "label": {
+            "ar": "الرابط",
+            "en": "URL"
+          }
+        },
+        "icon": {
+          "type": "text",
+          "label": {
+            "ar": "الأيقونة",
+            "en": "Icon"
+          }
+        },
+        "new_tab": {
+          "type": "checkbox",
+          "option": {
+            "ar": "فتح في تبويب جديد",
+            "en": "Open in new tab"
+          },
+          "noLabel": true,
+          "default": false
+        }
+      }
+    },
+    "companies_vat_hide_companies": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء شعارات شركات الشحن",
+        "en": "Hide Shipping Companies"
+      },
+      "noLabel": true,
+      "default": false
+    },
+    "companies_vat_hide_payment_methods": {
+      "type": "checkbox",
+      "option": {
+        "ar": "إخفاء شعارات طرق الدفع",
+        "en": "Hide Payment Methods"
+      },
+      "noLabel": true,
+      "default": false
     }
   }
 }
