@@ -1,18 +1,16 @@
 {% if not settings.hide_all_section %}
 <section section-id="{{ sectionId }}" data-lg-scroll-offset="130" data-md-scroll-offset="130" data-sm-scroll-offset="94" 
-class="video-hero-section {% if settings.upload_video %}has-video-bg{% endif %}"
+class="video-hero-section {% if settings.upload_video %}has-video-bg{% endif %} {% if settings.video_layout == 'container' %}container-layout{% else %}fullscreen-layout{% endif %} pb-{% if settings.padding_bottom and settings.padding_bottom != 'default' %}{{ settings.padding_bottom }}{% else %}100{% endif %} pt-{% if settings.padding_top and settings.padding_top != 'default' %}{{ settings.padding_top }}{% else %}100{% endif %}"
 {% if settings.bg_color %} style="background-color:{{ settings.bg_color }};" {% endif %}>
-   <!-- Video Area -->
-    <div class="video-layout pb-{% if settings.padding_bottom and settings.padding_bottom != 'default' %}{{ settings.padding_bottom }}{% else %}100{% endif %} pt-{% if settings.padding_top and settings.padding_top != 'default' %}{{ settings.padding_top }}{% else %}100{% endif %}">
+    <div class="{% if settings.video_layout == 'container' %}container{% endif %}">
+      <div class="video-layout">
       
-      <!-- Video Background -->
       {% if settings.upload_video %}
       <div class="video-background">
         <video id="bg-video-{{ sectionId }}" autoplay muted loop playsinline class="bg-video" preload="auto">
           <source src="{{ settings.upload_video }}" type="video/mp4">
           <source src="{{ settings.upload_video }}" type="video/webm">
           <source src="{{ settings.upload_video }}" type="video/ogg">
-          <!-- Fallback image if video fails -->
           {% if settings.bg_img %}
           <img src="{{ settings.bg_img }}" alt="Video fallback" style="width: 100%; height: 100%; object-fit: cover;">
           {% endif %}
@@ -21,422 +19,154 @@ class="video-hero-section {% if settings.upload_video %}has-video-bg{% endif %}"
       </div>
       {% endif %}
       
-      <!-- Background Image (when no video or as fallback) -->
       {% if settings.bg_img %}
       <div class="bg-position {% if settings.upload_video %}video-fallback-bg{% endif %}" style="background-image: url({{ settings.bg_img }});background-size: cover; background-position: center; {% if settings.bg_attachment %} background-attachment: fixed;{% endif %}{% if settings.upload_video %} display: none;{% endif %}" id="bg-position-video-{{ sectionId }}"></div>
        {% endif %}
        
-       <!-- Regular Overlay (only when no video) -->
        {% if settings.overlay and not settings.upload_video %}
           <div class="overlay" style="{% if settings.overlay_color %} background-color:{{ settings.overlay_color }};{% endif %}{% if settings.overlay_opacity %} opacity:{{ settings.overlay_opacity }} {% endif %}"></div>
         {% endif %}
         
-      <div class="container">
-          <!-- Video Controls (Optional) -->
-          {% if settings.show_video_controls and settings.upload_video %}
-            <div class="video-controls">
-              <button class="video-control-btn play-pause-btn" data-video="bg-video-{{ sectionId }}">
-                <i class="fas fa-pause"></i>
-              </button>
-              <button class="video-control-btn mute-btn" data-video="bg-video-{{ sectionId }}">
-                <i class="fas fa-volume-mute"></i>
-              </button>
-            </div>
-          {% endif %}
-          
-          <!-- Traditional Video Button (for popup) -->
-          {% if settings.show_popup_button %}
-            {% if settings.upload_video %} 
-              <a href="{{ settings.upload_video }}" class="play-btn popup-video">
-                <i>
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="var(--primary-color)" height="80px" width="80px" version="1.1" id="Capa_1" viewBox="0 0 60 60" xml:space="preserve" style="margin-left: -3px;">
-                    <g>
-                      <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30   c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15   C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"></path>
-                    </g>
-                  </svg>
-                </i>
-              </a>
-            {% elseif settings.video_link %}
-              <a href="{{ settings.video_link }}" class="play-btn popup-video">
-                <i>
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="var(--primary-color)" height="80px" width="80px" version="1.1" id="Capa_1" viewBox="0 0 60 60" xml:space="preserve" style="margin-left: -3px;">
-                    <g>
-                      <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30   c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15   C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"></path>
-                    </g>
-                  </svg>
-                </i>
-              </a>
+      {% if settings.show_video_controls and settings.upload_video %}
+        <div class="video-controls">
+          <button class="video-control-btn play-pause-btn" data-video="bg-video-{{ sectionId }}">
+            <i class="fas fa-pause"></i>
+          </button>
+          <button class="video-control-btn mute-btn" data-video="bg-video-{{ sectionId }}">
+            <i class="fas fa-volume-mute"></i>
+          </button>
+        </div>
+      {% endif %}
+      
+      {% if settings.show_popup_button %}
+        {% if settings.upload_video %} 
+          <a href="{{ settings.upload_video }}" class="play-btn popup-video">
+            <i>
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="var(--primary-color)" height="80px" width="80px" version="1.1" id="Capa_1" viewBox="0 0 60 60" xml:space="preserve" style="margin-left: -3px;">
+                <g>
+                  <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30   c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15   C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"></path>
+                </g>
+              </svg>
+            </i>
+          </a>
+        {% elseif settings.video_link %}
+          <a href="{{ settings.video_link }}" class="play-btn popup-video">
+            <i>
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="var(--primary-color)" height="80px" width="80px" version="1.1" id="Capa_1" viewBox="0 0 60 60" xml:space="preserve" style="margin-left: -3px;">
+                <g>
+                  <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30   c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15   C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"></path>
+                </g>
+              </svg>
+            </i>
+          </a>
+        {% endif %}
+      {% endif %}
+      
+      <div class="video-content-bottom-right">
+        {% if settings.sub_title or settings.title %}
+          <div class="video-text-content">
+            {% if settings.title %}
+              <h2 class="sec-title" style="{% if settings.text_color %}color:{{ settings.text_color }};{% endif %}">{{ settings.title }}</h2>
             {% endif %}
-          {% endif %}
-          {% if settings.sub_title or settings.title %}
-            <div class="text-center">
-              {% if settings.title %}
-                <h2 class="sec-title" style="{% if settings.text_color %}color:{{ settings.text_color }};{% endif %}">{{ settings.title }}</h2>
-              {% endif %}
-              {% if settings.subtitle %}
-                <span class="sec-subtitle" style="{% if settings.text_color %}color:{{ settings.text_color }};{% endif %}">{{ settings.subtitle }}</span>
-              {% endif %}
-            </div>
-          {% endif %}
-          {% if settings.button_text and settings.button_link %}
-            <a href="{{ settings.button_link }}" class="video-btn hbtn1" {% if settings.new_tab %} target="_blank" {% endif %}>{{ settings.button_text }}</a>
-          {% endif %}
-
+            {% if settings.subtitle %}
+              <span class="sec-subtitle" style="{% if settings.text_color %}color:{{ settings.text_color }};{% endif %}">{{ settings.subtitle }}</span>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if settings.button_text and settings.button_link %}
+          <a href="{{ settings.button_link }}" class="video-btn hbtn1 {% if settings.button_style == 'outline' %}style-outline{% elseif settings.button_style == 'glass' %}style-glass{% endif %}" {% if settings.new_tab %} target="_blank" {% endif %}>{{ settings.button_text }}</a>
+        {% endif %}
       </div>
     </div>
-    <!-- Video Area End -->
+    </div>
 </section>
 
-<style>
-/* Video Hero Section Styles */
-.video-hero-section {
-  position: relative;
-  overflow: hidden;
-  min-height: 100vh;
-  background: #000;
-}
 
-/* Video Background */
-.video-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-.bg-video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  transform: translateX(-50%) translateY(-50%);
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.bg-video.loaded {
-  opacity: 1;
-}
-
-/* Fallback Background Image */
-.video-fallback-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-.video-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 2;
-}
-
-/* Video Controls */
-.video-controls {
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  display: flex;
-  gap: 15px;
-  z-index: 1000;
-}
-
-.video-control-btn {
-  width: 50px;
-  height: 50px;
-  border: none;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-}
-
-.video-control-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
-}
-
-.video-control-btn:active {
-  transform: scale(0.95);
-}
-
-/* Content Positioning */
-.video-hero-section .container {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  text-align: center;
-}
-
-/* Enhanced Play Button */
-.play-btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-color, #007bff) 0%, rgba(255, 255, 255, 0.2) 100%);
-  box-shadow: 0 10px 30px rgba(0, 123, 255, 0.4);
-  transition: all 0.4s ease;
-  margin: 30px 0;
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.play-btn::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1));
-  animation: pulse 2s infinite;
-}
-
-.play-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 15px 40px rgba(0, 123, 255, 0.6);
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1.2);
-    opacity: 0;
-  }
-}
-
-/* Text Styling */
-.video-hero-section .sec-title {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  animation: fadeInUp 1s ease-out;
-}
-
-.video-hero-section .sec-subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  animation: fadeInUp 1s ease-out 0.3s both;
-}
-
-.video-hero-section .video-btn {
-  animation: fadeInUp 1s ease-out 0.6s both;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .video-hero-section {
-    min-height: 70vh;
-  }
-  
-  .video-controls {
-    top: 20px;
-    right: 20px;
-    gap: 10px;
-  }
-  
-  .video-control-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 14px;
-  }
-  
-  .play-btn {
-    width: 80px;
-    height: 80px;
-  }
-  
-  .video-hero-section .sec-title {
-    font-size: 2.5rem;
-  }
-  
-  .video-hero-section .sec-subtitle {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .video-hero-section {
-    min-height: 60vh;
-  }
-  
-  .video-hero-section .sec-title {
-    font-size: 2rem;
-  }
-}
-</style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(){
-    // Popup Video
-    $('.popup-video').magnificPopup({
-      type: 'iframe'
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    const videoSections = document.querySelectorAll('.video-hero-section');
     
-    // Video Controls
-    document.querySelectorAll('.play-pause-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const videoId = this.getAttribute('data-video');
-        const video = document.getElementById(videoId);
-        const icon = this.querySelector('i');
+    videoSections.forEach(section => {
+        const video = section.querySelector('.bg-video');
+        const fallbackBg = section.querySelector('.video-fallback-bg');
         
-        if (video.paused) {
-          video.play();
-          icon.className = 'fas fa-pause';
-        } else {
-          video.pause();
-          icon.className = 'fas fa-play';
+        if (video) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        video.play().catch(e => {
+                            console.log('Video autoplay failed:', e);
+                            if (fallbackBg) {
+                                fallbackBg.style.display = 'block';
+                            }
+                        });
+                    } else {
+                        video.pause();
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            observer.observe(section);
+            
+            video.addEventListener('loadeddata', function() {
+                this.classList.add('loaded');
+                if (fallbackBg) {
+                    fallbackBg.style.display = 'none';
+                }
+            });
+            
+            video.addEventListener('error', function() {
+                console.log('Video failed to load');
+                if (fallbackBg) {
+                    fallbackBg.style.display = 'block';
+                }
+            });
         }
-      });
-    });
-    
-    document.querySelectorAll('.mute-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const videoId = this.getAttribute('data-video');
-        const video = document.getElementById(videoId);
-        const icon = this.querySelector('i');
         
-        if (video.muted) {
-          video.muted = false;
-          icon.className = 'fas fa-volume-up';
-        } else {
-          video.muted = true;
-          icon.className = 'fas fa-volume-mute';
+        const playPauseBtn = section.querySelector('.play-pause-btn');
+        const muteBtn = section.querySelector('.mute-btn');
+        
+        if (playPauseBtn && video) {
+            playPauseBtn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (video.paused) {
+                    video.play();
+                    icon.className = 'fas fa-pause';
+                } else {
+                    video.pause();
+                    icon.className = 'fas fa-play';
+                }
+            });
         }
-      });
+        
+        if (muteBtn && video) {
+            muteBtn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (video.muted) {
+                    video.muted = false;
+                    icon.className = 'fas fa-volume-up';
+                } else {
+                    video.muted = true;
+                    icon.className = 'fas fa-volume-mute';
+                }
+            });
+        }
     });
     
-    // Auto-play Video Background
-    document.querySelectorAll('.bg-video').forEach(video => {
-      // Force autoplay
-      video.muted = true;
-      video.autoplay = true;
-      video.loop = true;
-      video.playsInline = true;
-      
-      // Loading events
-      video.addEventListener('loadstart', function() {
-        console.log('Video loading started');
-      });
-      
-      video.addEventListener('loadeddata', function() {
-        this.classList.add('loaded');
-        // Force play if not playing
-        if (this.paused) {
-          this.play().catch(e => {
-            console.log('Auto-play prevented:', e);
-            // Show fallback image if autoplay fails
-            showVideoFallback(this);
-          });
-        }
-      });
-      
-      video.addEventListener('canplay', function() {
-        this.classList.add('loaded');
-        // Ensure video is playing
-        if (this.paused) {
-          this.play().catch(e => {
-            console.log('Play failed:', e);
-            showVideoFallback(this);
-          });
-        }
-      });
-      
-      video.addEventListener('error', function() {
-        console.error('Video failed to load');
-        showVideoFallback(this);
-      });
-      
-      // Try to play immediately
-      setTimeout(() => {
-        video.play().catch(e => {
-          console.log('Initial play failed:', e);
-          // Try again after user interaction
-          document.addEventListener('click', () => {
-            video.play().catch(err => console.log('Play after click failed:', err));
-          }, { once: true });
+    const videoButtons = document.querySelectorAll('.video-btn');
+    videoButtons.forEach(btn => {
+        btn.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px) scale(1.02)';
         });
-      }, 100);
+        
+        btn.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
     });
-    
-    // Function to show fallback image
-    function showVideoFallback(video) {
-      const videoBackground = video.closest('.video-background');
-      const fallbackBg = document.querySelector('.video-fallback-bg');
-      
-      if (videoBackground) {
-        videoBackground.style.display = 'none';
-      }
-      if (fallbackBg) {
-        fallbackBg.style.display = 'block';
-      }
-    }
-    
-    // Intersection Observer for Video Performance
-    if ('IntersectionObserver' in window) {
-      const videoObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          const video = entry.target.querySelector('.bg-video');
-          if (video) {
-            if (entry.isIntersecting) {
-              video.play();
-            } else {
-              video.pause();
-            }
-          }
-        });
-      });
-      
-      document.querySelectorAll('.video-hero-section.has-video-bg').forEach(section => {
-        videoObserver.observe(section);
-      });
-    }
-  });
+});
 </script>
+
 {% endif %}
 {% schema %}
 {
@@ -621,7 +351,7 @@ class="video-hero-section {% if settings.upload_video %}has-video-bg{% endif %}"
           }
         }
       ],
-      "default": "80"
+      "default": "100"
     },
     "padding_bottom" : {
       "type":"select",
@@ -785,7 +515,7 @@ class="video-hero-section {% if settings.upload_video %}has-video-bg{% endif %}"
           }
         }
       ],
-      "default": "80"
+      "default": "100"
     },
     "bg_img": {
       "label": {
@@ -966,6 +696,69 @@ class="video-hero-section {% if settings.upload_video %}has-video-bg{% endif %}"
       },
       "noLabel": true,
       "default": false
+    },
+    "video_layout": {
+      "type": "select",
+      "label": {
+        "ar": "تخطيط الفيديو",
+        "en": "Video Layout"
+      },
+      "info": {
+        "ar": "اختر كيفية عرض الفيديو - كامل الشاشة أو داخل حاوية",
+        "en": "Choose how to display the video - fullscreen or within container"
+      },
+      "options": [
+        {
+          "value": "fullscreen",
+          "label": {
+            "ar": "كامل الشاشة",
+            "en": "Fullscreen"
+          }
+        },
+        {
+          "value": "container",
+          "label": {
+            "ar": "داخل حاوية",
+            "en": "Container"
+          }
+        }
+      ],
+      "default": "fullscreen"
+    },
+    "button_style": {
+      "type": "select",
+      "label": {
+        "ar": "نمط الزر",
+        "en": "Button Style"
+      },
+      "info": {
+        "ar": "اختر نمط الزر المفضل",
+        "en": "Choose your preferred button style"
+      },
+      "options": [
+        {
+          "value": "default",
+          "label": {
+            "ar": "افتراضي",
+            "en": "Default"
+          }
+        },
+        {
+          "value": "outline",
+          "label": {
+            "ar": "محدد",
+            "en": "Outline"
+          }
+        },
+        {
+          "value": "glass",
+          "label": {
+            "ar": "زجاجي",
+            "en": "Glass"
+          }
+        }
+      ],
+      "default": "default"
     }
   }
 }
