@@ -366,7 +366,7 @@
                         <button type="button" class="close pe-7s-close-circle" data-dismiss="modal" aria-label="Close"></button>
 
                         <div class="mini-prods">
-                            <div class="promotional-banner owl-carousel {% if settings.ads_full_height %}ads-full-height{% endif %} {% if settings.select_style == 'style2' %}margin{% endif %}">
+                            <div class="promotional-banner owl-carousel {% if settings.ads_full_height %}ads-full-height{% endif %}">
                                 {% for adItem in settings.ad_modal_ad_section %}
                                     <div class="item">
                                     {%  if adItem.ad_link and not adItem.link_text %}
@@ -1500,13 +1500,6 @@ function removeProductFromCart(productId){
                             "ar": "تصميم 1",
                             "en": "Style 1"
                         }
-                        },
-                        {
-                        "value": "style2",
-                        "label": {
-                            "ar": "تصميم 2",
-                            "en": "Style 2"
-                        }
                         }
                     ],
                     "default": "style1"
@@ -1514,8 +1507,8 @@ function removeProductFromCart(productId){
                     "card_list_border": {
                         "type": "color",
                         "label": {
-                            "ar": "لون حدود المنتج (يعمل مع تصميم 2)",
-                            "en": "Product border color (with style 2)"
+                            "ar": "لون حدود المنتج",
+                            "en": "Product border color"
                         }
                     },
                     "hide_description": {
@@ -1525,8 +1518,8 @@ function removeProductFromCart(productId){
                         "en": ""
                     },
                     "option": {
-                        "ar": "إخفاء الوصف (يعمل مع تصميم 2)",
-                        "en": "Hide Description (with style 2)"
+                        "ar": "إخفاء الوصف",
+                        "en": "Hide Description"
                     },
                     "noLabel": true,
                     "default": false
@@ -1866,7 +1859,7 @@ function removeProductFromCart(productId){
                         }
                     }
                 ],
-                "default": "style2"
+                "default": "style1"
             },
             "loop": {
             "type": "checkbox",

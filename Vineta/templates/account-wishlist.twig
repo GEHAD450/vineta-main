@@ -20,21 +20,19 @@ style="background-image:url({{ settings.globals_settings_breadcrumb_breadcrumb_b
     </section>
 
 
-    <div class="home-products-section style2 pt-50 pb-50">
+    <div class="home-products-section style1 pt-50 pb-50">
         <div class="container custom-container">
             <div id="wishlist-list" class="row products-slider">
                 {% if wishlist.data|length == 0 %}
                     <h5 class="empty">
                     <img src="{{ asset_url ~ 'box64.png' }}" loading="lazy" style="margin-bottom:20px;width:auto" class="empty-wishlist" alt="empty-wishlist">
-                        <br>
                     {{ locals.no_wishlist }}</h5>
                 {% else %}
                 {% for product in wishlist.data %}
-                    <div class="{% if settings.globals_settings_products_select_prod_style == 'style2' %} col-md-6 col-sm-6 col-12 {% else %} col-md-3 col-sm-6 col-12 {% endif %}">
+                    <div class="col-md-3 col-sm-6 col-12">
                         <div class="prod-col">
                             {% include 'product-card.twig' with {'product' : product, 'index': key,
                             'parentId':1111,'hide_rate':settings.globals_settings_products_hide_rate,
-                            'select_prod_style':settings.globals_settings_products_select_prod_style,
                             'show_count':settings.globals_settings_products_show_count,
                             'show_payments': settings.globals_settings_products_show_payments,
                             'card_list_border':settings.globals_settings_products_card_list_border,
@@ -43,7 +41,6 @@ style="background-image:url({{ settings.globals_settings_breadcrumb_breadcrumb_b
                     </div>
                 {% endfor %}
                 {% endif %}
-            </div>
             {% include 'pagination.twig' with { 'totalPages' : products.last_page , 'currentPage' : products.current_page } %}
         </div>
 

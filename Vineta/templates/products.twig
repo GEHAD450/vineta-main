@@ -44,20 +44,12 @@ style="background-image:url({{ settings.globals_settings_breadcrumb_breadcrumb_b
 
                     <div id="products-list" class="row products-slider products-list">
                         {% for product in products.data %}
-                            <div class="{% if settings.globals_settings_products_select_prod_style == 'style2' %} col-12 style2 
-                            {% else %} 
-                            {% if settings.globals_settings_products_select_prod_style == 'style1' or not settings.globals_settings_products_select_prod_style %}
-                            col-md-4 
-                            {% endif %}
-                            col-sm-6 col-12 
-                            {% endif %}">
+                            <div class="col-md-4 col-sm-6 col-12">
                                 <div class="prod-col">                                
                                     {% include 'product-card.twig' with {'product' : product, 'index': key,
                                     'parentId':66666,'hide_rate':settings.globals_settings_products_hide_rate,
-                                    'select_prod_style':settings.globals_settings_products_select_prod_style,
                                     'show_count':settings.globals_settings_products_show_count,
                                     'card_list_border':settings.globals_settings_products_card_list_border,
-                                    'show_payments': settings.globals_settings_products_show_payments,
                                     'show_payments': settings.globals_settings_products_show_payments,
                                     'hide_description':settings.globals_settings_products_hide_description} %}
                                 </div>

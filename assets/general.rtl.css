@@ -3327,13 +3327,38 @@ button,.btn:focus,.btn:active,.page-link:focus,.page-link:active {
   margin-left: auto;
   margin-right: auto;
 }
+ .offer-counter {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ff6f61;
+  border-radius: 25px;
+  padding:0 8px;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  font-size: 11px;
+  color: #198754;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  position: absolute;
+  bottom: 25px;
+  right: calc(50% - 118.5px);
+  z-index: 6;
+  width: fit-content;
+  align-items: center;
+  overflow: hidden;
+
+}
 
 .offer-counter li {
-  background-color: var(--buttons-bg-color);
-  color: var(--buttons-color);
-  border-radius:10px;
-  padding: 10px 0 7px;
-}
+  background: transparent;
+  color: #ff6f61;
+  padding: 5px 0px;
+  border-radius: 6px;
+  text-align: center;
+  min-width: 0;
+  font-size: 12px;}
 
 .offer-counter .count-number {
   font-weight: 700;

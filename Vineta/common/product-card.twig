@@ -2,11 +2,10 @@
 
 <div id="{{ product.id }}-{{ parentId }}"
         style="{% if card_list_border %}border-color:{{ card_list_border }};{% endif %}"
- class="product-item {% if select_prod_style %}{{ select_prod_style }} {% else %} style1 {% endif %} {% if product.is_infinite == false and product.quantity <= 0 %}product-item-out-of-stock{% endif %}">
+ class="product-item vineta-product-card vineta-standalone-product-card style1 {% if product.is_infinite == false and product.quantity <= 0 %}product-item-out-of-stock{% endif %}">
             <div class="mask {% if product.images|length == 0 %} no-image {% endif %}" {% if card_list_border %}style="border-color:{{ card_list_border }};"{% endif %}>
                 <a href="/products/{{ product.slug }}" style="display:block;">
-                    {% if select_prod_style == 'style1' or not select_prod_style %}
-                        {% if show_count and (product.is_infinite or product.quantity > 0) and product.purchase_restrictions.sale_price_period_end %}
+                    {% if show_count and (product.is_infinite or product.quantity > 0) and product.purchase_restrictions.sale_price_period_end %}
                             <script>
                                 // {{ product.purchase_restrictions.sale_price_period_end }} covert it from "2025-12-16T20:59:59.000000Z" to 00/00/0000
                                 var salePricePeriodEnd = "{{ product.purchase_restrictions.sale_price_period_end }}";
@@ -31,7 +30,6 @@
                                 </li>
                             </ul>
                         {% endif %}
-                    {% endif %}
 
                     {% if (product.is_infinite == false and product.quantity) <= 0 or (product.discount_percentage and (product.is_infinite or product.quantity > 0)) %}
                         <div class="labels">
@@ -46,8 +44,7 @@
                         </div>
                     {% endif %}
 
-                    {% if select_prod_style == 'style1' or not select_prod_style %}
-                        {% if product.is_infinite or product.quantity > 0 %}
+                    {% if product.is_infinite or product.quantity > 0 %}
                         <div class="optionsRepleat">
                             <div class="options">
                                 {% if (product.has_options) %}
@@ -70,7 +67,6 @@
                             </div>
                         </div>
                         {% endif %}
-                    {% endif %}
 
                     {% if product.images|length > 0 %}
                             <div class="imagesSlider">
@@ -87,16 +83,20 @@
                         {% else %}
                         <div class="image">
                                 <img id="product-card-img-{{ product.id }}" width="150" {% if product.is_infinite == false and product.quantity <= 0 %} style="opacity:0.7;" {% endif %}
-                                                src="{{ asset_url ~ 'noImage.svg'}}"
+                                                src="{{ assetUrl('noImage.svg') }}"
                                         alt="{{ product.name }}" loading="lazy" >
                         </div>
                     {% endif %}
                 </a>
                 <div class="add-to-wishlist" data-wishlist-id="{{ product.id }}">
                     {% if customer %}
-                    <a class="fa fa-heart-o" onclick="addToWishlist(this, '{{ product.id }}')" id="wishlist-{{ product.id }}"></a>
+                    <a onclick="addToWishlist(this, '{{ product.id }}')" id="wishlist-{{ product.id }}">
+                        <i class="fa fa-heart-o"></i>
+                    </a>
                     {% else %}
-                    <a class="fa fa-heart-o" href="/auth/login?redirect_to={{ requestUri() }}" id="wishlist-{{ product.id }}"></a>
+                    <a href="/auth/login?redirect_to={{ requestUri() }}" id="wishlist-{{ product.id }}">
+                        <i class="fa fa-heart-o"></i>
+                    </a>
                     {% endif %}
                     <a class="loader d-none"><i class="fa fa-refresh fa-spin"></i></a>
                 </div>
@@ -105,36 +105,6 @@
         
 
         <div class="content">
-        
-            {% if select_prod_style == 'style2' %}
-                <div class="product-card-style2-content">
-            {% endif %}
-
-            {% if select_prod_style == 'style2' %}
-                {% if product.is_infinite or product.quantity > 0 %}
-                <div class="optionsRepleat">
-                    <div class="options">
-                        {% if (product.has_options) %}
-                            <small>{{ locals.product_has_options }}</small>
-                        {% endif %}
-
-                        {% if not product.is_taxable %}
-                            <small>{{ locals.product_is_not_taxable }}</small>
-                        {% endif %}
-
-                        {% if product.badge %}
-                            {% if session.lang.code == 'ar' %}
-                                <small>{{ product.badge.body.ar }}</small>
-                            {% else %}
-                                <small>{{ product.badge.body.en }}</small>
-                            {% endif %}
-                        {% endif %}
-                        <small class="product-card-bundle-offer" data-bundle-offer-product-id="{{ product.id }}"></small>
-
-                    </div>
-                </div>
-                {% endif %}
-            {% endif %}
 
             {% if product.formatted_sale_price is not null %}
                 <div class="price">
@@ -166,45 +136,6 @@
                 {% endif %}
             {% endif %}
 
-            {% if select_prod_style == 'style2' and hide_description == false %}
-                {% if product.short_description is not empty %}
-                    <div class="shortDesc">
-                        {{ product.short_description | raw }}
-                    </div>
-                {% endif %}
-            {% endif %}
-
-            {% if select_prod_style == 'style2' %}
-                {% if show_count and (product.is_infinite or product.quantity > 0) and product.purchase_restrictions.sale_price_period_end %}
-                    <script>
-                        // {{ product.purchase_restrictions.sale_price_period_end }} covert it from "2025-12-16T20:59:59.000000Z" to 00/00/0000
-                        var salePricePeriodEnd = "{{ product.purchase_restrictions.sale_price_period_end }}";
-                        var salePricePeriodEndDate = new Date(salePricePeriodEnd);
-                        var salePricePeriodEndDate = salePricePeriodEndDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
-                        // to offer counter
-                        var offerCounter = document.querySelector('.offer-counter');
-                        offerCounter.setAttribute('data-offer-date', salePricePeriodEndDate);
-                    </script>
-                    <ul class="offer-counter" data-offer-date="{{ product.purchase_restrictions.sale_price_period_end }}">
-                        <li>
-                        <div class="day count-number">00</div><span class="count-name">{{ locals.days }}</span>
-                        </li>
-                        <li>
-                        <div class="hour count-number">00</div><span class="count-name">{{ locals.hours }}</span>
-                        </li>
-                        <li>
-                        <div class="minute count-number">00</div><span class="count-name">{{ locals.minutes }}</span>
-                        </li>
-                        <li>
-                        <div class="seconds count-number">00</div><span class="count-name">{{ locals.seconds }}</span>
-                        </li>
-                    </ul>
-                {% endif %}
-            {% endif %}
-
-            {% if select_prod_style == 'style2' %}
-                </div>
-            {% endif %}
 
             {% if show_payments %}
             <div class="tp-mask payment-methods">
@@ -238,15 +169,21 @@
         </div>
 </div>
 
+{% endif %}
+
 <script>
 
     document.addEventListener("DOMContentLoaded", function(){
         $(document).ready(function () {
             var intervalId;
             // if length of images is greater than 1 then add hover effect
-            if ({{ product.images|length }} > 1) {
+            var imagesLength = {{ product.images|length }};
+            var productId = "{{ product.id }}";
+            var parentId = "{{ parentId }}";
+            
+            if (imagesLength > 1) {
                 // Hover Effect for Image Transitions
-                $("#{{ product.id }}-{{ parentId }}").hover(
+                $("#" + productId + "-" + parentId).hover(
                     function () {
                         var images = $(this).find('.image');
                         clearInterval(intervalId);
@@ -277,7 +214,7 @@
                 );
             } else {
                 // if length of images is 1 then add hover effect
-                var images = $("#{{ product.id }}-{{ parentId }}").find('.image');
+                var images = $("#" + productId + "-" + parentId).find('.image');
                 images.css('opacity', 1);
             }
 
@@ -286,8 +223,4 @@
             
     });
 </script>
-
-{% endif %}
-
-
 

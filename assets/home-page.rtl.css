@@ -2965,29 +2965,6 @@ div.xc-ads-one__img img {
 }
 
 /* ===== COUNTDOWN TIMER ===== */
-.home-products-section .product-item .offer-counter {
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid #ff6f61;
-  border-radius: 25px;
-  padding: 8px;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  list-style: none;
-  margin: 0;
-  font-size: 11px;
-  color: #198754;
-  font-weight: 600;
-  backdrop-filter: blur(10px);
-  position: absolute;
-  bottom: 25px;
-  right: calc(50% - 118.5px);
-  z-index: 6;
-  width: fit-content;
-  align-items: center;
-  overflow: hidden;
-
-}
 
 .home-products-section .product-item .offer-counter li {
   text-align: center;
@@ -3447,14 +3424,12 @@ div.xc-ads-one__img img {
   transition: opacity 0.3s ease;
 }
 
-/* الصورة الأولى تأخذ المساحة */
 .home-products-section .product-item .mask .imagesSlider .image:first-child {
   position: relative ;
   opacity: 1;
   z-index: 1;
 }
 
-/* باقي الصور مخفية ومطلقة */
 .home-products-section .product-item .mask .imagesSlider .image:not(:first-child) {
   opacity: 0 ;
   z-index: 2 ;
@@ -3467,7 +3442,6 @@ div.xc-ads-one__img img {
   display: block;
 }
 
-/* إصلاح مشكلة عدم ظهور الصور رغم تغيير opacity */
 .home-products-section .product-item .mask .imagesSlider .image {
   visibility: visible ;
   pointer-events: auto;
@@ -3636,15 +3610,7 @@ div.xc-ads-one__img img {
   padding: 0;
 }
 
-.home-products-section .product-item .offer-counter li {
-  background: transparent;
-  color: #ff6f61;
-  padding: 5px 0px;
-  border-radius: 6px;
-  text-align: center;
-  min-width: 0;
-  font-size: 12px;
-}
+
 
 .home-products-section .product-item .offer-counter .count-number {
   font-weight: 700;
