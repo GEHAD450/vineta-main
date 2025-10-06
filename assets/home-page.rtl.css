@@ -2933,14 +2933,14 @@ div.xc-ads-one__img img {
 }
 
 /* ===== PRODUCT ACTION BUTTONS ===== */
-.home-products-section .product-item .mask .add-to-wishlist {
+.product-item .mask .add-to-wishlist {
   position: absolute;
   top: 12px;
   right: 12px;
-  z-index: 3;
+  z-index: 15;
 }
 
-.home-products-section .product-item .mask .add-to-wishlist a {
+ .product-item .mask .add-to-wishlist a {
   width: 36px;
   height: 36px;
   background: rgba(255, 255, 255, 0.9);
@@ -3091,11 +3091,7 @@ div.xc-ads-one__img img {
   transform: scale(1.1);
 }
 
-/* Product Options */
-.home-products-section .product-item .options {
-  padding: 0 16px 8px;
-  text-align: center;
-}
+
 
 .home-products-section .product-item .options small {
   background: #e9ecef;
@@ -3488,10 +3484,6 @@ div.xc-ads-one__img img {
   opacity: 1;
 }
 
-/* تأكد من عدم إخفاء الصور بأي طريقة */
-.home-products-section .product-item .mask *:not(.labels):not(.add-to-wishlist):not(.options) {
-  visibility: visible;
-}
 
 /* ===== END OF BICYCLE STYLE PRODUCTS SECTION ===== */
 
@@ -3574,16 +3566,159 @@ div.xc-ads-one__img img {
   transform: none;
 }
 
-/* Product Options */
-.home-products-section .product-item .options {
+
+
+/* ============================================ */
+/* OPTIONS REPEAT - CENTER OVERLAY */
+/* ============================================ */
+
+.product-item .optionsRepleat {
   position: absolute;
-  bottom: 7px;
-  left: 20px;
-  right: 20px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   opacity: 0;
-  transition: all 0.3s ease;
-  z-index: 10;
+  visibility: hidden;
+  transition: all 0.4s ease;
+  z-index: 15;
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+  padding: 20px;
 }
+
+ .product-item:hover .optionsRepleat {
+  opacity: 1;
+  visibility: visible;
+}
+
+.product-item .optionsRepleat .option-item:not(:last-child) {
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin: 2px 0;
+  width: 80%;
+  max-width: 180px;
+}
+
+ .product-item .optionsRepleat .option-item:last-child {
+  grid-row: 2;
+  background: rgba(52, 152, 219, 0.95);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+  text-align: center;
+  min-width: 120px;
+}
+
+ .product-item .optionsRepleat select,
+ .product-item .optionsRepleat input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 12px;
+  background: white;
+  transition: border-color 0.3s ease;
+}
+
+ .product-item .optionsRepleat select:focus,
+ .product-item .optionsRepleat input:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
+}
+ .product-item .optionsRepleat label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* تأثير الظهور المحسن */
+.product-item .optionsRepleat .option-item:not(:last-child) {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.4s ease;
+}
+
+ .product-item .optionsRepleat .option-item:last-child {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.5s ease;
+}
+
+.product-item:hover .optionsRepleat .option-item:not(:last-child) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-item:hover .optionsRepleat .option-item:last-child {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* تأخير الظهور */
+ .product-item .optionsRepleat .option-item:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+ .product-item .optionsRepleat .option-item:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+ .product-item .optionsRepleat .option-item:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+ .product-item .optionsRepleat .option-item:last-child {
+  transition-delay: 0.6s;
+}
+
+/* تحسين توزيع العناصر العلوية */
+.product-item .optionsRepleat .option-item:not(:last-child):nth-child(1) {
+  align-self: start;
+}
+
+.product-item .optionsRepleat .option-item:not(:last-child):nth-child(2) {
+  align-self: center;
+}
+
+.product-item .optionsRepleat .option-item:not(:last-child):nth-child(3) {
+  align-self: end;
+}
+
+/* تحسين للشاشات الصغيرة */
+@media (max-width: 768px) {
+.product-item .optionsRepleat {
+    padding: 15px;
+  }
+  
+ .product-item .optionsRepleat .option-item:not(:last-child) {
+    width: 90%;
+    max-width: 160px;
+    padding: 6px 10px;
+  }
+  .product-item .optionsRepleat .option-item:last-child {
+    padding: 10px 16px;
+    font-size: 12px;
+    min-width: 100px;
+  }
+}
+
+
 
 .home-products-section .product-item:hover .options {
   opacity: 1;

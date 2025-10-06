@@ -100,10 +100,7 @@
     opacity: 1;
 }
 
-/* تأكد من عدم إخفاء الصور بأي طريقة */
-.vineta-standalone-product-card .mask *:not(.labels):not(.add-to-wishlist):not(.options) {
-    visibility: visible;
-}
+
 
 /* Product Labels */
 .vineta-standalone-product-card .labels {
@@ -267,21 +264,7 @@
     box-shadow: none;
 }
 
-/* Product Options */
-.vineta-standalone-product-card .optionsRepleat {
-    position: absolute;
-    bottom: 10px;
-    left: 15px;
-    right: 15px;
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 10;
-}
 
-.vineta-standalone-product-card:hover .optionsRepleat {
-    opacity: 1;
-    bottom: 15px;
-}
 
 .vineta-standalone-product-card .options small {
     background: rgba(52,152,219,0.9);
@@ -487,7 +470,9 @@
 .products-details-page .product-formatted-price-discount {
     right: 15px;
 }
-
+.paddingPage .products-container .prod-col{
+    margin-bottom: 35px;
+}
 /* ============================================ */
 /* SLIDER ARROWS */
 /* ============================================ */
@@ -1171,39 +1156,57 @@
 /* ============================================ */
 
 .product-card-bundle-offer {
-    display: inline-block !important;
-    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3498db, #2980b9);
     color: white;
-    padding: 6px 12px;
-    border-radius: 15px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
     font-size: 11px;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
     margin: 5px 0;
     position: relative;
     overflow: hidden;
-    min-width: 80px;
     text-align: center;
-    box-shadow: 0 2px 10px rgba(255,107,53,0.3);
+    box-shadow: 0 2px 10px rgba(52,152,219,0.3);
+    border: 2px solid rgba(255,255,255,0.2);
 }
 
 .product-card-bundle-offer::before {
-    content: '🎁 ';
-    font-size: 12px;
+    content: '★';
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .product-card-bundle-offer::after {
-    content: 'عرض مجمع';
+    content: '';
 }
 
 .product-card-bundle-offer:empty::before {
-    content: '🎁 ';
+    content: '★';
 }
 
 .product-card-bundle-offer:empty::after {
-    content: 'Bundle Offer';
+    content: '';
 }
+
+/* خيارات أيقونات بديلة - يمكن تغييرها حسب الحاجة */
+/* 
+أيقونات أخرى يمكن استخدامها:
+- '★' نجمة (الحالية)
+- '⚡' صاعقة
+- '💎' ماسة  
+- '🔥' نار
+- '✨' لمعة
+- '⭐' نجمة مملوءة
+- '🌟' نجمة متألقة
+- '💫' نجمة دوارة
+- '🎯' هدف
+- '🏆' كأس
+*/
 
 /* إضافة تأثير لامع */
 .product-card-bundle-offer::after {
@@ -1213,26 +1216,29 @@
 
 .product-card-bundle-offer:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(255,107,53,0.4);
+    box-shadow: 0 4px 15px rgba(52,152,219,0.4);
+    background: linear-gradient(135deg, #2980b9, #3498db);
 }
 
 /* Standalone Product Card Bundle Offer */
 .vineta-standalone-product-card .product-card-bundle-offer {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 5;
-    box-shadow: 0 2px 8px rgba(255,107,53,0.3);
+    top: 8px;
+    left: calc(50% - 22px);
+   z-index: 5;
+    box-shadow: 0 2px 8px rgba(52,152,219,0.3);
+    margin: 0;
 }
 
 /* Product Details Page Bundle Offer */
 .products-details-page .product-card-bundle-offer {
     display: inline-flex !important;
     align-items: center;
+    justify-content: center;
     margin: 8px 0;
-    padding: 8px 16px;
-    font-size: 12px;
-    min-height: 28px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
 }
 
 /* تأكد من ظهور العنصر حتى لو كان فارغاً */
@@ -1240,7 +1246,9 @@ small.product-card-bundle-offer,
 .product-card-bundle-offer {
     visibility: visible !important;
     opacity: 1 !important;
-    display: inline-block !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 /* إضافة تأثير نبضة للفت الانتباه */
@@ -1256,6 +1264,29 @@ small.product-card-bundle-offer,
 
 .product-card-bundle-offer:hover {
     animation: none;
+}
+
+/* تحسينات للتصميم المتجاوب */
+@media (max-width: 768px) {
+    .product-card-bundle-offer {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .product-card-bundle-offer::before {
+        font-size: 14px;
+    }
+    
+    .vineta-standalone-product-card .product-card-bundle-offer {
+        top: 6px;
+        left: 6px;
+    }
+    
+    .products-details-page .product-card-bundle-offer {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
 }
 
 /* ============================================ */
