@@ -3175,86 +3175,344 @@ Mini Products
 }
 
 
-/******************************************************/
-
-
-/* Ad Modal */
-
-
-/******************************************************/
-
-.add-Modal .modal-dialog {
-  display: flex;
-  position: absolute;
-  top: 0;
-  left: 0;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  width: 100%;
-  max-width: 100%;
-  height: 100%
-}
-
-.add-Modal .modal-content {
-  border-radius: 0;
-  max-width: 800px;
-  border-radius: 20px;
-  background: none;
-  border: none;
-}
-
-.add-Modal .modal-content::-webkit-scrollbar {
-  width: 0px;
-}
-
-.add-Modal .modal-content::-webkit-scrollbar-track {
-  background: transparent!important;
-}
-
-.add-Modal .modal-content::-webkit-scrollbar-thumb {
-  background: transparent!important;
-}
-
-.add-Modal .modal-content::-webkit-scrollbar-thumb:hover {
-  background: transparent!important;
-}
-
-.add-Modal .modal-content .close {
-  position: absolute;
-  top: -40px;
-  right: 0;
-  opacity: 1;
-  z-index: 99;
-  color: #fff;
-  font-size: 30px;
-  background: none;
-}
-
-.add-Modal .mini-prods .promotional-banner .promotional-banner-item {
-  min-height: 420px;
-}
-
-@media(max-width:992px) {
-  .partners .slick-prev,
-  .videos .slick-prev,
-  .testimonials .slick-prev,
-  .products-slider .slick-prev,
-  .mini-prods .owl-carousel .owl-nav button.owl-prev,
-  .promotional-banner:hover .owl-carousel .owl-nav button.owl-prev,
-  .categories .owl-carousel .owl-nav button.owl-prev {
-    opacity: 0.6;
-    left: 5px;
-  }
-  .videos .slick-next,
-  .partners .slick-next,
-  .testimonials .slick-next,
-  .products-slider .slick-next,
-  .mini-prods .owl-carousel .owl-nav button.owl-next,
-  .promotional-banner:hover .owl-carousel .owl-nav button.owl-next,
-  .categories .owl-carousel .owl-nav button.owl-next {
-    right: 5px;
-    left: auto;
-    opacity: 0.6;
-  }
-}
+                /* ============================================ */
+                /* AD MODAL STYLES - VINETA THEME */
+                /* ============================================ */
+                
+                .add-Modal {
+                  z-index: 9999;
+                backdrop-filter: blur(10px);
+                background: rgb(0 0 0 / 4%);                }
+              
+              .add-Modal .modal-dialog {
+                  max-width: 90%;
+                  width: 800px;
+                  margin: 2rem auto;
+                  position: relative;
+              }
+              
+              .add-Modal .modal-content {
+                  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+                  border: none;
+                  border-radius: 20px;
+                  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                  overflow: hidden;
+                  position: relative;
+              }
+              
+              .add-Modal .close {
+                  position: absolute;
+                  top: 15px;
+                  left: 15px;
+                  z-index: 10;
+                  background: rgba(255, 255, 255, 0.9);
+                  border: none;
+                  border-radius: 50%;
+                  width: 40px;
+                  height: 40px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 18px;
+                  color: #dc3545;
+                  cursor: pointer;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+              }
+              
+              .add-Modal .close:hover {
+                  background: #dc3545;
+                  color: white;
+                  transform: scale(1.1);
+              }
+              
+              .promotional-banner {
+                  min-height: 400px;
+              }
+              
+              .promotional-banner-item {
+                  position: relative;
+                  min-height: 400px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  background-size: cover !important;
+                  background-position: center !important;
+                  background-repeat: no-repeat !important;
+                  width: 100%;
+              }
+              
+              .promotional-banner-item .overlay {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  bottom: 0;
+                  z-index: 1;
+              }
+              
+              .promotional-banner-item .content {
+                  position: absolute;
+                  top: 20px;
+                  right: 20px;
+                  z-index: 2;
+                  text-align: right;
+                  padding: 40px 20px;
+                  max-width: 400px;
+                  width: auto;
+              }
+              
+              .promotional-banner-item .content.center-content {
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  text-align: center;
+                  width: calc(100% - 40px);
+                  max-width: 600px;
+                  padding: 40px 20px;
+                  right: auto;
+              }
+              
+              /* المحتوى العادي - محاذاة يمين */
+              .promotional-banner-item .content {
+                  direction: rtl;
+              }
+         
+             
+              
+              /* المحتوى مع التوسيط - توسيط كامل */
+              .promotional-banner-item .content.center-content * {
+                  text-align: center;
+              }
+              
+              .promotional-banner-item .content.center-content .label,
+              .promotional-banner-item .content.center-content .title,
+              .promotional-banner-item .content.center-content .subtitle,
+              .promotional-banner-item .content.center-content .offer-counter,
+              .promotional-banner-item .content.center-content .hbtn1 {
+                  margin-left: auto;
+                  margin-right: auto;
+                  display: block;
+              }
+              
+              .promotional-banner-item .content.center-content .offer-counter {
+                  display: flex;
+                  justify-content: center;
+                  bottom:-25px
+              }
+              
+              .promotional-banner-item .content.center-content .hbtn1 {
+                  display: inline-block;
+              }
+              
+              .promotional-banner-item .label {
+                  display: inline-block;
+                  padding: 8px 16px;
+                  border-radius: 25px;
+                  font-size: 15px;
+                  font-weight: 600;
+                  text-transform: uppercase;
+                  letter-spacing: 1px;
+                  margin-bottom: 15px;
+                  background: #ff6f61;
+                  color: white;
+              }
+              
+              .promotional-banner-item .title {
+                  font-size: 2.5rem;
+                  font-weight: 700;
+                  margin-bottom: 15px;
+                  line-height: 1.2;
+                  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+              }
+              
+              .promotional-banner-item .subtitle {
+                  font-size: 20px;
+                  margin-bottom: 15px;
+                font-weight:500;
+                  display:flex !important;
+                  align-items:center;
+                  gap:5px
+              }
+              
+              .promotional-banner-item .price {
+                  font-weight: 700;
+                  margin-left: 10px;
+                  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+                  font-size: 30px;
+              }
+              .promotional-banner-item .hbtn1 {
+                  display: inline-block;
+                  padding: 15px 30px;
+                  background:var(--primary-color);
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 50px;
+                  font-weight: 600;
+                  text-transform: uppercase;
+                  letter-spacing: 1px;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+                  position: relative;
+                  overflow: hidden;
+                  bottom:0
+              }
+              
+              .promotional-banner-item .hbtn1:hover {
+                  transform: translateY(-2px);
+                  box-shadow: 0 12px 35px rgba(52, 152, 219, 0.4);
+                  color: white;
+                  text-decoration: none;
+              }
+              
+              .promotional-banner-item .hbtn1::before {
+                  content: '';
+                  position: absolute;
+                  top: 0;
+                  left: -100%;
+                  width: 100%;
+                  height: 100%;
+                  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                  transition: left 0.5s;
+              }
+              
+              .promotional-banner-item .hbtn1:hover::before {
+                  left: 100%;
+              }
+              
+              /* Owl Carousel Navigation */
+              .promotional-banner .owl-nav {
+                  position: absolute;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  width: 100%;
+                  z-index: 5;
+              }
+              
+              .promotional-banner .owl-nav button {
+                  position: absolute;
+                  background: rgba(255, 255, 255, 0.9);
+                  border: none;
+                  border-radius: 50%;
+                  width: 50px;
+                  height: 50px;
+                  font-size: 18px;
+                  color: #2c3e50;
+                  cursor: pointer;
+                  transition: all 0.3s ease;
+                  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+              }
+              
+              .promotional-banner .owl-nav .owl-prev {
+                  left: 20px;
+              }
+              
+              .promotional-banner .owl-nav .owl-next {
+                  right: 20px;
+              }
+              
+              .promotional-banner .owl-nav button:hover {
+                  background: #3498db;
+                  color: white;
+                  transform: scale(1.1);
+              }
+              
+              .promotional-banner .owl-dots {
+                  text-align: center;
+                  padding: 20px 0;
+                  position: absolute;
+                  bottom: 20px;
+                  left: 50%;
+                  transform: translateX(-50%);
+              }
+              
+              .promotional-banner .owl-dots .owl-dot {
+                  display: inline-block;
+                  margin: 0 5px;
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  background: rgba(255, 255, 255, 0.5);
+                  cursor: pointer;
+                  transition: all 0.3s ease;
+              }
+              
+              .promotional-banner .owl-dots .owl-dot.active,
+              .promotional-banner .owl-dots .owl-dot:hover {
+                  background: white;
+                  transform: scale(1.2);
+              }
+              
+              /* Full Height Ads */
+              .ads-full-height .promotional-banner-item {
+                  min-height: 80vh;
+              }
+              
+              /* Responsive Design */
+              @media (max-width: 768px) {
+                  .add-Modal .modal-dialog {
+                      margin: 1rem;
+                      max-width: 95%;
+                  }
+                  
+                  .promotional-banner-item {
+                      min-height: 300px;
+                  }
+                  
+                  .promotional-banner-item .content {
+                      padding: 20px 15px;
+                      max-width: 300px;
+                      top: 15px;
+                      right: 15px;
+                  }
+                  
+                  .promotional-banner-item .content.center-content {
+                      padding: 20px 15px;
+                      width: calc(100% - 30px);
+                      max-width: 500px;
+                  }
+                  
+                  .promotional-banner-item .title {
+                      font-size: 1.8rem;
+                  }
+                  
+                  .promotional-banner-item .subtitle {
+                      font-size: 1rem;
+                  }
+                  
+              
+                  
+                  .promotional-banner .owl-nav button {
+                      width: 40px;
+                      height: 40px;
+                      font-size: 14px;
+                  }
+                  
+                  .promotional-banner .owl-nav .owl-prev {
+                      left: 10px;
+                  }
+                  
+                  .promotional-banner .owl-nav .owl-next {
+                      right: 10px;
+                  }
+                  
+                  .ads-full-height .promotional-banner-item {
+                      min-height: 60vh;
+                  }
+              }
+              
+              @media (max-width: 480px) {
+                  .promotional-banner-item .title {
+                      font-size: 1.5rem;
+                  }
+                  
+                  .promotional-banner-item .hbtn1 {
+                      padding: 12px 24px;
+                      font-size: 14px;
+                  }
+              }
